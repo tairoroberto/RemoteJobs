@@ -4,31 +4,192 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
-    compileSdkVersion 26
+
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
     defaultConfig {
         applicationId "br.com.tairoroberto.remoteok"
-        minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        debug {}
+        release {}
+    }
+
+    buildTypes {
+        debug {
+            resValue "bool", "is_release", "false"
+            minifyEnabled false
+            testCoverageEnabled false
+        }
+
+        release {
+            resValue "bool", "is_release", "true"
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            debuggable false
+            testCoverageEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/kotlin',
+                            'src/${variant.dirName}/kotlin',
+                            'build/generated/source/apt/${variant.dirName}']
+
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets']
+        }
+    }
+
+    productFlavors {
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+
+    lintOptions {
+        lintConfig rootProject.file('lint.xml')
+    }
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+
+    // Android support  libs
+    implementation "com.android.support:appcompat-v7:${rootProject.supportLibs}"
+    implementation "com.android.support.constraint:constraint-layout:$constraint_layout"
+    implementation "com.android.support:design:${rootProject.supportLibs}"
+    implementation "com.android.support:support-vector-drawable:${rootProject.supportLibs}"
+    implementation "com.android.support:cardview-v7:${rootProject.supportLibs}"
+    implementation "com.android.support:multidex:${rootProject.multidex}"
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.kotlin_version"
+    implementation "org.jetbrains.anko:anko-coroutines:${rootProject.anko_version}"
+    implementation "org.jetbrains.anko:anko-commons:${rootProject.anko_version}"
+    implementation "org.jetbrains.kotlin:kotlin-test-junit:${rootProject.kotlin_version}"
+
+    // ReactiveX
+    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.rxandroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${rootProject.rxjava}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${rootProject.retrofit}"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.google.code.gson:gson:${rootProject.gson}"
+
+    // Image libs
+    implementation "com.squareup.picasso:picasso:$picasso"
+
+    // Facebook Sthetho
+    implementation "com.facebook.stetho:stetho:${rootProject.stetho}"
+    implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.stetho}"
+
+    //Timber
+    implementation "com.jakewharton.timber:timber:${rootProject.timber}"
+
+    // Dependency injection
+    implementation "com.google.dagger:dagger:${rootProject.dagger}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:design:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation "android.arch.persistence.room:runtime:${rootProject.arch}"
+    implementation "android.arch.persistence.room:rxjava2:${rootProject.arch}"
+    implementation "android.arch.persistence.room:testing:${rootProject.arch}"
+    kapt "android.arch.persistence.room:compiler:${rootProject.arch}"
+
+    implementation "android.arch.lifecycle:runtime:${rootProject.arch_lifecycle}"
+    implementation "android.arch.lifecycle:extensions:${rootProject.arch}"
+    implementation "android.arch.lifecycle:common-java8:${rootProject.arch}"
+    kapt "android.arch.lifecycle:compiler:${rootProject.arch}"
+
+    // Test libs
+    testImplementation "junit:junit:${rootProject.junit}"
+    androidTestImplementation "com.android.support.test:runner:${rootProject.runner}"
+    testImplementation "org.robolectric:robolectric:${rootProject.robolectric}"
+
+    testImplementation "com.squareup.okhttp3:mockwebserver:${rootProject.mockwebserver}"
+    testImplementation("android.arch.core:core-testing:${rootProject.arch}", {
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-core-utils'
+    })
+    testImplementation "org.mockito:mockito-core:${rootProject.mockito}"
+
+    androidTestImplementation "com.android.support:appcompat-v7:${rootProject.supportLibs}"
+    androidTestImplementation "com.android.support:recyclerview-v7:${rootProject.supportLibs}"
+    androidTestImplementation "com.android.support:cardview-v7:${rootProject.supportLibs}"
+    androidTestImplementation "com.android.support:design:${rootProject.supportLibs}"
+
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${rootProject.espresso}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:${rootProject.espresso}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+    androidTestImplementation("com.android.support.test.espresso:espresso-intents:${rootProject.espresso}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+    implementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espresso}"
+
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:2.1.3"
+
+    androidTestImplementation "android.arch.core:core-testing:${rootProject.arch}"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:${rootProject.dexmaker}"
+    androidTestImplementation "org.mockito:mockito-core:${rootProject.mockito}", {
+        exclude group: 'net.bytebuddy'
+    }
 }

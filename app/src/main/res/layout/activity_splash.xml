@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".home.view.MainActivity"
-    tools:showIn="@layout/activity_main">
+    android:background="#161616"
+    tools:context="br.com.tairoroberto.remoteok.splash.SplashActivity">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/remote_ok_logo" />
 
 </android.support.constraint.ConstraintLayout>
