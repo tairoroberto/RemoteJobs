@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.ShareActionProvider
+import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
 import br.com.tairoroberto.remoteok.R
@@ -26,7 +27,11 @@ import br.com.tairoroberto.remoteok.home.model.domain.Job
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailActivity : AppCompatActivity(), DetailContract.View {
 
@@ -61,25 +66,33 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     private fun showAlertDialog(job: Job) {
         alert {
-            title = "Vote"
-            message = "Vote for this movie is disable :( \nThe actual note for this movie is \n${job.position}"
+            title = "Apply for this job"
+            message = "Position: ${job.position}\n" +
+                      "Company: ${job.company}\n" +
+                      "Created at: ${formatDate(job.date)}"
 
+            noButton {}
             yesButton {
-                title = "OK"
+                browse("https://remoteok.io/l/${job.id}")
             }
+
         }.show()
     }
 
 
     override fun show(job: Job?) {
-        imageView.loadImage(getString(R.string.images_url, job?.logo), progressImage)
+        imageView.loadImage(job?.logo, progressImage)
 
         toolbar_layout.title = job?.position
         textViewName.text = job?.position
-        textViewOpen.text = job?.position
-        textViewOverview.text = job?.position
-        textViewReleaseDate.text = job?.position
-        textViewRate.text = job?.position
+        textViewOverview.text = Html.fromHtml(job?.description)
+        textViewReleaseDate.text = formatDate(job?.date)
+    }
+
+    private fun formatDate(date: String?): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss-SS:SS", Locale.ENGLISH)
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        return format.format(sdf.parse(date))
     }
 
     override fun showSnackBarError(msg: String) {
@@ -122,7 +135,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
             val bitmap = imageView.drawingCache
 
-            val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_movieDetail", null)
+            val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_detail", null)
             val bitmapUri = Uri.parse(bitmapPath)
 
             shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)

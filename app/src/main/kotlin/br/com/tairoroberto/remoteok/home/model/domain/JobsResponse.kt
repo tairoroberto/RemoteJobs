@@ -6,7 +6,7 @@ import android.os.Parcelable
 /**
  * Created by tairo on 14/11/17.
  */
-data class JobsResponse(var list: List<Job>) : Parcelable {
+data class JobsResponse(var list: List<Job>? = ArrayList()) : Parcelable {
 
     constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Job))
 

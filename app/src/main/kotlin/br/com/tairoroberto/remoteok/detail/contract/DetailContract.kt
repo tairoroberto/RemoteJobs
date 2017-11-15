@@ -19,7 +19,6 @@ class DetailContract {
     }
 
     interface Presenter : BaseMVP.Presenter<View> {
-        fun getById(id: String)
         fun manipulateResponse(job: Job?)
         fun showError(str: String)
         fun getContext(): Context?

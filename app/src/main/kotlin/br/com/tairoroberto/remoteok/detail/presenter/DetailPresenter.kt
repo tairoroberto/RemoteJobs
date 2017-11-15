@@ -23,12 +23,8 @@ class DetailPresenter : DetailContract.Presenter {
         this.view = null
     }
 
-    override fun getById(id: String) {
-        model?.searchMovieById(id)
-    }
-
     override fun manipulateResponse(job: Job?) {
-        Log.i("LOG", "movie ${job?.position}")
+        Log.i("LOG", "job ${job?.position}")
 
         view?.show(job)
     }

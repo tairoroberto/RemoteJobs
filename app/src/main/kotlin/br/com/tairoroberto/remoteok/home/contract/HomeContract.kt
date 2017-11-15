@@ -18,15 +18,15 @@ class HomeContract {
     }
 
     interface View : BaseMVP.View {
-        fun showMoviesList(movies: List<Job>?)
+        fun showJobsList(jobs: List<Job>?)
         fun showProgress(b: Boolean)
         fun showSnackBarError(str: String)
     }
 
     interface Presenter : BaseMVP.Presenter<View> {
-        fun loadMovies()
+        fun loadJobs()
         fun manipulateResponse(jobsResponse: JobsResponse)
-        fun manipulateResponseDB(movies: List<Job>?)
+        fun manipulateResponseDB(jobs: List<Job>?)
         fun showError(str: String)
         fun search(query: String)
         fun loadFromBD()

@@ -19,4 +19,11 @@
     <string name="production_countries">Production Countries: \n%s</string>
     <string name="spoken_languages">Spoken Languages: \n%s</string>
     <string name="share">share</string>
+    <string name="donate">Donate</string>
+
+    <string-array name="suggestions">
+        <item>android</item>
+        <item>dev</item>
+        <item>devops</item>
+    </string-array>
 </resources>

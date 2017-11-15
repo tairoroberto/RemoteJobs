@@ -2,6 +2,7 @@ package br.com.tairoroberto.remoteok.home.view
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,11 +25,11 @@ class HomeRecyclerAdapter(val context: Context?,
     private var lastPosition = -1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val movie = list?.get(position)
-        if (movie != null) {
-            holder.bind(context, movie, position)
+        val item = list?.get(position)
+        if (item != null) {
+            holder.bind(item)
             holder.itemView.setOnClickListener({
-                onClick.onItemClick(movie, holder.imageView)
+                onClick.onItemClick(item, holder.imageView)
             })
         }
         setAnimation(holder.itemView, position)
@@ -57,17 +58,17 @@ class HomeRecyclerAdapter(val context: Context?,
         val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
 
-        fun bind(context: Context?, job: Job, position: Int) {
-            imageView.loadImage(context?.getString(R.string.images_url, job.logo), progressImage)
-            textViewTitle.text = job.position
-            textViewOverview.text = job.description
+        fun bind(job: Job) {
+            imageView.loadImage(job.logo, progressImage)
+            textViewTitle.text = Html.fromHtml(job.position)
+            textViewOverview.text = Html.fromHtml(job.description)
         }
     }
 
-    fun update(movies: ArrayList<Job>) {
+    fun update(items: ArrayList<Job>) {
         this.list?.clear()
 
-        this.list?.addAll(movies)
+        this.list?.addAll(items)
         notifyDataSetChanged()
     }
 }

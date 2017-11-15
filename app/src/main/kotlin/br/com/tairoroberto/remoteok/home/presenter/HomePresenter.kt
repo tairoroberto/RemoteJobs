@@ -7,8 +7,8 @@ import android.content.Context
 import br.com.tairoroberto.remoteok.home.model.domain.Job
 import br.com.tairoroberto.remoteok.home.contract.HomeContract
 import br.com.tairoroberto.remoteok.home.model.domain.JobsResponse
-import com.tairoroberto.nextel.home.model.AppDatabase
-import br.com.tairoroberto.remoteok.home.model.domain.HomeModel
+import br.com.tairoroberto.remoteok.home.model.AppDatabase
+import br.com.tairoroberto.remoteok.home.model.HomeModel
 import org.jetbrains.anko.doAsync
 
 /**
@@ -29,7 +29,7 @@ class HomePresenter(application: Application) : AndroidViewModel(application), H
         this.view = null
     }
 
-    override fun loadMovies() {
+    override fun loadJobs() {
         model?.listAll()
     }
 
@@ -38,11 +38,11 @@ class HomePresenter(application: Application) : AndroidViewModel(application), H
             AppDatabase.getInstance(view?.getContext()).jobsDAO().insertAll(jobsResponse.list)
         }
 
-        view?.showMoviesList(jobsResponse.list)
+        view?.showJobsList(jobsResponse.list)
     }
 
-    override fun manipulateResponseDB(movies: List<Job>?) {
-        view?.showMoviesList(movies)
+    override fun manipulateResponseDB(jobs: List<Job>?) {
+        view?.showJobsList(jobs)
     }
 
     override fun showError(str: String) {

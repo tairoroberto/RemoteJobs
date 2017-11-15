@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_300dp"
                 android:scaleType="centerCrop"
-                android:transitionName="movie"/>
+                android:transitionName="image"/>
 
             <ImageView
                 android:layout_width="match_parent"

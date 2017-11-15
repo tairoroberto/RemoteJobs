@@ -153,6 +153,10 @@ dependencies {
     implementation "android.arch.lifecycle:common-java8:${rootProject.arch}"
     kapt "android.arch.lifecycle:compiler:${rootProject.arch}"
 
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true;
+    }
+
     // Test libs
     testImplementation "junit:junit:${rootProject.junit}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.runner}"

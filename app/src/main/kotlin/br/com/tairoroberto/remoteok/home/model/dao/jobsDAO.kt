@@ -1,4 +1,4 @@
-package com.tairoroberto.nextel.home.model.dao
+package br.com.tairoroberto.remoteok.home.model.dao
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
@@ -17,7 +17,7 @@ interface jobsDAO {
     fun getAll(): LiveData<List<Job>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(movies: List<Job>?)
+    fun insertAll(jobs: List<Job>?)
 
     @Query("select * from jobs where id = :id")
     fun getByID(id: Int): Flowable<Job>

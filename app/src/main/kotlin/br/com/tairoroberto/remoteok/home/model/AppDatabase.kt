@@ -1,4 +1,4 @@
-package com.tairoroberto.nextel.home.model
+package br.com.tairoroberto.remoteok.home.model
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
@@ -6,11 +6,11 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import br.com.tairoroberto.remoteok.home.model.domain.Job
-import com.tairoroberto.nextel.base.converter.DateConverter
-import com.tairoroberto.nextel.home.model.dao.jobsDAO
+import br.com.tairoroberto.remoteok.base.converter.Converters
+import br.com.tairoroberto.remoteok.home.model.dao.jobsDAO
 
 @Database(entities = arrayOf(Job::class), version = 1)
-@TypeConverters(DateConverter::class)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun jobsDAO(): jobsDAO

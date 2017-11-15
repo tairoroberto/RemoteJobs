@@ -1,6 +1,7 @@
 package com.tairoroberto.nextel.base.api
 
 
+import br.com.tairoroberto.remoteok.home.model.domain.Job
 import br.com.tairoroberto.remoteok.home.model.domain.JobsResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -12,8 +13,8 @@ import retrofit2.http.Path
 interface Api {
 
     @GET("remote-jobs.json")
-    fun getAll(): Observable<JobsResponse>
+    fun getAll(): Observable<List<Job>>
 
     @GET("{path}")
-    fun search(@Path("path") path: String): Observable<JobsResponse>
+    fun search(@Path("path") path: String): Observable<List<Job>>
 }
