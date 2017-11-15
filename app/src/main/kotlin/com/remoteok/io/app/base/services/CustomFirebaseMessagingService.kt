@@ -43,7 +43,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
         val builder = NotificationCompat.Builder(this)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setSmallIcon(R.drawable.ic_send_black_24dp)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)

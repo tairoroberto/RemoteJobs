@@ -45,16 +45,13 @@ android {
 
         release {
             resValue "bool", "is_release", "true"
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.release
             debuggable false
             testCoverageEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    dataBinding {
-        enabled = true
     }
 
     compileOptions {
@@ -192,7 +189,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-    implementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espresso}"
+    testImplementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espresso}"
 
     androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:2.1.3"
 
