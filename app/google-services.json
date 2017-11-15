@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "344648707686",
+    "firebase_url": "https://remoteok-c98af.firebaseio.com",
+    "project_id": "remoteok-c98af",
+    "storage_bucket": "remoteok-c98af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344648707686:android:1cb8e24d92e4f841",
+        "android_client_info": {
+          "package_name": "br.com.tairoroberto.remoteok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344648707686-f6uh2bpbbj3k6b1nt29v5f61k4nlotsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-0t6QKPWARiyxXDVd0J4vJR0OA3M16Cc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
