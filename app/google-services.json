@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "344648707686",
-    "firebase_url": "https://remoteok-c98af.firebaseio.com",
-    "project_id": "remoteok-c98af",
-    "storage_bucket": "remoteok-c98af.appspot.com"
+    "project_number": "907571924863",
+    "firebase_url": "https://remoteok-dfc72.firebaseio.com",
+    "project_id": "remoteok-dfc72",
+    "storage_bucket": "remoteok-dfc72.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:344648707686:android:1cb8e24d92e4f841",
+        "mobilesdk_app_id": "1:907571924863:android:9f94b2c02e8ebb9a",
         "android_client_info": {
-          "package_name": "br.com.tairoroberto.remoteok"
+          "package_name": "com.remoteok.io.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "344648707686-f6uh2bpbbj3k6b1nt29v5f61k4nlotsb.apps.googleusercontent.com",
+          "client_id": "907571924863-lpl928fs717e5f09flp984ri8h3n9gvi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB-0t6QKPWARiyxXDVd0J4vJR0OA3M16Cc"
+          "current_key": "AIzaSyCUxrFoaIGiAeWMpiTV1VqkERRPW4B4Wsw"
         }
       ],
       "services": {
