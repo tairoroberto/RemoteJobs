@@ -3,6 +3,7 @@ package com.remoteok.io.app.splash
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import com.remoteok.io.app.home.view.MainActivity
 import com.crashlytics.android.Crashlytics
@@ -11,6 +12,8 @@ import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.startActivity
 import java.util.*
+import android.util.DisplayMetrics
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -24,6 +27,17 @@ class SplashActivity : AppCompatActivity() {
             videoView.setVideoURI(path)
 
             videoView.setOnCompletionListener { jump() }
+
+            val metrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(metrics)
+            val params = ConstraintLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels)
+            params.bottomToBottom = content.id
+            params.endToEnd = content.id
+            params.startToStart = content.id
+            params.topToBottom = imageView.id
+            params.verticalBias = 1.0f
+            videoView.layoutParams = params
+
             videoView.start()
         } catch (e: Exception) {
             jump()
