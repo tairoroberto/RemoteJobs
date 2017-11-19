@@ -21,7 +21,7 @@ class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Mo
 
                     val jobs = JobsResponse()
                     jobs.list = it
-                    jobs.list = jobs.list?.subList(0, 50)?.sortedBy { it.date }
+                    jobs.list = jobs.list?.subList(0, 50)?.sortedBy { it.date }?.reversed()
                     Log.i("LOG", "List Size: ${jobs.list?.size}")
 
                     presenter.manipulateResponse(jobs)
@@ -38,6 +38,7 @@ class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Mo
                 ?.subscribe({
                     val jobsResponse = JobsResponse()
                     jobsResponse.list = it
+                    jobsResponse.list = jobsResponse.list?.subList(0, 50)?.sortedBy { it.date }?.reversed()
                     presenter.manipulateResponse(jobsResponse)
                 }, { error ->
                     Log.i("LOG", "Error: ${error.message}")

@@ -10,7 +10,6 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
 import android.support.v4.view.MenuItemCompat
-import android.support.v4.widget.SimpleCursorAdapter
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -20,9 +19,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.remoteok.io.app.R
 import com.remoteok.io.app.base.extension.isConected
 import com.remoteok.io.app.base.extension.showProgress
@@ -35,31 +32,38 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.yesButton
 import java.util.*
 
+
 /**
  * A simple [Fragment] subclass.
  */
 class HomeFragment : Fragment(), HomeContract.View, OnClick {
 
-    private var presenter: HomeContract.Presenter? = null
+    private val presenter: HomeContract.Presenter by lazy {
+        ViewModelProviders.of(this).get(HomePresenter::class.java)
+    }
+
     private var list: ArrayList<Job>? = ArrayList()
     private var adapter: HomeRecyclerAdapter? = null
+    private var adapterSearch: ArrayAdapter<String>? = null
     private var recyclerView: RecyclerView? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var progress: ProgressBar? = null
     private var withoutData: TextView? = null
-    private var adapterSearchView: SimpleCursorAdapter? = null
+    private var listSearch: ListView? = null
     private var suggestions: Array<String>? = null
+    private val filteredValues = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = ViewModelProviders.of(this).get(HomePresenter::class.java)
-        presenter?.attachView(this)
+        presenter.attachView(this)
         suggestions = resources.getStringArray(R.array.suggestions)
+        adapterSearch = ArrayAdapter(context, R.layout.item_search, resources.getStringArray(R.array.suggestions))
+
         setHasOptionsMenu(true)
     }
 
     override fun onDestroy() {
-        presenter?.detachView()
+        presenter.detachView()
         super.onDestroy()
     }
 
@@ -73,12 +77,19 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
         swipeRefreshLayout = view?.findViewById(R.id.swipeRefreshLayout)
         progress = view?.findViewById(R.id.progress)
         withoutData = view?.findViewById(R.id.withoutData)
+        listSearch = view?.findViewById(R.id.listSearch)
 
         recyclerView?.layoutManager = layoutManager
         recyclerView?.setHasFixedSize(true)
-        adapter = HomeRecyclerAdapter(activity, list, this)
+        adapter = HomeRecyclerAdapter(activity, list, this::onItemClick)
         recyclerView?.adapter = adapter
         swipeRefreshLayout?.setOnRefreshListener({ loadJobs() })
+        listSearch?.setOnItemClickListener { _, _, position, _ ->
+            showProgress(true)
+            presenter.search("remote-${filteredValues[position]}-jobs.json")
+            listSearch?.visibility = GONE
+            hideSoftKeyboard()
+        }
 
         showProgress(true)
         loadJobs()
@@ -94,12 +105,10 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
         }
     }
 
-    private fun loadJobs() {
-        if (activity?.isConected() == true) {
-            presenter?.loadJobs()
-        } else {
-            presenter?.loadFromBD()
-        }
+    private fun loadJobs() = if (activity?.isConected() == true) {
+        presenter.loadJobs()
+    } else {
+        presenter.loadFromBD()
     }
 
     override fun showProgress(b: Boolean) {
@@ -148,12 +157,33 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                presenter?.search("remote-$query-jobs.json")
+                presenter.search("remote-$query-jobs.json")
                 hideSoftKeyboard()
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+
+                if (newText.isBlank() || newText.length < 3) {
+                    listSearch?.visibility = GONE
+                    return false
+                }
+
+                filteredValues.clear()
+                resources.getStringArray(R.array.suggestions).forEach {
+                    if (it.toLowerCase().startsWith(newText.toLowerCase())) {
+                        filteredValues.add(it)
+                    }
+                }
+
+                if (filteredValues.size == 0){
+                    listSearch?.visibility = GONE
+                }
+
+                adapterSearch = ArrayAdapter(context, R.layout.item_search, filteredValues)
+                listSearch?.visibility = VISIBLE
+                listSearch?.adapter = adapterSearch
+
                 return true
             }
         })
@@ -204,7 +234,5 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
         }
     }
 
-    override fun getContext(): Context {
-        return activity as Context
-    }
+    override fun getContext(): Context = activity as Context
 }

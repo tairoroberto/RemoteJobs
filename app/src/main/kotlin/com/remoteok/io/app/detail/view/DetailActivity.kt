@@ -36,7 +36,9 @@ import java.util.*
 class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     private var shareActionProvider: ShareActionProvider? = null
-    private var presenter: DetailContract.Presenter? = null
+    private val presenter: DetailContract.Presenter? by lazy {
+        DetailPresenter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -45,7 +47,6 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
 
-        presenter = DetailPresenter()
         presenter?.attachView(this)
 
         imageView.isDrawingCacheEnabled = true

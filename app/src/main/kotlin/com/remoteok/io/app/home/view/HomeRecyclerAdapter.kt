@@ -20,7 +20,7 @@ import com.remoteok.io.app.base.extension.loadImage
  */
 class HomeRecyclerAdapter(val context: Context?,
                           private var list: ArrayList<Job>?,
-                          private val onClick: OnClick) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
+                          val onClick: (job:Job, imageView: ImageView) -> Unit) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
@@ -29,7 +29,7 @@ class HomeRecyclerAdapter(val context: Context?,
         if (item != null) {
             holder.bind(item)
             holder.itemView.setOnClickListener({
-                onClick.onItemClick(item, holder.imageView)
+                onClick(item, holder.imageView)
             })
         }
         setAnimation(holder.itemView, position)
