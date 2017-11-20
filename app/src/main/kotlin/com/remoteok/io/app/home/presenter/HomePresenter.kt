@@ -17,12 +17,10 @@ import org.jetbrains.anko.doAsync
 class HomePresenter(application: Application) : AndroidViewModel(application), HomeContract.Presenter {
 
     private var view: HomeContract.View? = null
-    private var model: HomeContract.Model? = null
+    private var model: HomeContract.Model = HomeModel(this)
 
     override fun attachView(view: HomeContract.View) {
         this.view = view
-        this.model = HomeModel(this)
-        model = HomeModel(this)
     }
 
     override fun detachView() {
@@ -30,7 +28,7 @@ class HomePresenter(application: Application) : AndroidViewModel(application), H
     }
 
     override fun loadJobs() {
-        model?.listAll()
+        model.listAll()
     }
 
     override fun manipulateResponse(jobsResponse: JobsResponse) {
@@ -51,11 +49,11 @@ class HomePresenter(application: Application) : AndroidViewModel(application), H
     }
 
     override fun search(query: String) {
-        model?.search(query.toLowerCase())
+        model.search(query.toLowerCase())
     }
 
     override fun loadFromBD() {
-        model?.listFromBD()
+        model.listFromBD()
     }
 
     override fun getContext(): Context? = view?.getContext()

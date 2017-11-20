@@ -12,11 +12,10 @@ import com.remoteok.io.app.home.model.domain.Job
 class DetailPresenter : DetailContract.Presenter {
 
     private var view: DetailContract.View? = null
-    private var model: DetailContract.Model? = null
+    private var model: DetailContract.Model = DetailModel(this)
 
     override fun attachView(view: DetailContract.View) {
         this.view = view
-        this.model = DetailModel(this)
     }
 
     override fun detachView() {
