@@ -33,7 +33,5 @@ class DetailPresenter : DetailContract.Presenter {
         view?.showSnackBarError(str)
     }
 
-    override fun getContext(): Context? {
-        return view?.getContext()
-    }
+    override fun getContext(): Context? = view?.getContext()
 }

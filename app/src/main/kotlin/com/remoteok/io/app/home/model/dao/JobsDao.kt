@@ -12,7 +12,7 @@ import io.reactivex.Flowable
  * Created by tairo on 12/12/17 3:03 PM.
  */
 @Dao
-interface jobsDAO {
+interface JobsDao {
     @Query("SELECT * FROM jobs")
     fun getAll(): LiveData<List<Job>>
 

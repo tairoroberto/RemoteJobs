@@ -14,17 +14,11 @@ data class JobsResponse(var list: List<Job>? = ArrayList()) : Parcelable {
         parcel.writeTypedList(list)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<JobsResponse> {
-        override fun createFromParcel(parcel: Parcel): JobsResponse {
-            return JobsResponse(parcel)
-        }
+        override fun createFromParcel(parcel: Parcel): JobsResponse = JobsResponse(parcel)
 
-        override fun newArray(size: Int): Array<JobsResponse?> {
-            return arrayOfNulls(size)
-        }
+        override fun newArray(size: Int): Array<JobsResponse?> = arrayOfNulls(size)
     }
 }

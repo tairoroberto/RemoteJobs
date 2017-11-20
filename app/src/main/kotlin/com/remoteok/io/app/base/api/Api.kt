@@ -11,7 +11,7 @@ import retrofit2.http.Path
  */
 interface Api {
 
-    @GET("remote-jobs.json")
+    @GET("remote-dev+engineer+senior+digital-nomad-jobs.json")
     fun getAll(): Observable<List<Job>>
 
     @GET("{path}")

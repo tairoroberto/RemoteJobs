@@ -145,13 +145,9 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         }
     }
 
-    override fun getContext(): Context {
-        return this
-    }
+    override fun getContext(): Context = this
 
-    override fun getActivity(): Activity? {
-        return this
-    }
+    override fun getActivity(): Activity? = this
 
     override fun onDestroy() {
         presenter?.detachView()

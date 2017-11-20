@@ -1,6 +1,7 @@
 package com.remoteok.io.app.home.view
 
 import android.content.Context
+import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.LayoutInflater
@@ -11,8 +12,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.remoteok.io.app.R
-import com.remoteok.io.app.home.model.domain.Job
 import com.remoteok.io.app.base.extension.loadImage
+import com.remoteok.io.app.home.model.domain.Job
 
 
 /**
@@ -20,7 +21,7 @@ import com.remoteok.io.app.base.extension.loadImage
  */
 class HomeRecyclerAdapter(val context: Context?,
                           private var list: ArrayList<Job>?,
-                          val onClick: (job:Job, imageView: ImageView) -> Unit) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
+                          private val onClick: (job: Job, imageView: ImageView) -> Unit) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
@@ -48,20 +49,28 @@ class HomeRecyclerAdapter(val context: Context?,
         }
     }
 
-    override fun getItemCount(): Int {
-        return list?.size as Int
-    }
+    override fun getItemCount(): Int = list?.size as Int
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
-        val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
-        val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
+        private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
+        private val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
 
         fun bind(job: Job) {
             imageView.loadImage(job.logo, progressImage)
-            textViewTitle.text = Html.fromHtml(job.position)
-            textViewOverview.text = Html.fromHtml(job.description)
+
+            textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(job.position, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                Html.fromHtml(job.position)
+            }
+
+            textViewOverview.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(job.description, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                Html.fromHtml(job.description)
+            }
         }
     }
 

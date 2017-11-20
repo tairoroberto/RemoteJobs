@@ -113,6 +113,7 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
 
     override fun showProgress(b: Boolean) {
         activity?.showProgress(recyclerView, progress, b)
+        swipeRefreshLayout?.isRefreshing = false
     }
 
     override fun showSnackBarError(str: String) {

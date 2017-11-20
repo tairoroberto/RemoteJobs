@@ -75,17 +75,11 @@ data class Job(
                 parcel.writeStringList(tags)
         }
 
-        override fun describeContents(): Int {
-                return 0
-        }
+        override fun describeContents(): Int = 0
 
         companion object CREATOR : Parcelable.Creator<Job> {
-                override fun createFromParcel(parcel: Parcel): Job {
-                        return Job(parcel)
-                }
+                override fun createFromParcel(parcel: Parcel): Job = Job(parcel)
 
-                override fun newArray(size: Int): Array<Job?> {
-                        return arrayOfNulls(size)
-                }
+                override fun newArray(size: Int): Array<Job?> = arrayOfNulls(size)
         }
 }

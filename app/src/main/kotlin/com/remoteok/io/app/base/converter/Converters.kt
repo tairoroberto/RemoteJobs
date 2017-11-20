@@ -8,14 +8,10 @@ import com.google.gson.reflect.TypeToken
 
 class Converters {
     @TypeConverter
-    fun toDate(timestamp: Long?): Date? {
-        return if (timestamp == null) null else Date(timestamp)
-    }
+    fun toDate(timestamp: Long?): Date? = if (timestamp == null) null else Date(timestamp)
 
     @TypeConverter
-    fun toTimestamp(date: Date?): Long? {
-        return date?.time
-    }
+    fun toTimestamp(date: Date?): Long? = date?.time
 
     @TypeConverter
     fun fromString(value: String): List<String> {

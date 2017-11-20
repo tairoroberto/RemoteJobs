@@ -51,18 +51,14 @@ class HomePresenter(application: Application) : AndroidViewModel(application), H
     }
 
     override fun search(query: String) {
-        model?.search(query)
+        model?.search(query.toLowerCase())
     }
 
     override fun loadFromBD() {
         model?.listFromBD()
     }
 
-    override fun getContext(): Context? {
-        return view?.getContext()
-    }
+    override fun getContext(): Context? = view?.getContext()
 
-    override fun getActivity(): Activity? {
-        return view?.getActivity()
-    }
+    override fun getActivity(): Activity? = view?.getActivity()
 }

@@ -9,9 +9,7 @@ import com.remoteok.io.app.home.model.domain.Job
  */
 class DetailContract {
 
-    interface Model {
-
-    }
+    interface Model
 
     interface View : BaseMVP.View {
         fun show(job: Job?)
