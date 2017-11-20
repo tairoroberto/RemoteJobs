@@ -1,7 +1,7 @@
 package com.remoteok.io.app.home.model
 
 import android.util.Log
-import com.remoteok.io.app.base.api.ApiUtils
+import com.remoteok.io.app.base.api.Api
 import com.remoteok.io.app.home.contract.HomeContract
 import com.remoteok.io.app.home.model.domain.JobsResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,8 +13,7 @@ import org.jetbrains.anko.doAsync
  */
 class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Model {
     override fun listAll() {
-        ApiUtils.getApiService(presenter.getContext())?.getAll()
-                ?.subscribeOn(Schedulers.io())
+        Api(presenter.getContext()).getApiService().getAll().subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
 
@@ -30,8 +29,7 @@ class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Mo
     }
 
     override fun search(query: String) {
-        ApiUtils.getApiService(presenter.getContext())?.search(query)
-                ?.subscribeOn(Schedulers.io())
+        Api(presenter.getContext()).getApiService().search(query).subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
                     val jobsResponse = JobsResponse()
