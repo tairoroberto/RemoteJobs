@@ -18,7 +18,11 @@ class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Mo
                 ?.subscribe({
 
                     val jobsResponse = JobsResponse()
-                    jobsResponse.list = it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id }
+
+                    if (it.isNotEmpty()) {
+                        jobsResponse.list = it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id }
+                    }
+
                     Log.i("LOG", "List Size: ${jobsResponse.list?.size}")
 
                     presenter.manipulateResponse(jobsResponse)
@@ -33,7 +37,11 @@ class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Mo
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
                     val jobsResponse = JobsResponse()
-                    jobsResponse.list = it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id }
+
+                    if (it.isNotEmpty()) {
+                        jobsResponse.list = it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id }
+                    }
+
                     Log.i("LOG", "List Size: ${jobsResponse.list?.size}")
 
                     presenter.manipulateResponse(jobsResponse)
@@ -48,7 +56,9 @@ class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Mo
         presenter.getActivity().doAsync {
             AppDatabase.getInstance(presenter.getContext()).jobsDAO().getAll().observeForever {
                 presenter.getActivity()?.runOnUiThread {
-                    presenter.manipulateResponseDB(it?.subList(0, if (it.size > 30) 30 else it.lastIndex)?.sortedByDescending { it.id })
+                    if (it?.isNotEmpty() == true) {
+                        presenter.manipulateResponseDB(it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id })
+                    }
                 }
             }
         }

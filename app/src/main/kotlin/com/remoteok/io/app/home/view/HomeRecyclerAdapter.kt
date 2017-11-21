@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -33,7 +34,7 @@ class HomeRecyclerAdapter(val context: Context?,
                 onClick(item, holder.imageView)
             })
         }
-        setAnimation(holder.itemView, position)
+        //setAnimation(holder.itemView, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,12 +54,17 @@ class HomeRecyclerAdapter(val context: Context?,
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
+        private val imageViewGradient: ImageView = view.findViewById(R.id.imageViewGradient)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
 
         fun bind(job: Job) {
             imageView.loadImage(job.logo, progressImage)
+
+            if (job.logo.isEmpty()) {
+                imageViewGradient.visibility = GONE
+            }
 
             textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(job.position, Html.FROM_HTML_MODE_COMPACT)

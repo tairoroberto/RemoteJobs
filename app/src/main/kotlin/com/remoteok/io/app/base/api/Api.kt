@@ -27,7 +27,7 @@ class Api(context: Context?) {
 
         val client = OkHttpClient.Builder()
                 .addNetworkInterceptor(StethoInterceptor())
-                .addNetworkInterceptor(getRewriteCacheControlInterceptor((context as Activity).isConected()))
+                //.addNetworkInterceptor(getRewriteCacheControlInterceptor((context as Activity).isConected()))
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
