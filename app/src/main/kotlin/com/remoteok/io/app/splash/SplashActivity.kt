@@ -19,7 +19,14 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Fabric.with(this, Crashlytics())
+
+        val fabric = Fabric.Builder(this)
+                .kits(Crashlytics())
+                .debuggable(true)
+                .build()
+
+        Fabric.with(fabric)
+
         setContentView(R.layout.activity_splash)
 
         try {
