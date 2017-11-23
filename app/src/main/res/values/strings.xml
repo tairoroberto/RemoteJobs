@@ -1,25 +1,7 @@
 <resources>
     <string name="app_name">Remote OK</string>
     <string name="action_settings">Settings</string>
-
-    <string name="api_v3_auth">
-        6413f09c0280e9b760d6d91b2933f43f
-    </string>
-    <string name="api_v4_auth">
-        eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NDEzZjA5YzAyODBlOWI3NjBkNmQ5MWIyOTMzZjQzZiIsInN1YiI6IjVhMDRiMTdhYzNhMzY4MzNlOTAwMzZjYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vagQND2AVGNKICL906UcLdLOS9QvdkS92dZViQdOvZA
-    </string>
-    <string name="api_sample">
-        https://api.themoviedb.org/3/movie/550?api_key=6413f09c0280e9b760d6d91b2933f43f
-    </string>
-    <string name="images_url">https://image.tmdb.org/t/p/w500/%s</string>
-    <string name="genres">Genres: \n%s</string>
-    <string name="home_page">Home page: \n%s</string>
-    <string name="original_languages">Original Languages: %s</string>
-    <string name="companies">Companies: \n%s</string>
-    <string name="production_countries">Production Countries: \n%s</string>
-    <string name="spoken_languages">Spoken Languages: \n%s</string>
     <string name="share">share</string>
-
     <string name="donate">donate</string>
 
     <string-array name="suggestions">
