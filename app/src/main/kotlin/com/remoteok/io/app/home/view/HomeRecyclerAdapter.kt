@@ -54,17 +54,12 @@ class HomeRecyclerAdapter(val context: Context?,
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
-        private val imageViewGradient: ImageView = view.findViewById(R.id.imageViewGradient)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
 
         fun bind(job: Job) {
             imageView.loadImage(job.logo, progressImage)
-
-            if (job.logo.isEmpty()) {
-                imageViewGradient.visibility = GONE
-            }
 
             textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(job.position, Html.FROM_HTML_MODE_COMPACT)
