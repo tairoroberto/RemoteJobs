@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -20,7 +20,7 @@ import com.remoteok.io.app.home.model.domain.Job
 /**
  * Created by tairo on 12/12/17.
  */
-class HomeRecyclerAdapter(val context: Context?,
+class HomeRecyclerAdapter(private val context: Context?,
                           private var list: ArrayList<Job>?,
                           private val onClick: (job: Job, imageView: ImageView) -> Unit) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
@@ -57,6 +57,9 @@ class HomeRecyclerAdapter(val context: Context?,
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
+        private val tag1: Button = view.findViewById(R.id.tag1)
+        private val tag2: Button = view.findViewById(R.id.tag2)
+        private val tag3: Button = view.findViewById(R.id.tag3)
 
         fun bind(job: Job) {
             imageView.loadImage(job.logo, progressImage)
@@ -71,6 +74,19 @@ class HomeRecyclerAdapter(val context: Context?,
                 Html.fromHtml(job.description, Html.FROM_HTML_MODE_COMPACT)
             } else {
                 Html.fromHtml(job.description)
+            }
+
+            job.tags?.forEachIndexed { index, s ->
+                if (index == 0) {
+                    tag1.text = s
+                }
+
+                if (index == 1) {
+                    tag2.text = s
+                }
+                if (index == 2) {
+                    tag3.text = s
+                }
             }
         }
     }

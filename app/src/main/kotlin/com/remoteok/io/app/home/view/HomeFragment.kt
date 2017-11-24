@@ -36,7 +36,7 @@ import java.util.*
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment(), HomeContract.View, OnClick {
+class HomeFragment : Fragment(), HomeContract.View {
 
     private val presenter: HomeContract.Presenter by lazy {
         ViewModelProviders.of(this).get(HomePresenter::class.java)
@@ -135,7 +135,7 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
         showProgress(false)
     }
 
-    override fun onItemClick(job: Job, imageView: ImageView) {
+    private fun onItemClick(job: Job, imageView: ImageView) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(context as Activity, Pair.create(imageView, "image"))
@@ -177,7 +177,7 @@ class HomeFragment : Fragment(), HomeContract.View, OnClick {
                     }
                 }
 
-                if (filteredValues.size == 0){
+                if (filteredValues.size == 0) {
                     listSearch?.visibility = GONE
                 }
 

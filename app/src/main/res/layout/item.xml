@@ -1,89 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="@dimen/dimen_8dp"
-    android:layout_marginEnd="@dimen/dimen_16dp"
-    android:layout_marginStart="@dimen/dimen_16dp"
-    android:elevation="@dimen/dimen_4dp"
-    android:orientation="vertical"
-    android:background="@null">
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/dimen_8dp"
+                                    android:layout_marginEnd="@dimen/dimen_16dp"
+                                    android:layout_marginStart="@dimen/dimen_16dp"
+                                    android:background="@null"
+                                    android:elevation="@dimen/dimen_4dp"
+                                    android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dimen_220dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:background="@color/green_e6f9fa"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
-            android:id="@+id/imageViewGradient"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_130dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/gradient_black" />
+            app:srcCompat="@drawable/logo_400x200"/>
 
 
         <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_8dp"
-        android:layout_marginEnd="@dimen/dimen_8dp"
-        android:layout_marginStart="@dimen/dimen_8dp"
-        tools:text="title"
-        android:fontFamily="@font/sf_ui_text_light"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewOverview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/textViewTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_ui_text_heavy"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Senior Full Stack Web Developer"/>
 
-    <TextView
-        android:id="@+id/textViewOverview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="@dimen/dimen_8dp"
-        android:maxLines="3"
-        tools:text="subtitle"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/dimen_14sp"
-        android:fontFamily="@font/sf_ui_text_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/textViewOverview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_ui_text_light"
+            android:maxLines="2"
+            android:textColor="#000000"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonsContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Tenth Avenue Commerce"/>
 
-    <ProgressBar
-        android:id="@+id/progressImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        <ProgressBar
+            android:id="@+id/progressImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"/>
+
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/buttonsContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:flexDirection="row"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <Button
+                android:id="@+id/tag1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/border_button"
+                tools:text="Dev"
+                app:layout_flexGrow="1"/>
+
+            <Button
+                android:id="@+id/tag2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/dimen_4dp"
+                android:background="@drawable/border_button"
+                tools:text="marketing"
+                app:layout_flexGrow="1"/>
+
+            <Button
+                android:id="@+id/tag3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/dimen_4dp"
+                android:background="@drawable/border_button"
+                tools:text="full "
+                app:layout_flexGrow="1"/>
+        </com.google.android.flexbox.FlexboxLayout>
 
     </android.support.constraint.ConstraintLayout>
 
