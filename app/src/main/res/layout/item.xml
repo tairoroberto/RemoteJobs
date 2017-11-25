@@ -4,7 +4,7 @@
                                     xmlns:tools="http://schemas.android.com/tools"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/dimen_8dp"
+                                    android:layout_marginTop="@dimen/dimen_8dp"
                                     android:layout_marginEnd="@dimen/dimen_16dp"
                                     android:layout_marginStart="@dimen/dimen_16dp"
                                     android:background="@null"
@@ -20,11 +20,14 @@
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginBottom="0dp"
             android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="8dp"
             android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@+id/buttonsContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_400x200"/>
+            app:srcCompat="@drawable/logo_253x199" />
 
 
         <TextView
@@ -38,6 +41,7 @@
             android:fontFamily="@font/sf_ui_text_heavy"
             android:textColor="#000000"
             android:textSize="16sp"
+            android:maxLines="2"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -49,30 +53,28 @@
             android:id="@+id/textViewOverview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
+            android:maxLines="3"
             android:fontFamily="@font/sf_ui_text_light"
-            android:maxLines="2"
+            android:textAlignment="viewStart"
             android:textColor="#000000"
             android:textSize="@dimen/dimen_14sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonsContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="Tenth Avenue Commerce"/>
+            tools:text="Tenth Avenue CommerceTenth Avenue CommerceTenth Avenue Commerce" />
 
         <ProgressBar
             android:id="@+id/progressImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
@@ -84,43 +86,47 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             app:flexDirection="row"
             app:flexWrap="wrap"
             app:justifyContent="flex_start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            app:layout_constraintTop_toBottomOf="@+id/textViewOverview">
 
             <Button
                 android:id="@+id/tag1"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:background="@drawable/border_button"
-                tools:text="Dev"
-                app:layout_flexGrow="1"/>
+                android:layout_marginEnd="@dimen/dimen_4dp"
+                app:layout_flexGrow="1"
+                tools:text="Dev" />
 
             <Button
                 android:id="@+id/tag2"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_marginStart="@dimen/dimen_4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/dimen_4dp"
                 android:background="@drawable/border_button"
-                tools:text="marketing"
-                app:layout_flexGrow="1"/>
+                app:layout_flexGrow="1"
+                tools:text="marketing" />
 
             <Button
                 android:id="@+id/tag3"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_marginStart="@dimen/dimen_4dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/border_button"
-                tools:text="full "
-                app:layout_flexGrow="1"/>
+                app:layout_flexGrow="1"
+                tools:text="full " />
         </com.google.android.flexbox.FlexboxLayout>
 
     </android.support.constraint.ConstraintLayout>

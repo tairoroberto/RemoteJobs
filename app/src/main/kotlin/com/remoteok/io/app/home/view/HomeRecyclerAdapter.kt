@@ -62,7 +62,7 @@ class HomeRecyclerAdapter(private val context: Context?,
         private val tag3: Button = view.findViewById(R.id.tag3)
 
         fun bind(job: Job) {
-            imageView.loadImage(job.logo, progressImage)
+            imageView.loadImage(job.logo, progressImage, false)
 
             textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(job.position, Html.FROM_HTML_MODE_COMPACT)

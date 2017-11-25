@@ -82,7 +82,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
 
     override fun show(job: Job?) {
-        imageView.loadImage(job?.logo, progressImage)
+        imageView.loadImage(job?.logo, progressImage, true)
 
         toolbar_layout.title = job?.position
         textViewName.text = job?.position
