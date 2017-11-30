@@ -76,6 +76,7 @@ android {
 
     lintOptions {
         disable "ResourceType"
+        abortOnError false
     }
 }
 
@@ -136,6 +137,7 @@ dependencies {
 
     // Image libs
     implementation "com.squareup.picasso:picasso:$picasso"
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
 
     // Facebook Sthetho for debug conections
     implementation "com.facebook.stetho:stetho:${rootProject.stetho}"

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="design_fab_image_size" tools:override="true">48dp</dimen>
+    <dimen name="design_fab_image_size" tools:override="true">36dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
     <dimen name="dimen_36dp">36dp</dimen>

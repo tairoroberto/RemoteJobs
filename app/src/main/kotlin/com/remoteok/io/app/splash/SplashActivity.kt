@@ -5,14 +5,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
-import com.remoteok.io.app.home.view.MainActivity
+import android.util.DisplayMetrics
 import com.crashlytics.android.Crashlytics
 import com.remoteok.io.app.R
+import com.remoteok.io.app.home.view.MainActivity
 import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.startActivity
 import java.util.*
-import android.util.DisplayMetrics
 
 
 class SplashActivity : AppCompatActivity() {

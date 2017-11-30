@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000000"
-    android:id="@+id/content"
-    tools:context="com.remoteok.io.app.splash.SplashActivity">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/content"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="#000000"
+                                             tools:context="com.remoteok.io.app.splash.SplashActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_400x200" />
+        app:srcCompat="@drawable/logo_400x200"/>
 
     <VideoView
         android:id="@+id/videoView"
@@ -30,6 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"/>
 
 </android.support.constraint.ConstraintLayout>
