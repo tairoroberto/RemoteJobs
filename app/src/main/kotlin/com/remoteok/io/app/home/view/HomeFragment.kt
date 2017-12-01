@@ -10,24 +10,21 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
 import android.support.v4.view.MenuItemCompat
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.transition.ChangeBounds
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
 import com.remoteok.io.app.R
-import com.remoteok.io.app.base.extension.isConected
-import com.remoteok.io.app.base.extension.showProgress
-import com.remoteok.io.app.base.extension.showSnackBarError
+import com.remoteok.io.app.base.extension.*
 import com.remoteok.io.app.detail.view.DetailActivity
-import com.remoteok.io.app.home.contract.HomeContract
 import com.remoteok.io.app.home.model.domain.Job
-import com.remoteok.io.app.home.presenter.HomePresenter
+import com.remoteok.io.app.home.viewModel.HomeViewModel
+import com.remoteok.io.app.home.viewModel.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_list.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.yesButton
 import java.util.*
@@ -36,65 +33,79 @@ import java.util.*
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment(), HomeContract.View {
+class HomeFragment : Fragment() {
 
-    private val presenter: HomeContract.Presenter by lazy {
-        ViewModelProviders.of(this).get(HomePresenter::class.java)
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, ViewModelFactory(context)).get(HomeViewModel::class.java)
     }
 
-    private var list: ArrayList<Job>? = ArrayList()
-    private var adapter: HomeRecyclerAdapter? = null
+    private var list: List<Job>? = ArrayList()
+    lateinit var adapter: HomeRecyclerAdapter
     private var adapterSearch: ArrayAdapter<String>? = null
-    private var recyclerView: RecyclerView? = null
-    private var swipeRefreshLayout: SwipeRefreshLayout? = null
-    private var progress: ProgressBar? = null
-    private var withoutData: TextView? = null
-    private var listSearch: ListView? = null
     private var suggestions: Array<String>? = null
     private val filteredValues = ArrayList<String>()
 
+    override fun getContext(): Context = activity as Context
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.attachView(this)
         suggestions = resources.getStringArray(R.array.suggestions)
         adapterSearch = ArrayAdapter(context, R.layout.item_search, resources.getStringArray(R.array.suggestions))
-
+        adapter = HomeRecyclerAdapter(activity, list, this::onItemClick)
         setHasOptionsMenu(true)
-    }
+        retainInstance = true
 
-    override fun onDestroy() {
-        presenter.detachView()
-        super.onDestroy()
+        observeLoadingStatus()
+        observeErrorStatus()
+        observeResponse()
+        observeResponseFromDataBase()
+        getAllJobs()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         setAnimation()
-        val view: View? = inflater.inflate(R.layout.fragment_list, container, false)
+        return inflater.inflate(R.layout.fragment_list, container, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
-        recyclerView = view?.findViewById(R.id.recyclerView)
-        swipeRefreshLayout = view?.findViewById(R.id.swipeRefreshLayout)
-        progress = view?.findViewById(R.id.progress)
-        withoutData = view?.findViewById(R.id.withoutData)
-        listSearch = view?.findViewById(R.id.listSearch)
 
-        recyclerView?.layoutManager = layoutManager
-        recyclerView?.setHasFixedSize(true)
-        adapter = HomeRecyclerAdapter(activity, list, this::onItemClick)
-        recyclerView?.adapter = adapter
-        swipeRefreshLayout?.setOnRefreshListener({ loadJobs() })
-        listSearch?.setOnItemClickListener { _, _, position, _ ->
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
+        swipeRefreshLayout.setOnRefreshListener({ getAllJobs() })
+
+        listSearch.setOnItemClickListener { _, _, position, _ ->
             showProgress(true)
-            presenter.search("remote-${filteredValues[position]}-jobs.json")
-            listSearch?.visibility = GONE
-            hideSoftKeyboard()
+            viewModel.search("remote-${filteredValues[position]}-jobs.json")
+            listSearch.visibility = GONE
+            activity?.hideSoftKeyboard()
         }
+    }
 
-        showProgress(true)
-        loadJobs()
+    private fun getAllJobs() {
+        if (activity?.isConected() == true) {
+            viewModel.getAllJobs()
+        } else {
+            viewModel.getAllJobsDataBase()
+        }
+    }
 
-        return view
+    private fun observeLoadingStatus() {
+        viewModel.getLoadingStatus().observe(this, android.arch.lifecycle.Observer { isLoading -> showProgress(isLoading) })
+    }
+
+    private fun observeErrorStatus() {
+        viewModel.getErrorStatus().observe(this, android.arch.lifecycle.Observer { msg -> showSnackBarError(msg.toString()) })
+    }
+
+    private fun observeResponse() {
+        viewModel.getResponse().observe(this, android.arch.lifecycle.Observer { response -> showJobsList(response) })
+    }
+
+    private fun observeResponseFromDataBase() {
+        viewModel.getResponseFromDataBase().observe(this, android.arch.lifecycle.Observer { response -> showJobsList(response) })
     }
 
     private fun setAnimation() {
@@ -105,32 +116,26 @@ class HomeFragment : Fragment(), HomeContract.View {
         }
     }
 
-    private fun loadJobs() = if (activity?.isConected() == true) {
-        presenter.loadJobs()
-    } else {
-        presenter.loadFromBD()
-    }
-
-    override fun showProgress(b: Boolean) {
-        activity?.showProgress(recyclerView, progress, b)
+    fun showProgress(b: Boolean?) {
+        activity?.showProgress(recyclerView, progress, b == true)
         swipeRefreshLayout?.isRefreshing = false
     }
 
-    override fun showSnackBarError(str: String) {
+    fun showSnackBarError(str: String) {
         activity?.showSnackBarError(recyclerView, str)
+        swipeRefreshLayout?.isRefreshing = false
     }
 
-    override fun showJobsList(jobs: List<Job>?) {
-        val list: ArrayList<Job> = ArrayList()
+    fun showJobsList(jobs: List<Job>?) {
 
-        jobs?.forEach { list.add(it) }
+        list = jobs
 
         withoutData?.visibility = GONE
-        if (list.isEmpty()) {
+        if (list?.isEmpty() == true) {
             withoutData?.visibility = VISIBLE
         }
 
-        adapter?.update(list)
+        adapter.update(list)
         swipeRefreshLayout?.isRefreshing = false
         showProgress(false)
     }
@@ -158,8 +163,8 @@ class HomeFragment : Fragment(), HomeContract.View {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                presenter.search("remote-$query-jobs.json")
-                hideSoftKeyboard()
+                viewModel.search("remote-$query-jobs.json")
+                activity?.hideSoftKeyboard()
                 return true
             }
 
@@ -192,12 +197,12 @@ class HomeFragment : Fragment(), HomeContract.View {
                 object : MenuItemCompat.OnActionExpandListener {
                     override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                         searchView.requestFocus()
-                        showSoftKeyboard()
+                        activity?.showSoftKeyboard()
                         return true
                     }
 
                     override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                        hideSoftKeyboard()
+                        activity?.hideSoftKeyboard()
                         return true
                     }
                 })
@@ -219,21 +224,4 @@ class HomeFragment : Fragment(), HomeContract.View {
 
         return true
     }
-
-    private fun hideSoftKeyboard() {
-        val view = activity?.currentFocus
-        if (view != null) {
-            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE)
-                    as? InputMethodManager)?.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
-
-    private fun showSoftKeyboard() {
-        val view = activity?.currentFocus
-        if (view != null) {
-            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)
-        }
-    }
-
-    override fun getContext(): Context = activity as Context
 }

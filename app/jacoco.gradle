@@ -28,12 +28,6 @@ project.afterEvaluate {
             '**/BuildConfig*',
             '**/test/**',
             '**/Manifest*',
-            '**/AddNoteView*',
-            '**/EditNoteView*',
-            '**/NoteDetailView*',
-            '**/NotesView*',
-            '**/BaseView*',
-            '**/NotesAdapter*',
             '**/MainActivity*'
     ]
 

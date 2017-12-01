@@ -52,7 +52,17 @@ fun Activity.isConected(): Boolean {
     return netInfo != null && netInfo.isConnectedOrConnecting
 }
 
-fun Activity.hideKeyboard() {
-    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+fun Activity.hideSoftKeyboard() {
+    val view = currentFocus
+    if (view != null) {
+        (getSystemService(Context.INPUT_METHOD_SERVICE)
+                as? InputMethodManager)?.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+}
+
+fun Activity.showSoftKeyboard() {
+    val view = currentFocus
+    if (view != null) {
+        (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)
+    }
 }

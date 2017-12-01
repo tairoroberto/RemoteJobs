@@ -1,66 +1,24 @@
 package com.remoteok.io.app.home.model
 
-import android.util.Log
+import android.arch.lifecycle.LiveData
+import com.remoteok.io.app.CustomApplication.Companion.context
 import com.remoteok.io.app.base.api.Api
-import com.remoteok.io.app.home.contract.HomeContract
-import com.remoteok.io.app.home.model.domain.JobsResponse
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.doAsync
+import com.remoteok.io.app.home.model.domain.Job
+import io.reactivex.Flowable
 
 /**
  * Created by tairo on 12/11/17.
  */
-class HomeModel(private val presenter: HomeContract.Presenter) : HomeContract.Model {
-    override fun listAll() {
-        Api(presenter.getContext()).getApiService().getAll().subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe({
-
-                    val jobsResponse = JobsResponse()
-
-                    if (it.isNotEmpty()) {
-                        jobsResponse.list = it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id }
-                    }
-
-                    Log.i("LOG", "List Size: ${jobsResponse.list?.size}")
-
-                    presenter.manipulateResponse(jobsResponse)
-                }, { error ->
-                    Log.i("LOG", " Error: ${error.message}")
-                    presenter.showError(error.message as String)
-                })
+class HomeModel {
+    fun listAll(): Flowable<List<Job>> {
+        return Api(context).getApiService().getAll()
     }
 
-    override fun search(query: String) {
-        Api(presenter.getContext()).getApiService().search(query).subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe({
-                    val jobsResponse = JobsResponse()
-
-                    if (it.isNotEmpty()) {
-                        jobsResponse.list = it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id }
-                    }
-
-                    Log.i("LOG", "List Size: ${jobsResponse.list?.size}")
-
-                    presenter.manipulateResponse(jobsResponse)
-                }, { error ->
-                    Log.i("LOG", "Error: ${error.message}")
-                    presenter.showError(error.message as String)
-                })
+    fun search(query: String): Flowable<List<Job>> {
+        return Api(context).getApiService().search(query)
     }
 
-    override fun listFromBD() {
-
-        presenter.getActivity().doAsync {
-            AppDatabase.getInstance(presenter.getContext()).jobsDAO().getAll().observeForever {
-                presenter.getActivity()?.runOnUiThread {
-                    if (it?.isNotEmpty() == true) {
-                        presenter.manipulateResponseDB(it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id })
-                    }
-                }
-            }
-        }
+    fun listFromBD(): LiveData<List<Job>> {
+        return AppDatabase.getInstance(context).jobsDAO().getAll()
     }
 }

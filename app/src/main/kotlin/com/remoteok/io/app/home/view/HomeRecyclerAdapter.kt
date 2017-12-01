@@ -21,7 +21,7 @@ import com.remoteok.io.app.home.model.domain.Job
  * Created by tairo on 12/12/17.
  */
 class HomeRecyclerAdapter(private val context: Context?,
-                          private var list: ArrayList<Job>?,
+                          private var list: List<Job>?,
                           private val onClick: (job: Job, imageView: ImageView) -> Unit) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
@@ -91,10 +91,8 @@ class HomeRecyclerAdapter(private val context: Context?,
         }
     }
 
-    fun update(items: ArrayList<Job>) {
-        this.list?.clear()
-
-        this.list?.addAll(items)
+    fun update(items: List<Job>?) {
+        this.list = items
         notifyDataSetChanged()
     }
 }

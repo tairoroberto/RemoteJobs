@@ -20,14 +20,14 @@
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginBottom="0dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toTopOf="@+id/buttonsContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_253x199"/>
+            app:srcCompat="@drawable/logo_253x199" />
 
 
         <TextView
@@ -47,7 +47,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Senior Full Stack Web Developer"/>
+            tools:text="Senior Full Stack Web Developer" />
 
         <TextView
             android:id="@+id/textViewOverview"
@@ -65,7 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-            tools:text="Tenth Avenue CommerceTenth Avenue CommerceTenth Avenue Commerce"/>
+            tools:text="Tenth Avenue CommerceTenth Avenue CommerceTenth Avenue Commerce" />
 
         <ProgressBar
             android:id="@+id/progressImage"
