@@ -6,8 +6,8 @@ buildscript {
     ext.buildToolsVersion = '26.0.2'
     ext.minSdkVersion =  21
     ext.targetSdkVersion =  26
-    ext.versionCode =  9
-    ext.versionName =  '1.9'
+    ext.versionCode =  10
+    ext.versionName =  '1.10'
 
     ext.supportLibs = '27.0.2'
     ext.constraint_layout = '1.0.2'
@@ -16,7 +16,7 @@ buildscript {
     ext.crashlytics = '2.8.0'
     ext.firebase = '11.6.2'
 
-    ext.kotlin_version = '1.2.0'
+    ext.kotlin_version = '1.2.10'
     ext.anko_version = '0.10.1'
 
     ext.gson = '2.8.0'

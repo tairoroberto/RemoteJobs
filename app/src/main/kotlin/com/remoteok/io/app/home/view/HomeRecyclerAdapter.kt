@@ -55,7 +55,7 @@ class HomeRecyclerAdapter(private val context: Context?,
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
-        private val textViewOverview: TextView = view.findViewById(R.id.textViewOverview)
+        private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
         private val tag1: Button = view.findViewById(R.id.tag1)
         private val tag2: Button = view.findViewById(R.id.tag2)
@@ -76,16 +76,24 @@ class HomeRecyclerAdapter(private val context: Context?,
                 Html.fromHtml(job.description)
             }
 
+            tag1.visibility = View.VISIBLE
+            tag2.visibility = View.VISIBLE
+            tag3.visibility = View.VISIBLE
+
             job.tags?.forEachIndexed { index, s ->
-                if (index == 0) {
+                if (index >= 0) {
                     tag1.text = s
+                    tag1.visibility = View.VISIBLE
                 }
 
-                if (index == 1) {
+                if (index >= 1) {
                     tag2.text = s
+                    tag1.visibility = View.VISIBLE
                 }
-                if (index == 2) {
+
+                if (index >= 2) {
                     tag3.text = s
+                    tag1.visibility = View.VISIBLE
                 }
             }
         }

@@ -84,7 +84,7 @@ class DetailActivity : AppCompatActivity() {
 
         toolbar_layout.title = job?.position
         textViewName.text = job?.position
-        textViewOverview.text = Html.fromHtml(job?.description)
+        textViewDescription.text = Html.fromHtml(job?.description)
         textViewReleaseDate.text = formatDate(job?.date)
     }
 
@@ -138,7 +138,7 @@ class DetailActivity : AppCompatActivity() {
             val bitmapUri = Uri.parse(bitmapPath)
 
             shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${textViewOverview.text}")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${textViewDescription.text}")
             shareActionProvider?.setShareIntent(shareIntent)
         }
     }

@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel
 import com.remoteok.io.app.home.model.AppDatabase
 import com.remoteok.io.app.home.model.HomeModel
 import com.remoteok.io.app.home.model.domain.Job
+import com.remoteok.io.app.home.model.domain.JobsResponse
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -58,18 +59,18 @@ class HomeViewModel(private val appDatabase: AppDatabase) : ViewModel() {
         loadResponse(model.search(query.toLowerCase()))
     }
 
-    fun loadResponse(jobsResponse: Flowable<List<Job>>) {
+    private fun loadResponse(jobsResponse: Flowable<JobsResponse>) {
         disposables.add(jobsResponse
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ s -> loadingStatus.setValue(true) })
+                .doOnSubscribe({ loadingStatus.setValue(true) })
                 .doAfterTerminate({ loadingStatus.setValue(false) })
                 .subscribe(
                         { jobs ->
-                            response.value = jobs
+                            response.value = jobs.list?.subList(0, if (jobs.list?.size as Int > 30) 30 else jobs.list?.lastIndex as Int)
                             doAsync {
                                 appDatabase.jobsDAO().deleteAll()
-                                appDatabase.jobsDAO().insertAll(jobs)
+                                appDatabase.jobsDAO().insertAll(response.value)
                             }
                         },
                         { throwable -> errorStatus.value = throwable.message.toString() }

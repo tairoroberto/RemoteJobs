@@ -1,9 +1,7 @@
 package com.remoteok.io.app.base.api
 
-import android.app.Activity
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.remoteok.io.app.base.extension.isConected
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,7 +15,7 @@ import java.util.concurrent.TimeUnit
  * Created by tairo on 11/12/17.
  */
 class Api(context: Context?) {
-    private val URL_BASE = "https://remoteok.io/"
+    private val URL_BASE = "https://us-central1-remoteok-dfc72.cloudfunctions.net/"
     private var retrofit: Retrofit
 
     init {

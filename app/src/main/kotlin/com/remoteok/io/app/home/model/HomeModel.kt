@@ -4,17 +4,18 @@ import android.arch.lifecycle.LiveData
 import com.remoteok.io.app.CustomApplication.Companion.context
 import com.remoteok.io.app.base.api.Api
 import com.remoteok.io.app.home.model.domain.Job
+import com.remoteok.io.app.home.model.domain.JobsResponse
 import io.reactivex.Flowable
 
 /**
  * Created by tairo on 12/11/17.
  */
 class HomeModel {
-    fun listAll(): Flowable<List<Job>> {
-        return Api(context).getApiService().getAll()
+    fun listAll(): Flowable<JobsResponse> {
+        return this.search("remote-jobs")
     }
 
-    fun search(query: String): Flowable<List<Job>> {
+    fun search(query: String): Flowable<JobsResponse> {
         return Api(context).getApiService().search(query)
     }
 

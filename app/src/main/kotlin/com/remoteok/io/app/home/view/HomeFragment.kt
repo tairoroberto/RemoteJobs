@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
 
         listSearch.setOnItemClickListener { _, _, position, _ ->
             showProgress(true)
-            viewModel.search("remote-${filteredValues[position]}-jobs.json")
+            viewModel.search("remote-${filteredValues[position]}-jobs")
             listSearch.visibility = GONE
             activity?.hideSoftKeyboard()
         }
@@ -116,17 +116,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun showProgress(b: Boolean?) {
+    private fun showProgress(b: Boolean?) {
         activity?.showProgress(recyclerView, progress, b == true)
         swipeRefreshLayout?.isRefreshing = false
     }
 
-    fun showSnackBarError(str: String) {
+    private fun showSnackBarError(str: String) {
         activity?.showSnackBarError(recyclerView, str)
         swipeRefreshLayout?.isRefreshing = false
     }
 
-    fun showJobsList(jobs: List<Job>?) {
+    private fun showJobsList(jobs: List<Job>?) {
 
         list = jobs
 
@@ -163,7 +163,7 @@ class HomeFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.search("remote-$query-jobs.json")
+                viewModel.search("remote-$query-jobs")
                 activity?.hideSoftKeyboard()
                 return true
             }
