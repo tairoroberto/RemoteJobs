@@ -79,7 +79,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
 
-    fun show(job: Job?) {
+    private fun show(job: Job?) {
         imageView.loadImage(job?.logo, progressImage, true)
 
         toolbar_layout.title = job?.position
