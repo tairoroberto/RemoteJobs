@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/textViewLogo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
@@ -27,7 +27,7 @@
             app:layout_constraintBottom_toTopOf="@+id/buttonsContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_253x199" />
+            app:srcCompat="@drawable/logo_400x200" />
 
 
         <TextView
@@ -45,7 +45,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/textViewLogo"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Senior Full Stack Web Developer" />
 
@@ -63,7 +63,7 @@
             android:textColor="#000000"
             android:textSize="@dimen/dimen_14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/textViewLogo"
             app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
             tools:text="Tenth Avenue CommerceTenth Avenue CommerceTenth Avenue Commerce" />
 
@@ -75,10 +75,10 @@
             android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"/>
+            app:layout_constraintBottom_toBottomOf="@+id/textViewLogo"
+            app:layout_constraintEnd_toEndOf="@+id/textViewLogo"
+            app:layout_constraintStart_toStartOf="@+id/textViewLogo"
+            app:layout_constraintTop_toTopOf="@+id/textViewLogo"/>
 
 
         <com.google.android.flexbox.FlexboxLayout

@@ -1,6 +1,5 @@
 package com.remoteok.io.app.domain
 
-import android.arch.lifecycle.LiveData
 import com.remoteok.io.app.model.Job
 import io.reactivex.Flowable
 
@@ -19,7 +18,7 @@ interface LocalRepository {
 
     fun deleteAll()
 
-    fun getAll(): LiveData<List<Job>>
+    fun getAll(): Flowable<List<Job>>
 
     fun getByID(id: Int): Flowable<Job>
 }

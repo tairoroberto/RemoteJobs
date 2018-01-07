@@ -30,7 +30,7 @@ class LocalDataStore(private val jobsDao: JobsDao) : LocalRepository {
         jobsDao.deleteAll()
     }
 
-    override fun getAll(): LiveData<List<Job>> {
+    override fun getAll(): Flowable<List<Job>> {
         return jobsDao.getAll()
     }
 

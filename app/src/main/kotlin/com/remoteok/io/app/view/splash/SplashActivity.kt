@@ -7,7 +7,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
 import com.crashlytics.android.Crashlytics
-import com.facebook.stetho.Stetho
 import com.remoteok.io.app.BuildConfig
 import com.remoteok.io.app.R
 import com.remoteok.io.app.view.home.MainActivity

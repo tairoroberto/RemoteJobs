@@ -2,12 +2,12 @@
 
 buildscript {
 
-    ext.compileSdkVersion = 26
-    ext.buildToolsVersion = '26.0.2'
+    ext.compileSdkVersion = 27
+    ext.buildToolsVersion = '27.0.1'
     ext.minSdkVersion =  21
-    ext.targetSdkVersion =  26
-    ext.versionCode =  12
-    ext.versionName =  '1.12'
+    ext.targetSdkVersion =  27
+    ext.versionCode =  13
+    ext.versionName =  '1.13'
 
     ext.supportLibs = '27.0.2'
     ext.constraint_layout = '1.0.2'
@@ -49,7 +49,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0-alpha07'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.24.4'
         classpath 'com.google.gms:google-services:3.1.0'

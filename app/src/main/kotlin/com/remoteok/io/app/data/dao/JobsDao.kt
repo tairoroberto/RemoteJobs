@@ -26,7 +26,7 @@ interface JobsDao {
     fun deleteAll()
 
     @Query("SELECT * FROM jobs")
-    fun getAll(): LiveData<List<Job>>
+    fun getAll(): Flowable<List<Job>>
 
     @Query("select * from jobs where id = :id")
     fun getByID(id: Int): Flowable<Job>

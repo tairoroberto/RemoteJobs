@@ -168,13 +168,11 @@ dependencies {
 
     /*######################## Dependency injection ###########################*/
     // Dagger Core
-    provided "com.google.dagger:dagger:$project.dagger"
-    annotationProcessor "com.google.dagger:dagger-compiler:$project.dagger"
+    compileOnly "com.google.dagger:dagger:$project.dagger"
     kapt "com.google.dagger:dagger-compiler:$project.dagger"
 
     // Dagger Android
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$project.dagger"
     kapt "com.google.dagger:dagger-android-processor:$project.dagger"
     /*############################################################################*/
 

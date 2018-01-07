@@ -18,7 +18,6 @@ import android.view.Menu
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
-import com.remoteok.io.app.utils.extension.showSnackBarError
 import com.remoteok.io.app.viewmodel.detail.DetailViewModel
 import com.remoteok.io.app.viewmodel.detail.DetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -47,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
 
-        imageView.isDrawingCacheEnabled = true
+        textViewLogo.isDrawingCacheEnabled = true
         job = intent.getParcelableExtra("job")
 
         showJob()
@@ -80,11 +79,21 @@ class DetailActivity : AppCompatActivity() {
 
 
     private fun showJob() {
-        imageView.loadImage(job.logo, progressImage, true)
+        textViewLogo.loadImage(job.logo, progressImage, true)
 
         toolbar_layout.title = job.position
         textViewName.text = job.position
-        textViewDescription.loadData(job.description, "text/html", "UTF-8")
+
+
+        val description =
+                "<html>" +
+                "    <head>" +
+                "        <meta charset=\"utf-8\" />" +
+                "    </head>" +
+                "    <body bgcolor=\"#fafafa\"> ${job.description} </body>" +
+                "</html>"
+
+        textViewDescription.loadData(description, "text/html", "UTF-8")
         textViewReleaseDate.text = formatDate(job.date)
     }
 
@@ -93,11 +102,6 @@ class DetailActivity : AppCompatActivity() {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
         return format.format(sdf.parse(date))
     }
-
-    fun showSnackBarError(msg: String) {
-        showSnackBarError(fab, msg)
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -132,7 +136,7 @@ class DetailActivity : AppCompatActivity() {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "image/*"
 
-            val bitmap = imageView.drawingCache
+            val bitmap = textViewLogo.drawingCache
 
             val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_detail", null)
             val bitmapUri = Uri.parse(bitmapPath)

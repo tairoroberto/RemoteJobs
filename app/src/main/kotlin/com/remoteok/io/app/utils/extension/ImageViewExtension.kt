@@ -18,7 +18,7 @@ fun ImageView.loadImage(url: String?, progress: ProgressBar?, large: Boolean?) {
     progress?.visibility = View.VISIBLE
 
     if (url.isNullOrBlank()){
-        this.setImageResource(if (large == false) R.drawable.logo_253x199 else R.drawable.logo_400x200)
+        this.setImageResource(if (large == false) R.drawable.logo_400x200 else R.drawable.logo_1200x1200)
         progress?.visibility = View.GONE
         return
     }
@@ -35,7 +35,7 @@ fun ImageView.loadImage(url: String?, progress: ProgressBar?, large: Boolean?) {
                     progress?.visibility = View.VISIBLE
                     //Try again online if cache failed
                     Picasso.with(context).load(url).networkPolicy(NetworkPolicy.NO_CACHE)
-                            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(if (large == false) R.drawable.logo_253x199 else R.drawable.logo_400x200)
+                            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(if (large == false) R.drawable.logo_400x200 else R.drawable.logo_1200x1200)
                             .into(this@loadImage, object : Callback {
 
                                 override fun onSuccess() {

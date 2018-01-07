@@ -70,7 +70,6 @@ class HomeFragment : Fragment() {
         observeLoadingStatus()
         //observeErrorStatus()
         observeResponse()
-        observeResponseFromDataBase()
         getAllJobs()
     }
 
@@ -110,10 +109,6 @@ class HomeFragment : Fragment() {
 
     private fun observeResponse() {
         viewModel.getResponse().observe(this, android.arch.lifecycle.Observer { response -> showJobsList(response) })
-    }
-
-    private fun observeResponseFromDataBase() {
-        viewModel.getResponseFromDataBase().observe(this, android.arch.lifecycle.Observer { response -> showJobsList(response) })
     }
 
     private fun setAnimation() {

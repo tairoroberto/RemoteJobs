@@ -13,8 +13,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.remoteok.io.app.R
-import com.remoteok.io.app.utils.extension.loadImage
 import com.remoteok.io.app.model.Job
+import com.remoteok.io.app.utils.extension.loadImage
 
 
 /**
@@ -53,7 +53,7 @@ class HomeRecyclerAdapter(private val context: Context?,
     override fun getItemCount(): Int = list?.size as Int
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.imageView)
+        val imageView: ImageView = view.findViewById(R.id.textViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)

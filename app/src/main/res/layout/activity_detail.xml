@@ -24,10 +24,11 @@
             app:toolbarId="@+id/toolbar">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/textViewLogo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_300dp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/logo_1200x1200"
                 android:transitionName="image"/>
 
             <ImageView

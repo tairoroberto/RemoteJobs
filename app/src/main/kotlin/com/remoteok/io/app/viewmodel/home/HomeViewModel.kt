@@ -1,6 +1,5 @@
 package com.remoteok.io.app.viewmodel.home
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.remoteok.io.app.domain.HomeUseCase
@@ -22,8 +21,6 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
 
     private val response: MutableLiveData<List<Job>> = MutableLiveData()
 
-    private val responseFromDataBase: MutableLiveData<List<Job>> = MutableLiveData()
-
     private val loadingStatus = MutableLiveData<Boolean>()
 
     private val errorStatus = MutableLiveData<String>()
@@ -38,10 +35,6 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
 
     fun getResponse(): MutableLiveData<List<Job>> {
         return response
-    }
-
-    fun getResponseFromDataBase(): MutableLiveData<List<Job>> {
-        return responseFromDataBase
     }
 
     fun getAllJobs() {
@@ -67,21 +60,27 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
                                 homeUseCase.addAllJobs(response.value)
                             }
                         },
-                        {
-                            throwable -> errorStatus.value = throwable.message.toString()
+                        { throwable ->
+                            errorStatus.value = throwable.message.toString()
                             loadResponseFromDataBase(homeUseCase.listJobsFromBD())
                         }
                 )
         )
     }
 
-    private fun loadResponseFromDataBase(jobsResponse: LiveData<List<Job>>) {
-        doAsync {
-            jobsResponse.observeForever {
-                if (it?.isNotEmpty() == true) {
-                    responseFromDataBase.value = it.subList(0, if (it.size > 30) 30 else it.lastIndex).sortedByDescending { it.id }
-                }
-            }
-        }
+    private fun loadResponseFromDataBase(jobsResponse: Flowable<List<Job>>) {
+        disposables.add(jobsResponse
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe({ loadingStatus.setValue(true) })
+                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .subscribe(
+                        { jobs ->
+                            response.value = jobs.subList(0, if (jobs.size > 30) 30 else jobs.lastIndex)
+                        },
+                        { throwable ->
+                            errorStatus.value = throwable.message.toString()
+                        }
+                ))
     }
 }
