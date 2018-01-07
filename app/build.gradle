@@ -99,7 +99,9 @@ kotlin {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Android support  libs
+
+
+    /*###################### Android support  libs ###############################*/
     implementation "com.android.support:appcompat-v7:${rootProject.supportLibs}"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout"
     implementation "com.android.support:design:${rootProject.supportLibs}"
@@ -107,42 +109,51 @@ dependencies {
     implementation "com.android.support:cardview-v7:${rootProject.supportLibs}"
     implementation "com.google.android:flexbox:0.2.6"
     implementation "com.android.support:multidex:${rootProject.multidex}"
+    /*############################################################################*/
 
-    // Firebase
+    /*############################## Firebase #####################################*/
     implementation "com.google.firebase:firebase-core:${rootProject.firebase}"
     implementation "com.google.firebase:firebase-messaging:${rootProject.firebase}"
+    /*############################################################################*/
 
-    // kotlin
+    /*############################# Crashlytics ####################################*/
+    implementation("com.crashlytics.sdk.android:crashlytics:${rootProject.crashlytics}@aar") {
+        transitive = true
+    }
+    /*############################################################################*/
+
+    /*########################## kotlin ##########################################*/
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.kotlin_version"
     implementation "org.jetbrains.anko:anko-coroutines:${rootProject.anko_version}"
     implementation "org.jetbrains.anko:anko-commons:${rootProject.anko_version}"
     implementation "org.jetbrains.kotlin:kotlin-test-junit:${rootProject.kotlin_version}"
+    /*############################################################################*/
 
-    // Crashlytics
-    implementation("com.crashlytics.sdk.android:crashlytics:${rootProject.crashlytics}@aar") {
-        transitive = true
-    }
-
-    // ReactiveX
+    /*########################### ReactiveX ######################################*/
     implementation "io.reactivex.rxjava2:rxandroid:${rootProject.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${rootProject.rxjava}"
+    /*############################################################################*/
 
-    // Retrofit
+    /*############################ Retrofit ######################################*/
     implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.retrofit}"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.retrofit}"
+    /*############################################################################*/
 
-    // Gson: Json Converter
+    /*############################ Gson: Json Converter ##########################*/
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.retrofit}"
     implementation "com.google.code.gson:gson:${rootProject.gson}"
+    /*############################################################################*/
 
-    // Image libs
+    /*########################### Image libs #####################################*/
     implementation "com.squareup.picasso:picasso:$picasso"
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
+    /*############################################################################*/
 
-    // Facebook Sthetho for debug conections
+    /*################ Facebook Sthetho for debug conections #####################*/
     implementation "com.facebook.stetho:stetho:${rootProject.stetho}"
     implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.stetho}"
+    /*############################################################################*/
 
+    /*######################## Architetures Components ###########################*/
     // Room Database
     implementation "android.arch.persistence.room:runtime:${rootProject.arch}"
     implementation "android.arch.persistence.room:rxjava2:${rootProject.arch}"
@@ -153,19 +164,26 @@ dependencies {
     implementation "android.arch.lifecycle:runtime:${rootProject.arch_lifecycle}"
     implementation "android.arch.lifecycle:extensions:${rootProject.arch}"
     kapt "android.arch.lifecycle:compiler:${rootProject.arch}"
+    /*############################################################################*/
 
-    // Dependency injection
+    /*######################## Dependency injection ###########################*/
+    // Dagger Core
+    provided "com.google.dagger:dagger:$project.dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.dagger"
     kapt "com.google.dagger:dagger-compiler:$project.dagger"
-    implementation "com.google.dagger:dagger:$rootProject.dagger"
 
     // Dagger Android
-    kapt "com.google.dagger:dagger-android-processor:$project.dagger"
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$project.dagger"
+    /*############################################################################*/
 
+    /*############################## Log Libs ####################################*/
     // Timber
     implementation "com.jakewharton.timber:timber:${rootProject.timber}"
+    /*############################################################################*/
 
-    // Test libs
+    /*############################### Test ibs ###################################*/
     testImplementation "junit:junit:${rootProject.junit}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.runner}"
 
@@ -200,6 +218,7 @@ dependencies {
     })
     testImplementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espresso}"
     androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:2.1.3"
+    /*############################################################################*/
 
 }
 apply plugin: 'com.google.gms.google-services'

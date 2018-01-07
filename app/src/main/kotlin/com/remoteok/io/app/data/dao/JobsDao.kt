@@ -1,0 +1,33 @@
+package com.remoteok.io.app.data.dao
+
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.*
+import com.remoteok.io.app.model.Job
+import io.reactivex.Flowable
+
+/**
+ * Created by tairo on 12/12/17 3:03 PM.
+ */
+@Dao
+interface JobsDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun add(job: Job): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addAll(jobs: List<Job>?)
+
+    @Update
+    fun update(job: Job)
+
+    @Delete
+    fun delete(job: Job)
+
+    @Query("DELETE FROM jobs")
+    fun deleteAll()
+
+    @Query("SELECT * FROM jobs")
+    fun getAll(): LiveData<List<Job>>
+
+    @Query("select * from jobs where id = :id")
+    fun getByID(id: Int): Flowable<Job>
+}
