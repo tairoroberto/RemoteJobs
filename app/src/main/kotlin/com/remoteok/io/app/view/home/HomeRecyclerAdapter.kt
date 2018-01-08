@@ -21,19 +21,17 @@ import com.remoteok.io.app.utils.extension.loadImage
  * Created by tairo on 12/12/17.
  */
 class HomeRecyclerAdapter(private val context: Context?,
-                          private var list: List<Job>?,
+                          private var list: MutableList<Job>,
                           private val onClick: (job: Job, imageView: ImageView) -> Unit) : RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = list?.get(position)
-        if (item != null) {
-            holder.bind(item)
-            holder.itemView.setOnClickListener({
-                onClick(item, holder.imageView)
-            })
-        }
+        val item = list[position]
+        holder.bind(item)
+        holder.itemView.setOnClickListener({
+            onClick(item, holder.imageView)
+        })
         //setAnimation(holder.itemView, position)
     }
 
@@ -50,7 +48,7 @@ class HomeRecyclerAdapter(private val context: Context?,
         }
     }
 
-    override fun getItemCount(): Int = list?.size as Int
+    override fun getItemCount(): Int = list.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.textViewLogo)
@@ -100,7 +98,10 @@ class HomeRecyclerAdapter(private val context: Context?,
     }
 
     fun update(items: List<Job>?) {
-        this.list = items
+        this.list.clear()
+        if (items != null) {
+            this.list.addAll(items)
+        }
         notifyDataSetChanged()
     }
 }

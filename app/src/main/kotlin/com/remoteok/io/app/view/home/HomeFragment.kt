@@ -20,7 +20,10 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
-import com.remoteok.io.app.utils.extension.*
+import com.remoteok.io.app.utils.extension.hideSoftKeyboard
+import com.remoteok.io.app.utils.extension.showProgress
+import com.remoteok.io.app.utils.extension.showSnackBarError
+import com.remoteok.io.app.utils.extension.showSoftKeyboard
 import com.remoteok.io.app.view.detail.DetailActivity
 import com.remoteok.io.app.viewmodel.home.HomeViewModel
 import com.remoteok.io.app.viewmodel.home.HomeViewModelFactory
@@ -28,7 +31,6 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.yesButton
-import java.util.*
 import javax.inject.Inject
 
 
@@ -44,7 +46,7 @@ class HomeFragment : Fragment() {
         ViewModelProviders.of(this, homeViewModelFactory).get(HomeViewModel::class.java)
     }
 
-    private var list: List<Job>? = ArrayList()
+    private val list: MutableList<Job> = ArrayList()
 
     lateinit var adapter: HomeRecyclerAdapter
 
@@ -131,14 +133,12 @@ class HomeFragment : Fragment() {
 
     private fun showJobsList(jobs: List<Job>?) {
 
-        list = jobs
-
         withoutData?.visibility = GONE
-        if (list?.isEmpty() == true) {
+        if (jobs == null || jobs.isEmpty()) {
             withoutData?.visibility = VISIBLE
         }
 
-        adapter.update(list)
+        adapter.update(jobs)
         swipeRefreshLayout?.isRefreshing = false
         showProgress(false)
     }
