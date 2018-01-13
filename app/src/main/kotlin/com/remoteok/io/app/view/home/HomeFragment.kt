@@ -16,7 +16,6 @@ import android.transition.ChangeBounds
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
@@ -48,11 +47,11 @@ class HomeFragment : Fragment() {
 
     private val list: MutableList<Job> = ArrayList()
 
-    lateinit var adapter: HomeRecyclerAdapter
+    private lateinit var adapter: HomeRecyclerAdapter
 
-    private var adapterSearch: ArrayAdapter<String>? = null
+    private lateinit var adapterSearch: SearchAdapter
 
-    private var suggestions: Array<String>? = null
+    private val suggestions: MutableList<String> = ArrayList()
 
     private val filteredValues = ArrayList<String>()
 
@@ -63,8 +62,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        suggestions = resources.getStringArray(R.array.suggestions)
-        adapterSearch = ArrayAdapter(context, R.layout.item_search, resources.getStringArray(R.array.suggestions))
+        resources.getStringArray(R.array.suggestions).forEach { suggestions.add(it) }
+        adapterSearch = SearchAdapter(context, suggestions)
         adapter = HomeRecyclerAdapter(activity, list, this::onItemClick)
         setHasOptionsMenu(true)
         retainInstance = true
@@ -82,12 +81,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val layoutManager = LinearLayoutManager(activity)
 
-        recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
-        swipeRefreshLayout.setOnRefreshListener({ getAllJobs() })
+        setRecyclerViewListJobs()
 
         listSearch.setOnItemClickListener { _, _, position, _ ->
             showProgress(true)
@@ -95,6 +90,14 @@ class HomeFragment : Fragment() {
             listSearch.visibility = GONE
             activity?.hideSoftKeyboard()
         }
+    }
+
+    private fun setRecyclerViewListJobs() {
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
+        swipeRefreshLayout.setOnRefreshListener({ getAllJobs() })
     }
 
     private fun getAllJobs() {
@@ -189,7 +192,7 @@ class HomeFragment : Fragment() {
                     listSearch?.visibility = GONE
                 }
 
-                adapterSearch = ArrayAdapter(context, R.layout.item_search, filteredValues)
+                adapterSearch = SearchAdapter(context, filteredValues)
                 listSearch?.visibility = VISIBLE
                 listSearch?.adapter = adapterSearch
 

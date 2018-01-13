@@ -8,7 +8,7 @@ import android.content.Context
 import com.remoteok.io.app.data.dao.JobsDao
 import com.remoteok.io.app.model.Job
 
-@Database(entities = [(Job::class)], version = 1)
+@Database(entities = [(Job::class)], version = 2)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
