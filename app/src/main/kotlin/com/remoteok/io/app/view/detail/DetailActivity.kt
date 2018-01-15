@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.ShareActionProvider
+import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
 import com.remoteok.io.app.R
@@ -45,6 +46,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         textViewLogo.isDrawingCacheEnabled = true
         job = intent.getParcelableExtra("job")
@@ -142,7 +144,7 @@ class DetailActivity : AppCompatActivity() {
             val bitmapUri = Uri.parse(bitmapPath)
 
             shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${job.description}")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job.description)}")
             shareActionProvider?.setShareIntent(shareIntent)
         }
     }
