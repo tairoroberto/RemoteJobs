@@ -4,6 +4,7 @@ import android.Manifest
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -89,11 +90,11 @@ class DetailActivity : AppCompatActivity() {
 
         val description =
                 "<html>" +
-                "    <head>" +
-                "        <meta charset=\"utf-8\" />" +
-                "    </head>" +
-                "    <body bgcolor=\"#fafafa\"> ${job.description} </body>" +
-                "</html>"
+                        "    <head>" +
+                        "        <meta charset=\"utf-8\" />" +
+                        "    </head>" +
+                        "    <body bgcolor=\"#fafafa\"> ${job.description} </body>" +
+                        "</html>"
 
         textViewDescription.loadData(description, "text/html", "UTF-8")
         textViewReleaseDate.text = formatDate(job.date)
@@ -134,22 +135,24 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setShareIntent() {
-        if (shareActionProvider != null) {
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "image/*"
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
 
-            val bitmap = textViewLogo.drawingCache
-
-            val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_detail", null)
-            val bitmapUri = Uri.parse(bitmapPath)
-
-            shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job.description)}")
-            shareActionProvider?.setShareIntent(shareIntent)
+        val bitmap = if (textViewLogo.drawingCache != null) {
+            textViewLogo.drawingCache
+        } else {
+            BitmapFactory.decodeResource(resources, R.drawable.logo_400x200)
         }
+
+        val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_detail", null)
+
+        val bitmapUri = Uri.parse(bitmapPath)
+        shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job.description)}")
+        shareActionProvider?.setShareIntent(shareIntent)
     }
 
     companion object {
-        val WRITE_EXTERNAL_STORAGE = 2
+        const val WRITE_EXTERNAL_STORAGE = 2
     }
 }
