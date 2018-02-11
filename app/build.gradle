@@ -8,10 +8,6 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'io.fabric'
 
-apply from: "$rootDir/config/quality.gradle"
-
-apply from: "./jacoco.gradle"
-
 android {
 
     compileSdkVersion rootProject.compileSdkVersion
@@ -73,11 +69,6 @@ android {
             assets.srcDirs = ['src/main/assets']
         }
     }
-
-    lintOptions {
-        disable "ResourceType"
-        abortOnError false
-    }
 }
 
 allprojects {
@@ -98,8 +89,6 @@ kotlin {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-
 
     /*###################### Android support  libs ###############################*/
     implementation "com.android.support:appcompat-v7:${rootProject.supportLibs}"
@@ -162,13 +151,13 @@ dependencies {
 
     // Lifecycle
     implementation "android.arch.lifecycle:runtime:${rootProject.arch_lifecycle}"
-    implementation "android.arch.lifecycle:extensions:${rootProject.arch}"
+    implementation "android.arch.lifecycle:extensions:${rootProject.arch_lifecycle}"
     kapt "android.arch.lifecycle:compiler:${rootProject.arch}"
     /*############################################################################*/
 
     /*######################## Dependency injection ###########################*/
     // Dagger Core
-    compileOnly "com.google.dagger:dagger:$project.dagger"
+    implementation "com.google.dagger:dagger:$project.dagger"
     kapt "com.google.dagger:dagger-compiler:$project.dagger"
 
     // Dagger Android

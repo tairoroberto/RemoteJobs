@@ -3,7 +3,7 @@
 buildscript {
 
     ext.compileSdkVersion = 27
-    ext.buildToolsVersion = '27.0.1'
+    ext.buildToolsVersion = '27.0.3'
     ext.minSdkVersion =  21
     ext.targetSdkVersion =  27
     ext.versionCode =  17
@@ -16,7 +16,7 @@ buildscript {
     ext.crashlytics = '2.8.0'
     ext.firebase = '11.8.0'
 
-    ext.kotlin_version = '1.2.10'
+    ext.kotlin_version = '1.2.21'
     ext.anko_version = '0.10.1'
 
     ext.gson = '2.8.0'
@@ -36,7 +36,7 @@ buildscript {
     ext.runner = '0.5'
     ext.espresso = '3.0.1'
     ext.arch = "1.0.0"
-    ext.arch_lifecycle = "1.0.3"
+    ext.arch_lifecycle = "1.1.0"
     ext.mockwebserver = "3.8.1"
     ext.mockito_kotlin = "1.5.0"
     ext.timber = "4.6.0"
@@ -49,7 +49,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-alpha08'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha02'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.24.4'
         classpath 'com.google.gms:google-services:3.1.0'
