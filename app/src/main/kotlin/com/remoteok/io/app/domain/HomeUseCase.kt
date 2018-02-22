@@ -3,6 +3,7 @@ package com.remoteok.io.app.domain
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.model.JobsResponse
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
  * Created by tairo on 12/11/17.
@@ -10,11 +11,11 @@ import io.reactivex.Flowable
 class HomeUseCase(private val localRepository: LocalRepository,
                   private val remoteRepository: RemoteRepository) {
 
-    fun listAllJobs(): Flowable<JobsResponse> {
+    fun listAllJobs(): Single<JobsResponse> {
         return remoteRepository.listAll()
     }
 
-    fun searchJobs(query: String): Flowable<JobsResponse> {
+    fun searchJobs(query: String): Single<JobsResponse> {
         return remoteRepository.search(query)
     }
 

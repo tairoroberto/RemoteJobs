@@ -56,8 +56,7 @@ class SplashActivity : AppCompatActivity() {
         Timer().schedule(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    startActivity<MainActivity>()
-                    finish()
+                    jump()
                 }
             }
         }, 2500)

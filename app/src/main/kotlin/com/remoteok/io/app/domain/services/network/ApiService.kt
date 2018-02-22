@@ -2,7 +2,7 @@ package com.remoteok.io.app.domain.services.network
 
 
 import com.remoteok.io.app.model.JobsResponse
-import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,5 +12,5 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("fetchJobs/")
-    fun search(@Query("path") path: String): Flowable<JobsResponse>
+    fun search(@Query("path") path: String): Single<JobsResponse>
 }

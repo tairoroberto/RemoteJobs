@@ -19,7 +19,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.remoteok.RemoteOkTestRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -175,10 +175,7 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:${rootProject.runner}"
 
     // Mokito
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:${rootProject.mockito_kotlin}"
-
-    // Hamcrest
-    testImplementation "org.hamcrest:java-hamcrest:${rootProject.hamcrest}"
+    testImplementation "org.mockito:mockito-core:${rootProject.mockitoVersion}"
 
     // Mockserver for resquest mock
     testImplementation "com.squareup.okhttp3:mockwebserver:${rootProject.mockwebserver}"
@@ -204,7 +201,7 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
     testImplementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espresso}"
-    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:2.1.3"
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:${rootProject.uiautomator}"
     /*############################################################################*/
 
 }

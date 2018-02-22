@@ -6,6 +6,7 @@ import com.remoteok.io.app.domain.HomeUseCase
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.model.JobsResponse
 import io.reactivex.Flowable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -45,7 +46,7 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
         loadResponse(homeUseCase.searchJobs(query.toLowerCase()))
     }
 
-    private fun loadResponse(jobsResponse: Flowable<JobsResponse>) {
+    private fun loadResponse(jobsResponse: Single<JobsResponse>) {
         disposables.add(jobsResponse
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

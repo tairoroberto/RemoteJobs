@@ -2,13 +2,14 @@ package com.remoteok.io.app.view.detail
 
 import android.Manifest
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore.Images
+import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
@@ -144,7 +145,7 @@ class DetailActivity : AppCompatActivity() {
             BitmapFactory.decodeResource(resources, R.drawable.logo_400x200)
         }
 
-        val bitmapPath = Images.Media.insertImage(contentResolver, bitmap, "image_detail", null)
+        val bitmapPath = MediaStore.Images.Media.insertImage(contentResolver, bitmap, "image_detail_remoteok", null)
 
         val bitmapUri = Uri.parse(bitmapPath)
         shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
