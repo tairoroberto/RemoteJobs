@@ -11,7 +11,7 @@ interface CompaniesLocalRepository {
 
     fun add(company: Company): Long
 
-    fun addAll(company: List<Company>?)
+    fun addAll(companies: List<Company>?)
 
     fun update(company: Company)
 
