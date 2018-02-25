@@ -1,11 +1,9 @@
 package com.remoteok.io.app.data
 
-import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
-import android.arch.persistence.room.migration.Migration
 import android.content.Context
 import com.remoteok.io.app.data.dao.CompaniesDao
 import com.remoteok.io.app.data.dao.JobsDao
@@ -30,16 +28,16 @@ abstract class AppDatabase : RoomDatabase() {
                 }
 
 
-        private val MIGRATION_1_5: Migration = object : Migration(1, 5) {
+        /*private val MIGRATION_1_5: Migration = object : Migration(1, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Since we didn't alter the table, there's nothing else to do here.
             }
-        }
+        }*/
 
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
                         AppDatabase::class.java, "remoteok.db")
-                        .addMigrations(MIGRATION_1_5)
+                        //.addMigrations(MIGRATION_1_5)
                         .fallbackToDestructiveMigration()
                         .build()
     }
