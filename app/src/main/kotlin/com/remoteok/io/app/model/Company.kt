@@ -12,9 +12,9 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "companies")
 @Parcelize
 data class Company(
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "id")
-        var id: String = "",
+        var id: Long = 0,
 
         @ColumnInfo(name = "image")
         @SerializedName("image")
