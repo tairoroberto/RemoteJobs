@@ -13,7 +13,7 @@ import com.remoteok.io.app.model.Company
 import com.remoteok.io.app.model.Job
 
 
-@Database(entities = [(Job::class), (Company::class)], version = 4)
+@Database(entities = [(Job::class), (Company::class)], version = 5)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -30,7 +30,7 @@ abstract class AppDatabase : RoomDatabase() {
                 }
 
 
-        private val MIGRATION_1_4: Migration = object : Migration(1, 4) {
+        private val MIGRATION_1_5: Migration = object : Migration(1, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Since we didn't alter the table, there's nothing else to do here.
             }
@@ -39,7 +39,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
                         AppDatabase::class.java, "remoteok.db")
-                        .addMigrations(MIGRATION_1_4)
+                        .addMigrations(MIGRATION_1_5)
                         .fallbackToDestructiveMigration()
                         .build()
     }
