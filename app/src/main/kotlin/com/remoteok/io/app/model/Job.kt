@@ -1,13 +1,16 @@
 package com.remoteok.io.app.model
 
+import android.annotation.SuppressLint
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@SuppressLint("ParcelCreator")
 @Entity(tableName = "jobs")
+@Parcelize
 data class Job(
         @ColumnInfo(name = "date")
         @SerializedName("date")
@@ -48,38 +51,4 @@ data class Job(
 
         @ColumnInfo(name = "tags")
         @SerializedName("tags")
-        var tags: List<String>? = null) : Parcelable {
-
-        constructor(parcel: Parcel) : this(
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.readString(),
-                parcel.createStringArrayList())
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-                parcel.writeString(date)
-                parcel.writeString(logo)
-                parcel.writeString(description)
-                parcel.writeString(epoch)
-                parcel.writeString(company)
-                parcel.writeString(id)
-                parcel.writeString(position)
-                parcel.writeString(slug)
-                parcel.writeString(url)
-                parcel.writeStringList(tags)
-        }
-
-        override fun describeContents(): Int = 0
-
-        companion object CREATOR : Parcelable.Creator<Job> {
-                override fun createFromParcel(parcel: Parcel): Job = Job(parcel)
-
-                override fun newArray(size: Int): Array<Job?> = arrayOfNulls(size)
-        }
-}
+        var tags: List<String>? = null) : Parcelable

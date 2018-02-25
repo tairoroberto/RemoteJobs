@@ -7,15 +7,18 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.arch.persistence.room.migration.Migration
 import android.content.Context
+import com.remoteok.io.app.data.dao.CompaniesDao
 import com.remoteok.io.app.data.dao.JobsDao
+import com.remoteok.io.app.model.Company
 import com.remoteok.io.app.model.Job
 
 
-@Database(entities = [(Job::class)], version = 4)
+@Database(entities = [(Job::class), (Company::class)], version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun jobsDAO(): JobsDao
+    abstract fun companiesDAO(): CompaniesDao
 
     companion object {
 

@@ -33,7 +33,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_130dp"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="0dp"
                 app:srcCompat="@drawable/gradient_black"/>
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_guidelines"
+        android:src="@drawable/ic_contract"
         app:layout_anchor="@+id/app_bar"
         app:layout_anchorGravity="right|bottom" />
 

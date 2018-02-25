@@ -226,4 +226,10 @@
         <item>writers</item>
         <item>xamarin</item>
     </string-array>
+
+    <string name="title_jobs">Jobs</string>
+    <string name="title_highestpaid">Highest Paid</string>
+    <string name="title_companies">Companies</string>
+    <string name="title_statistics">Statistics</string>
+
 </resources>

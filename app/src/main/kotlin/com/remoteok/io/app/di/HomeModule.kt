@@ -1,14 +1,14 @@
 package com.remoteok.io.app.di
 
-import com.remoteok.io.app.domain.HomeUseCase
-import com.remoteok.io.app.domain.LocalRepository
-import com.remoteok.io.app.domain.RemoteRepository
+import com.remoteok.io.app.domain.home.HomeLocalRepository
+import com.remoteok.io.app.domain.home.HomeRemoteRepository
+import com.remoteok.io.app.domain.home.HomeUseCase
 import com.remoteok.io.app.viewmodel.home.HomeViewModelFactory
 import dagger.Module
 import dagger.Provides
 
 /**
- * Define SchoolClassActivity-specific dependencies here.
+ * Define HomeFragment-specific dependencies here.
  */
 @Module
 class HomeModule {
@@ -19,8 +19,8 @@ class HomeModule {
     }
 
     @Provides
-    internal fun provideHomeUseCase(localRepository: LocalRepository,
-                                    remoteRepository: RemoteRepository): HomeUseCase {
-        return HomeUseCase(localRepository, remoteRepository)
+    internal fun provideHomeUseCase(homeLocalRepository: HomeLocalRepository,
+                                    remoteRepository: HomeRemoteRepository): HomeUseCase {
+        return HomeUseCase(homeLocalRepository, remoteRepository)
     }
 }

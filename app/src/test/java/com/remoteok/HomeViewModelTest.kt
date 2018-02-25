@@ -5,11 +5,11 @@ import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import com.remoteok.io.app.data.AppDatabase
-import com.remoteok.io.app.data.LocalDataStore
-import com.remoteok.io.app.data.RemoteDataStore
-import com.remoteok.io.app.domain.HomeUseCase
-import com.remoteok.io.app.domain.LocalRepository
-import com.remoteok.io.app.domain.RemoteRepository
+import com.remoteok.io.app.data.home.HomeLocalDataStore
+import com.remoteok.io.app.data.home.HomeRemoteDataStore
+import com.remoteok.io.app.domain.home.HomeUseCase
+import com.remoteok.io.app.domain.companies.LocalRepository
+import com.remoteok.io.app.domain.companies.RemoteRepository
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.model.JobsResponse
 import com.remoteok.io.app.viewmodel.home.HomeViewModel
@@ -52,8 +52,8 @@ class HomeViewModelTest {
         val db = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
                 AppDatabase::class.java).build()
 
-        localRepositoty = LocalDataStore(db.jobsDAO())
-        remoteRepository = RemoteDataStore()
+        localRepositoty = HomeLocalDataStore(db.jobsDAO())
+        remoteRepository = HomeRemoteDataStore()
         homeUseCase = HomeUseCase(localRepositoty, remoteRepository)
         homeViewModel = HomeViewModel(homeUseCase)
 

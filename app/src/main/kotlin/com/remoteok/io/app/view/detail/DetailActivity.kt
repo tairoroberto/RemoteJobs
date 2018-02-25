@@ -2,22 +2,23 @@ package com.remoteok.io.app.view.detail
 
 import android.Manifest
 import android.arch.lifecycle.ViewModelProviders
-import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.ShareActionProvider
 import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
+import com.remoteok.io.app.BuildConfig
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
@@ -29,14 +30,20 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class DetailActivity : AppCompatActivity() {
 
     private var shareActionProvider: ShareActionProvider? = null
 
     private lateinit var job: Job
+
+    private lateinit var contentUri: Uri
 
     private val viewModel by lazy {
         ViewModelProviders.of(this, DetailViewModelFactory()).get(DetailViewModel::class.java)
@@ -81,7 +88,6 @@ class DetailActivity : AppCompatActivity() {
         }.show()
     }
 
-
     private fun showJob() {
         textViewLogo.loadImage(job.logo, progressImage, true)
 
@@ -124,20 +130,7 @@ class DetailActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
-            WRITE_EXTERNAL_STORAGE -> {
-                if ((grantResults.isNotEmpty()) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    setShareIntent()
-                }
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
     private fun setShareIntent() {
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "image/*"
 
         val bitmap = if (textViewLogo.drawingCache != null) {
             textViewLogo.drawingCache
@@ -145,12 +138,37 @@ class DetailActivity : AppCompatActivity() {
             BitmapFactory.decodeResource(resources, R.drawable.logo_400x200)
         }
 
-        val bitmapPath = MediaStore.Images.Media.insertImage(contentResolver, bitmap, "image_detail_remoteok", null)
+        try {
+            val cachePath = File(this.cacheDir, "/images")
+            cachePath.mkdirs()
+            val stream = FileOutputStream("$cachePath/image.png") // overwrites this image every time
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.close()
 
-        val bitmapUri = Uri.parse(bitmapPath)
-        shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        val imagePath = File(this.cacheDir, "images")
+        val newFile = File(imagePath, "image.png")
+        contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", newFile)
+
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
         shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job.description)}")
         shareActionProvider?.setShareIntent(shareIntent)
+    }
+
+    override fun onDestroy() {
+        val file = File(contentUri.path)
+        if (file.exists()) {
+            file.delete()
+        }
+        super.onDestroy()
     }
 
     companion object {

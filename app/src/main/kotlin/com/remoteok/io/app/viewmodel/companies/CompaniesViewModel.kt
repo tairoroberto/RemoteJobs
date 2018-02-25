@@ -1,10 +1,10 @@
-package com.remoteok.io.app.viewmodel.home
+package com.remoteok.io.app.viewmodel.companies
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.remoteok.io.app.domain.home.HomeUseCase
-import com.remoteok.io.app.model.Job
-import com.remoteok.io.app.model.JobsResponse
+import com.remoteok.io.app.domain.companies.CompaniesUseCase
+import com.remoteok.io.app.model.CompaniesResponse
+import com.remoteok.io.app.model.Company
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,15 +12,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.doAsync
 
-
 /**
- * Created by tairo on 12/12/17.
+ * Created by tairo on 2/24/18 11:04 PM.
  */
-class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
-
+class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
     private val disposables = CompositeDisposable()
 
-    private val response: MutableLiveData<List<Job>> = MutableLiveData()
+    private val response: MutableLiveData<List<Company>> = MutableLiveData()
 
     private val loadingStatus = MutableLiveData<Boolean>()
 
@@ -34,50 +32,46 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
         return errorStatus
     }
 
-    fun getResponse(): MutableLiveData<List<Job>> {
+    fun getResponse(): MutableLiveData<List<Company>> {
         return response
     }
 
-    fun getAllJobs() {
-        loadResponse(homeUseCase.listAllJobs())
+    fun listAllCompanies() {
+        loadResponse(companiesUseCase.listAllCompanies())
     }
 
-    fun search(query: String) {
-        loadResponse(homeUseCase.searchJobs(query.toLowerCase()))
-    }
-
-    private fun loadResponse(jobsResponse: Single<JobsResponse>) {
-        disposables.add(jobsResponse
+    private fun loadResponse(companiesResponse: Single<CompaniesResponse>) {
+        disposables.add(companiesResponse
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe({ loadingStatus.setValue(true) })
                 .doAfterTerminate({ loadingStatus.setValue(false) })
-                .doOnError { loadResponseFromDataBase(homeUseCase.listJobsFromBD()) }
+                .doOnError { loadResponseFromDataBase(companiesUseCase.listCompaniesFromBD()) }
                 .subscribe(
-                        { jobs ->
-                            response.value = jobs.list?.subList(0, if (jobs.list?.size as Int > 30) 30 else jobs.list?.lastIndex as Int)
+                        { companies ->
+                            response.value = companies.items?.subList(0, if (companies.items?.size as Int > 30) 30 else companies.items?.lastIndex as Int)
                             doAsync {
-                                homeUseCase.deleteAllJobs()
-                                homeUseCase.addAllJobs(response.value)
+                                companiesUseCase.deleteAllCompanies()
+                                companiesUseCase.addAllCompanies(response.value)
                             }
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()
-                            loadResponseFromDataBase(homeUseCase.listJobsFromBD())
+                            loadResponseFromDataBase(companiesUseCase.listCompaniesFromBD())
                         }
                 )
         )
     }
 
-    private fun loadResponseFromDataBase(jobsResponse: Flowable<List<Job>>) {
-        disposables.add(jobsResponse
+    private fun loadResponseFromDataBase(companiesResponse: Flowable<List<Company>>) {
+        disposables.add(companiesResponse
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe({ loadingStatus.setValue(true) })
                 .doAfterTerminate({ loadingStatus.setValue(false) })
                 .subscribe(
-                        { jobs ->
-                            response.value = jobs.subList(0, if (jobs.size > 30) 30 else jobs.lastIndex)
+                        { companies ->
+                            response.value = companies.subList(0, if (companies.size > 30) 30 else companies.lastIndex)
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()

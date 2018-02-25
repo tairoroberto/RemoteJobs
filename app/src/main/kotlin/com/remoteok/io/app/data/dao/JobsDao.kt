@@ -1,6 +1,5 @@
 package com.remoteok.io.app.data.dao
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.remoteok.io.app.model.Job
 import io.reactivex.Flowable

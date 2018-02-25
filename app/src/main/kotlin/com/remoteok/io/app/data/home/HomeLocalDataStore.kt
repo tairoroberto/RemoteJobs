@@ -1,15 +1,14 @@
-package com.remoteok.io.app.data
+package com.remoteok.io.app.data.home
 
-import android.arch.lifecycle.LiveData
 import com.remoteok.io.app.data.dao.JobsDao
-import com.remoteok.io.app.domain.LocalRepository
+import com.remoteok.io.app.domain.home.HomeLocalRepository
 import com.remoteok.io.app.model.Job
 import io.reactivex.Flowable
 
 /**
  * Created by tairo on 1/6/18 10:58 PM.
  */
-class LocalDataStore(private val jobsDao: JobsDao) : LocalRepository {
+class HomeLocalDataStore(private val jobsDao: JobsDao) : HomeLocalRepository {
     override fun add(job: Job): Long {
         return jobsDao.add(job)
     }

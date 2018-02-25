@@ -1,4 +1,4 @@
-package com.remoteok.io.app.domain
+package com.remoteok.io.app.domain.home
 
 import com.remoteok.io.app.model.Job
 import io.reactivex.Flowable
@@ -6,7 +6,7 @@ import io.reactivex.Flowable
 /**
  * Created by tairo on 1/6/18 10:49 PM.
  */
-interface LocalRepository {
+interface HomeLocalRepository {
 
     fun add(job: Job): Long
 
