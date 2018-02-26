@@ -29,4 +29,7 @@ interface JobsDao {
 
     @Query("select * from jobs where id = :id")
     fun getByID(id: Int): Flowable<Job>
+
+    @Query("SELECT * FROM jobs where company = :company")
+    fun getAllByCompany(company: String): Flowable<List<Job>>
 }

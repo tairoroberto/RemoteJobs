@@ -63,6 +63,8 @@ class DetailActivity : AppCompatActivity() {
         showJob()
 
         fab.setOnClickListener { showAlertDialog(job) }
+
+        contentUri = Uri.EMPTY
     }
 
     private fun setAnimation() {

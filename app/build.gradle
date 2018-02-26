@@ -69,6 +69,10 @@ android {
             assets.srcDirs = ['src/main/assets']
         }
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
 }
 
 allprojects {

@@ -22,4 +22,6 @@ interface CompaniesLocalRepository {
     fun getAll(): Flowable<List<Company>>
 
     fun getByID(id: Int): Flowable<Company>
+
+    fun getAllByCompany(company: String): Flowable<List<Job>>
 }

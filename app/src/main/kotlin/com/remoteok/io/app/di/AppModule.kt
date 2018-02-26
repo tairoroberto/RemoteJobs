@@ -54,8 +54,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    internal fun provideCompaniesLocalRepository(companiesDao: CompaniesDao): CompaniesLocalRepository {
-        return CompaniesLocalDataStore(companiesDao)
+    internal fun provideCompaniesLocalRepository(companiesDao: CompaniesDao, jobsDao: JobsDao): CompaniesLocalRepository {
+        return CompaniesLocalDataStore(companiesDao, jobsDao)
     }
 
     @Singleton

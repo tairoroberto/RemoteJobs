@@ -1,14 +1,16 @@
 package com.remoteok.io.app.data.companies
 
 import com.remoteok.io.app.data.dao.CompaniesDao
+import com.remoteok.io.app.data.dao.JobsDao
 import com.remoteok.io.app.domain.companies.CompaniesLocalRepository
 import com.remoteok.io.app.model.Company
+import com.remoteok.io.app.model.Job
 import io.reactivex.Flowable
 
 /**
  * Created by tairo on 1/6/18 10:58 PM.
  */
-class CompaniesLocalDataStore(private val companiesDao: CompaniesDao) : CompaniesLocalRepository {
+class CompaniesLocalDataStore(private val companiesDao: CompaniesDao, private val jobsDao: JobsDao) : CompaniesLocalRepository {
     override fun add(company: Company): Long {
         return companiesDao.add(company)
     }
@@ -35,5 +37,9 @@ class CompaniesLocalDataStore(private val companiesDao: CompaniesDao) : Companie
 
     override fun getByID(id: Int): Flowable<Company> {
         return companiesDao.getByID(id)
+    }
+
+    override fun getAllByCompany(company: String): Flowable<List<Job>> {
+        return jobsDao.getAllByCompany(company)
     }
 }
