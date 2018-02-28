@@ -27,7 +27,7 @@ import com.remoteok.io.app.view.detail.DetailActivity
 import com.remoteok.io.app.viewmodel.home.HomeViewModel
 import com.remoteok.io.app.viewmodel.home.HomeViewModelFactory
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.yesButton
 import javax.inject.Inject
@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setAnimation()
-        return inflater.inflate(R.layout.fragment_list, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

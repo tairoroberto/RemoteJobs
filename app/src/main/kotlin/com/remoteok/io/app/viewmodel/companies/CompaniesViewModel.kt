@@ -49,7 +49,7 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
                 .doOnError { loadResponseFromDataBase(companiesUseCase.listCompaniesFromBD()) }
                 .subscribe(
                         { companies ->
-                            response.value = companies.items?.subList(0, if (companies.items?.size as Int > 30) 30 else companies.items?.lastIndex as Int)
+                            response.value = companies.items
                             doAsync {
                                 companiesUseCase.deleteAllCompanies()
                                 companiesUseCase.addAllCompanies(response.value)
@@ -71,7 +71,7 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
                 .doAfterTerminate({ loadingStatus.setValue(false) })
                 .subscribe(
                         { companies ->
-                            response.value = companies.subList(0, if (companies.size > 30) 30 else companies.lastIndex)
+                            response.value = companies
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()

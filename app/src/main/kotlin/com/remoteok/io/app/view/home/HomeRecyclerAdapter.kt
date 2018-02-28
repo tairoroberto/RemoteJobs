@@ -32,7 +32,7 @@ class HomeRecyclerAdapter(private val context: Context?,
         holder.itemView.setOnClickListener({
             onClick(item, holder.imageView)
         })
-        //setAnimation(holder.itemView, position)
+        setAnimation(holder.itemView, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,7 +51,8 @@ class HomeRecyclerAdapter(private val context: Context?,
     override fun getItemCount(): Int = list.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.textViewLogo)
+        val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
+        private val textViewLogo: TextView = view.findViewById(R.id.textViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
@@ -60,7 +61,14 @@ class HomeRecyclerAdapter(private val context: Context?,
         private val tag3: Button = view.findViewById(R.id.tag3)
 
         fun bind(job: Job) {
-            imageView.loadImage(job.logo, progressImage, false)
+            if (!job.logo.isBlank()) {
+                textViewLogo.visibility = View.INVISIBLE
+                imageView.visibility = View.VISIBLE
+                imageView.loadImage(job.logo, progressImage, false)
+            } else {
+                textViewLogo.visibility = View.VISIBLE
+                imageView.visibility = View.GONE
+            }
 
             textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(job.position, Html.FROM_HTML_MODE_COMPACT)

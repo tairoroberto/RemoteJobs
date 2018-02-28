@@ -24,7 +24,7 @@ interface CompaniesDao {
     @Query("DELETE FROM companies")
     fun deleteAll()
 
-    @Query("SELECT * FROM companies")
+    @Query("SELECT * FROM companies LIMIT 30")
     fun getAll(): Flowable<List<Company>>
 
     @Query("select * from companies where id = :id")

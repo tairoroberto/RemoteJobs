@@ -24,12 +24,12 @@ interface JobsDao {
     @Query("DELETE FROM jobs")
     fun deleteAll()
 
-    @Query("SELECT * FROM jobs")
+    @Query("SELECT * FROM jobs LIMIT 30")
     fun getAll(): Flowable<List<Job>>
 
     @Query("select * from jobs where id = :id")
     fun getByID(id: Int): Flowable<Job>
 
-    @Query("SELECT * FROM jobs where company = :company")
+    @Query("SELECT * FROM jobs where company = :company LIMIT 30")
     fun getAllByCompany(company: String): Flowable<List<Job>>
 }

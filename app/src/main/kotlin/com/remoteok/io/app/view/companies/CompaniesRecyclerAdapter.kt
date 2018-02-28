@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.remoteok.io.app.R
+import com.remoteok.io.app.R.id.textViewLogo
 import com.remoteok.io.app.model.Company
 import com.remoteok.io.app.utils.extension.loadImage
 
@@ -31,7 +32,7 @@ class CompaniesRecyclerAdapter(private val context: Context?,
         holder.itemView.setOnClickListener({
             onClick(item, holder.imageView)
         })
-        //setAnimation(holder.itemView, position)
+        setAnimation(holder.itemView, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,7 +51,7 @@ class CompaniesRecyclerAdapter(private val context: Context?,
     override fun getItemCount(): Int = list.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.textViewLogo)
+        val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)

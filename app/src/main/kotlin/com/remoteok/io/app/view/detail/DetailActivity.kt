@@ -55,14 +55,17 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        textViewLogo.isDrawingCacheEnabled = true
+        imageViewLogo.isDrawingCacheEnabled = true
         job = intent.getParcelableExtra("job")
 
         showJob()
 
         fab.setOnClickListener { showAlertDialog(job) }
+        imageBack.setOnClickListener {
+            setAnimation()
+            finish()
+        }
 
         contentUri = Uri.EMPTY
     }
@@ -91,7 +94,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showJob() {
-        textViewLogo.loadImage(job.logo, progressImage, true)
+        imageViewLogo.loadImage(job.logo, progressImage, false)
 
         toolbar_layout.title = job.position
         textViewName.text = job.position
@@ -134,8 +137,8 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setShareIntent() {
 
-        val bitmap = if (textViewLogo.drawingCache != null) {
-            textViewLogo.drawingCache
+        val bitmap = if (imageViewLogo.drawingCache != null) {
+            imageViewLogo.drawingCache
         } else {
             BitmapFactory.decodeResource(resources, R.drawable.logo_400x200)
         }

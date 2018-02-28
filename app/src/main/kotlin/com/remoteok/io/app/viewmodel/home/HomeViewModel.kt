@@ -55,7 +55,7 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
                 .doOnError { loadResponseFromDataBase(homeUseCase.listJobsFromBD()) }
                 .subscribe(
                         { jobs ->
-                            response.value = jobs.list?.subList(0, if (jobs.list?.size as Int > 30) 30 else jobs.list?.lastIndex as Int)
+                            response.value = jobs.list
                             doAsync {
                                 homeUseCase.deleteAllJobs()
                                 homeUseCase.addAllJobs(response.value)
@@ -77,7 +77,7 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
                 .doAfterTerminate({ loadingStatus.setValue(false) })
                 .subscribe(
                         { jobs ->
-                            response.value = jobs.subList(0, if (jobs.size > 30) 30 else jobs.lastIndex)
+                            response.value = jobs
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()
