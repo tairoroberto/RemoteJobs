@@ -140,7 +140,7 @@ class DetailActivity : AppCompatActivity() {
         val bitmap = if (imageViewLogo.drawingCache != null) {
             imageViewLogo.drawingCache
         } else {
-            BitmapFactory.decodeResource(resources, R.drawable.logo_400x200)
+            BitmapFactory.decodeResource(resources, R.drawable.ic_logo_400x200)
         }
 
         try {
