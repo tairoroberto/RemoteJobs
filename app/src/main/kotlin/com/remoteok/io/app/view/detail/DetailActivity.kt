@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -99,16 +100,10 @@ class DetailActivity : AppCompatActivity() {
         toolbar_layout.title = job.position
         textViewName.text = job.position
 
+        val font = Typeface.createFromAsset(assets, "NotoSans_CondensedLight.ttf")
+        textViewDescription.typeface = font
 
-        val description =
-                "<html>" +
-                        "    <head>" +
-                        "        <meta charset=\"utf-8\" />" +
-                        "    </head>" +
-                        "    <body bgcolor=\"#fafafa\"> ${job.description} </body>" +
-                        "</html>"
-
-        textViewDescription.loadData(description, "text/html", "UTF-8")
+        textViewDescription.text = Html.fromHtml(job.description)
         textViewReleaseDate.text = formatDate(job.date)
     }
 
