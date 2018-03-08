@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "907571924863-5eno3dlb8ogmft9350ljhendknqblh94.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.remoteok.io.app",
+            "certificate_hash": "bd2fa6e970c86df58923fe875459f78fd512294f"
+          }
+        },
+        {
           "client_id": "907571924863-lpl928fs717e5f09flp984ri8h3n9gvi.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907571924863-lpl928fs717e5f09flp984ri8h3n9gvi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

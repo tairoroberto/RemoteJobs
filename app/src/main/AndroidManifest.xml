@@ -36,6 +36,10 @@
             android:parentActivityName=".view.home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:label="@string/title_activity_login" />
+
         <service android:name=".domain.services.CustomFirebaseInstaceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

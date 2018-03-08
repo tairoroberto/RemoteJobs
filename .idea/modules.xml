@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RemoteOK.iml" filepath="$PROJECT_DIR$/RemoteOK.iml" />
+      <module fileurl="file://C:\AndroidStudioProjects\RemoteOK\RemoteOK.iml" filepath="C:\AndroidStudioProjects\RemoteOK\RemoteOK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\AndroidStudioProjects\RemoteOK\app\app.iml" filepath="C:\AndroidStudioProjects\RemoteOK\app\app.iml" />
     </modules>
   </component>
 </project>

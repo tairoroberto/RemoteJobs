@@ -111,6 +111,7 @@ dependencies {
     /*############################## Firebase #####################################*/
     implementation "com.google.firebase:firebase-core:${rootProject.firebase}"
     implementation "com.google.firebase:firebase-messaging:${rootProject.firebase}"
+    implementation "com.google.firebase:firebase-auth:${rootProject.firebase}"
     /*############################################################################*/
 
     /*############################# Crashlytics ####################################*/
@@ -155,6 +156,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:${rootProject.arch}"
     implementation "android.arch.persistence.room:rxjava2:${rootProject.arch}"
     implementation "android.arch.persistence.room:testing:${rootProject.arch}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     kapt "android.arch.persistence.room:compiler:${rootProject.arch}"
 
     // Lifecycle

@@ -1,15 +1,12 @@
 package com.remoteok.io.app.domain.services.network
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.reflect.Modifier
 import java.util.concurrent.TimeUnit
-
 
 /**
  * Created by tairo on 11/12/17.
@@ -19,12 +16,6 @@ class RemoteApiService {
     private var retrofit: Retrofit
 
     init {
-
-        val gson = GsonBuilder()
-                .excludeFieldsWithModifiers(Modifier.TRANSIENT)
-                .disableHtmlEscaping()
-                .create()
-
         val httpClient = OkHttpClient.Builder()
                 .addNetworkInterceptor(StethoInterceptor())
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -35,7 +26,7 @@ class RemoteApiService {
         retrofit = Retrofit.Builder()
                 .baseUrl(URL_BASE)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient)
                 .build()
     }
