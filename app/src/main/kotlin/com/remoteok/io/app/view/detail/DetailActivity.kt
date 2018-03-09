@@ -34,6 +34,7 @@ import org.jetbrains.anko.yesButton
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.net.URLDecoder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -103,7 +104,9 @@ class DetailActivity : AppCompatActivity() {
         val font = Typeface.createFromAsset(assets, "NotoSans_CondensedLight.ttf")
         textViewDescription.typeface = font
 
-        textViewDescription.text = Html.fromHtml(job.description)
+        val text = URLDecoder.decode(job.description.replace("%", " percent"), "UTF-8")
+
+        textViewDescription.text = Html.fromHtml(text)
         textViewReleaseDate.text = formatDate(job.date)
     }
 
