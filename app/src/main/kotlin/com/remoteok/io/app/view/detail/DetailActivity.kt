@@ -23,10 +23,12 @@ import com.remoteok.io.app.BuildConfig
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
+import com.remoteok.io.app.utils.extension.showProgress
 import com.remoteok.io.app.viewmodel.detail.DetailViewModel
 import com.remoteok.io.app.viewmodel.detail.DetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
+import org.apache.commons.text.StringEscapeUtils
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.noButton
@@ -34,7 +36,6 @@ import org.jetbrains.anko.yesButton
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.net.URLDecoder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -58,6 +59,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
 
+        showProgress(textViewDescription, progressBar, true)
         imageViewLogo.isDrawingCacheEnabled = true
         job = intent.getParcelableExtra("job")
 
@@ -104,10 +106,26 @@ class DetailActivity : AppCompatActivity() {
         val font = Typeface.createFromAsset(assets, "NotoSans_CondensedLight.ttf")
         textViewDescription.typeface = font
 
-        val text = URLDecoder.decode(job.description.replace("%", " percent"), "UTF-8")
+        val text = StringEscapeUtils.escapeJava(job.description)
 
-        textViewDescription.text = Html.fromHtml(text)
+        textViewDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(StringEscapeUtils.unescapeJava(removeUnicodeCharacters(text)), Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            Html.fromHtml(StringEscapeUtils.unescapeJava(removeUnicodeCharacters(text)))
+        }
+
         textViewReleaseDate.text = formatDate(job.date)
+        showProgress(textViewDescription, progressBar, false)
+    }
+
+    private fun removeUnicodeCharacters(data: String): String {
+
+        return data
+                .replace("\\u00E2\\u0080\\u0099", "'")
+                .replace("\\u00E2\\u0080\\u009C", "'")
+                .replace("\\u00E2\\u0080\\u009D", "'")
+                .replace("\\u00E2\\u0080\\u0093", "'")
+                .replace("\\u00E2\\u0082\\u00AC", "€")
     }
 
     private fun formatDate(date: String?): String {
@@ -145,7 +163,7 @@ class DetailActivity : AppCompatActivity() {
             val cachePath = File(this.cacheDir, "/images")
             cachePath.mkdirs()
             val stream = FileOutputStream("$cachePath/image.png") // overwrites this image every time
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
             stream.close()
 
         } catch (e: IOException) {
@@ -172,6 +190,10 @@ class DetailActivity : AppCompatActivity() {
             file.delete()
         }
         super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 
     companion object {

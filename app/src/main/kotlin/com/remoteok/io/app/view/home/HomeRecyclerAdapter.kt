@@ -15,6 +15,7 @@ import android.widget.TextView
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
+import org.apache.commons.text.StringEscapeUtils
 
 
 /**
