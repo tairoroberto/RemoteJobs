@@ -113,6 +113,7 @@ dependencies {
     implementation "com.google.firebase:firebase-core:${rootProject.firebase}"
     implementation "com.google.firebase:firebase-messaging:${rootProject.firebase}"
     implementation "com.google.firebase:firebase-auth:${rootProject.firebase}"
+    implementation "com.google.android.gms:play-services-analytics:${rootProject.firebase}"
     /*############################################################################*/
 
     /*############################# Crashlytics ####################################*/
@@ -144,7 +145,7 @@ dependencies {
     /*############################################################################*/
 
     /*########################### Image libs #####################################*/
-    implementation "com.squareup.picasso:picasso:$picasso"
+    implementation "com.squareup.picasso:picasso:${rootProject.picasso}"
     /*############################################################################*/
 
     /*################ Facebook Sthetho for debug conections #####################*/

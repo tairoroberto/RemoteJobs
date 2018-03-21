@@ -19,6 +19,7 @@ import android.support.v7.widget.ShareActionProvider
 import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.remoteok.io.app.BuildConfig
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
@@ -48,6 +49,8 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var contentUri: Uri
 
+    private lateinit var tracker: FirebaseAnalytics
+
     private val viewModel by lazy {
         ViewModelProviders.of(this, DetailViewModelFactory()).get(DetailViewModel::class.java)
     }
@@ -58,6 +61,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
+
+        tracker = FirebaseAnalytics.getInstance(this@DetailActivity)
 
         showProgress(textViewDescription, progressBar, true)
         imageViewLogo.isDrawingCacheEnabled = true
@@ -92,9 +97,17 @@ class DetailActivity : AppCompatActivity() {
             noButton {}
             yesButton {
                 browse("https://remoteok.io/l/${job.id}")
+                trackApplyedJob(job)
             }
 
         }.show()
+    }
+
+    private fun trackApplyedJob(job: Job) {
+        val params = Bundle()
+        params.putString("job_id", job.id)
+        params.putString("job_name", job.position)
+        tracker.logEvent("apply_job", params)
     }
 
     private fun showJob() {
@@ -141,6 +154,8 @@ class DetailActivity : AppCompatActivity() {
 
         shareActionProvider = MenuItemCompat.getActionProvider(shareItem) as ShareActionProvider
 
+        trackSharedJob()
+
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE)
@@ -149,6 +164,17 @@ class DetailActivity : AppCompatActivity() {
         }
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun trackSharedJob() {
+        shareActionProvider?.setOnShareTargetSelectedListener { source, intent ->
+            val params = Bundle()
+            params.putString("job_id", job.id)
+            params.putString("job_name", job.position)
+            tracker.logEvent("share_job", params)
+
+            return@setOnShareTargetSelectedListener false
+        }
     }
 
     private fun setShareIntent() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,23 +13,28 @@
 
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/buttonsContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textViewLogo"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="0dp"
         android:background="@drawable/background_card_border_black"
@@ -37,16 +42,12 @@
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/remote_ok"
         android:textColor="@color/white_f2feff"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="48sp" />
 
 
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -57,14 +58,11 @@
         android:textColor="#252220"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLogo"
         tools:text="Senior Full Stack Web Developer" />
 
     <TextView
         android:id="@+id/textViewDescription"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -75,30 +73,11 @@
         android:textAlignment="viewStart"
         android:textColor="#605751"
         android:textSize="@dimen/dimen_12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
         tools:text="Tenth Avenue CommerceTenth Avenue CommerceTenth Avenue Commerce" />
-
-    <ProgressBar
-        android:id="@+id/progressImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewLogo"
-        app:layout_constraintEnd_toEndOf="@+id/textViewLogo"
-        app:layout_constraintStart_toStartOf="@+id/textViewLogo"
-        app:layout_constraintTop_toTopOf="@+id/textViewLogo" />
-
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/buttonsContainer"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -106,12 +85,7 @@
         android:layout_marginTop="8dp"
         app:flexDirection="row"
         app:flexWrap="wrap"
-        app:justifyContent="flex_start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescription">
+        app:justifyContent="flex_start">
 
         <Button
             android:id="@+id/tag1"
@@ -146,4 +120,4 @@
             tools:text="full " />
     </com.google.android.flexbox.FlexboxLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

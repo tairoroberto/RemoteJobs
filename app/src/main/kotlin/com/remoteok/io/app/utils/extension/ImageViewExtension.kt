@@ -8,6 +8,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 
 /**
@@ -17,24 +18,25 @@ import com.squareup.picasso.Picasso
 fun ImageView.loadImage(url: String?, progress: ProgressBar?, large: Boolean?) {
     progress?.visibility = View.VISIBLE
 
-    if (url.isNullOrBlank()){
+    if (url.isNullOrBlank()) {
         this.setImageResource(if (large == false) R.drawable.ic_logo_400x200 else R.drawable.ic_logo_1200x1200)
         progress?.visibility = View.GONE
         return
     }
 
-    Picasso.with(context)
+    Picasso.get()
             .load(url)
             .networkPolicy(NetworkPolicy.OFFLINE)
             .into(this, object : Callback {
+
                 override fun onSuccess() {
                     progress?.visibility = View.GONE
                 }
 
-                override fun onError() {
+                override fun onError(e: Exception?) {
                     progress?.visibility = View.VISIBLE
                     //Try again online if cache failed
-                    Picasso.with(context).load(url).networkPolicy(NetworkPolicy.NO_CACHE)
+                    Picasso.get().load(url).networkPolicy(NetworkPolicy.NO_CACHE)
                             .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(if (large == false) R.drawable.ic_logo_400x200 else R.drawable.ic_logo_1200x1200)
                             .into(this@loadImage, object : Callback {
 
@@ -42,7 +44,7 @@ fun ImageView.loadImage(url: String?, progress: ProgressBar?, large: Boolean?) {
                                     progress?.visibility = View.GONE
                                 }
 
-                                override fun onError() {
+                                override fun onError(e: Exception?) {
                                     progress?.visibility = View.GONE
                                 }
                             })

@@ -3,6 +3,7 @@ package com.remoteok.io.app.view.home
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.hideSoftKeyboard
@@ -29,6 +31,8 @@ import com.remoteok.io.app.viewmodel.home.HomeViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
 import javax.inject.Inject
 
@@ -55,6 +59,8 @@ class HomeFragment : Fragment() {
 
     private val filteredValues = ArrayList<String>()
 
+    private lateinit var tracker: FirebaseAnalytics
+
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
@@ -72,6 +78,8 @@ class HomeFragment : Fragment() {
         //observeErrorStatus()
         observeResponse()
         getAllJobs()
+
+        tracker = FirebaseAnalytics.getInstance(activity)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -90,6 +98,7 @@ class HomeFragment : Fragment() {
             listSearch.visibility = GONE
             activity?.hideSoftKeyboard()
         }
+        showAlertDialogHateUs()
     }
 
     private fun setRecyclerViewListJobs() {
@@ -229,5 +238,22 @@ class HomeFragment : Fragment() {
         }
 
         return true
+    }
+
+    private fun showAlertDialogHateUs() {
+        val rated = activity?.getSharedPreferences("Home", MODE_PRIVATE)?.getBoolean("rated", false)
+        if (rated != true) {
+            activity?.alert {
+                title = "Rate us"
+                message = "Rate us and help us improve with new features for the community, give us 5 stars to help in the disclosure, but leave a comment to improve the app :)"
+
+                noButton {}
+                yesButton {
+                    activity?.browse("market://details?id=${activity?.packageName}")
+                    activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)?.apply()
+                }
+
+            }?.show()
+        }
     }
 }

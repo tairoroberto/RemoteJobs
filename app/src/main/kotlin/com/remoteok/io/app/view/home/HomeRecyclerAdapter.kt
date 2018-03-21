@@ -63,7 +63,7 @@ class HomeRecyclerAdapter(private val context: Context?,
 
         fun bind(job: Job) {
             if (!job.logo.isBlank()) {
-                textViewLogo.visibility = View.INVISIBLE
+                textViewLogo.visibility = View.GONE
                 imageView.visibility = View.VISIBLE
                 imageView.loadImage(job.logo, progressImage, false)
             } else {
