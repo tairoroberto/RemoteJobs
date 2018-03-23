@@ -60,7 +60,7 @@ class CompaniesRecyclerAdapter(private val context: Context?,
         private val tag3: Button = view.findViewById(R.id.tag3)
 
         fun bind(company: Company) {
-            imageView.loadImage(company.image, progressImage, false)
+            imageView.loadImage(company.image, progressImage)
 
             textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(company.company, Html.FROM_HTML_MODE_COMPACT)

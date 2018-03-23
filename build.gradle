@@ -6,8 +6,8 @@ buildscript {
     ext.buildToolsVersion = '27.0.3'
     ext.minSdkVersion = 21
     ext.targetSdkVersion = 27
-    ext.versionCode = 23
-    ext.versionName = '1.23'
+    ext.versionCode = 24
+    ext.versionName = '1.24'
 
     ext.supportLibs = '27.0.2'
     ext.constraint_layout = '1.0.2'
