@@ -24,6 +24,7 @@ import com.remoteok.io.app.BuildConfig
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
+import com.remoteok.io.app.utils.extension.removeUnicodeCharacters
 import com.remoteok.io.app.utils.extension.showProgress
 import com.remoteok.io.app.viewmodel.detail.DetailViewModel
 import com.remoteok.io.app.viewmodel.detail.DetailViewModelFactory
@@ -96,7 +97,7 @@ class DetailActivity : AppCompatActivity() {
 
             noButton {}
             yesButton {
-                browse("https://remoteok.io/l/${job.id}")
+                browse(job.url)
                 trackApplyedJob(job)
             }
 
@@ -119,26 +120,14 @@ class DetailActivity : AppCompatActivity() {
         val font = Typeface.createFromAsset(assets, "NotoSans_CondensedLight.ttf")
         textViewDescription.typeface = font
 
-        val text = StringEscapeUtils.escapeJava(job.description)
-
         textViewDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(StringEscapeUtils.unescapeJava(removeUnicodeCharacters(text)), Html.FROM_HTML_MODE_COMPACT)
+            Html.fromHtml(job.description, Html.FROM_HTML_MODE_COMPACT)
         } else {
-            Html.fromHtml(StringEscapeUtils.unescapeJava(removeUnicodeCharacters(text)))
+            Html.fromHtml(job.description)
         }
 
         textViewReleaseDate.text = formatDate(job.date)
         showProgress(textViewDescription, progressBar, false)
-    }
-
-    private fun removeUnicodeCharacters(data: String): String {
-
-        return data
-                .replace("\\u00E2\\u0080\\u0099", "'")
-                .replace("\\u00E2\\u0080\\u009C", "'")
-                .replace("\\u00E2\\u0080\\u009D", "'")
-                .replace("\\u00E2\\u0080\\u0093", "'")
-                .replace("\\u00E2\\u0082\\u00AC", "€")
     }
 
     private fun formatDate(date: String?): String {

@@ -66,3 +66,22 @@ fun Activity.showSoftKeyboard() {
         (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)
     }
 }
+
+fun Context.removeUnicodeCharacters(data: String): String {
+
+    return data
+            .replace("\\u00E2\\u0080\\u0099", "'")
+            .replace("\\u00e2\\u0080\\u0099", "'")
+            .replace("\\u00E2\\u0080\\u009C", "'")
+            .replace("\\u00e2\\u0080\\u009c", "'")
+            .replace("\\u00E2\\u0080\\u009D", "'")
+            .replace("\\u00e2\\u0080\\u009d", "'")
+            .replace("\\u00E2\\u0080\\u0093", "'")
+            .replace("\\u00e2\\u0080\\u0093", "'")
+            .replace("\\u00E2\\u0082\\u00AC", "€")
+            .replace("\\u00e2\\u0082\\u00aC", "€")
+            .replace("\\u00c3\\u00a9", "é")
+            .replace("\\u00C3\\u00A9", "é")
+            .replace("\\u00C3\\u00A0", "à")
+            .replace("\\u00c3\\u00a0", "à")
+}

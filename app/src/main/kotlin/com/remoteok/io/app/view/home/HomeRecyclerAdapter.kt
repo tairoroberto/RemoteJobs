@@ -15,6 +15,7 @@ import android.widget.TextView
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
+import com.remoteok.io.app.utils.extension.removeUnicodeCharacters
 import org.apache.commons.text.StringEscapeUtils
 
 
@@ -70,6 +71,12 @@ class HomeRecyclerAdapter(private val context: Context?,
                 textViewLogo.visibility = View.VISIBLE
                 imageView.visibility = View.GONE
             }
+
+            val textTitle = StringEscapeUtils.escapeJava(job.position)
+            job.position = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textTitle))
+
+            val textDescription = StringEscapeUtils.escapeJava(job.description)
+            job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))
 
             textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(job.position, Html.FROM_HTML_MODE_COMPACT)
