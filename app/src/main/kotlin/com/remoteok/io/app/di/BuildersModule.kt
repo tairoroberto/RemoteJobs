@@ -2,6 +2,7 @@ package com.remoteok.io.app.di
 
 import com.remoteok.io.app.view.companies.CompaniesFragment
 import com.remoteok.io.app.view.detail.DetailActivity
+import com.remoteok.io.app.view.highestpaid.HighestPaidFragment
 import com.remoteok.io.app.view.home.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -17,6 +18,9 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [(CompaniesModule::class)])
     internal abstract fun bindCompaniesFragment(): CompaniesFragment
+
+    @ContributesAndroidInjector(modules = [(HighestPaidModule::class)])
+    internal abstract fun bindHighestPaidFragment(): HighestPaidFragment
 
     @ContributesAndroidInjector(modules = [(DetailModule::class)])
     internal abstract fun bindDetailActivity(): DetailActivity

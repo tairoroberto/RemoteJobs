@@ -18,7 +18,6 @@ fun ImageView.loadImage(url: String?, progress: ProgressBar?) {
     progress?.visibility = View.VISIBLE
 
     if (url.isNullOrBlank()) {
-        this.setImageResource(R.drawable.ic_logo_400x200)
         progress?.visibility = View.GONE
         return
     }

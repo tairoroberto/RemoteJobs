@@ -32,4 +32,7 @@ interface JobsDao {
 
     @Query("SELECT * FROM jobs where company = :company LIMIT 30")
     fun getAllByCompany(company: String): Flowable<List<Job>>
+
+    @Query("SELECT * FROM jobs where tags LIKE '%'||:tag|| '%' LIMIT 30")
+    fun getAllByTag(tag: String): Flowable<List<Job>>
 }

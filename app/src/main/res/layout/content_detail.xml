@@ -38,7 +38,7 @@
             android:layout_marginEnd="@dimen/dimen_16dp"
             android:layout_marginStart="@dimen/dimen_16dp"
             android:layout_marginTop="16dp"
-            android:autoLink="web"
+            android:autoLink="web|email"
             android:fontFamily="@font/sf_ui_text_light"
             android:textSize="@dimen/dimen_16sp"
             android:textStyle="bold"

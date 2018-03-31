@@ -26,15 +26,13 @@ import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
 import com.remoteok.io.app.utils.extension.removeUnicodeCharacters
 import com.remoteok.io.app.utils.extension.showProgress
+import com.remoteok.io.app.utils.extension.textHtml
 import com.remoteok.io.app.viewmodel.detail.DetailViewModel
 import com.remoteok.io.app.viewmodel.detail.DetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
 import org.apache.commons.text.StringEscapeUtils
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.yesButton
+import org.jetbrains.anko.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -46,7 +44,7 @@ class DetailActivity : AppCompatActivity() {
 
     private var shareActionProvider: ShareActionProvider? = null
 
-    private lateinit var job: Job
+    private var job: Job? = Job()
 
     private lateinit var contentUri: Uri
 
@@ -66,18 +64,20 @@ class DetailActivity : AppCompatActivity() {
         tracker = FirebaseAnalytics.getInstance(this@DetailActivity)
 
         showProgress(textViewDescription, progressBar, true)
-        imageViewLogo.isDrawingCacheEnabled = true
-        job = intent.getParcelableExtra("job")
+        job = intent?.getParcelableExtra("job")
 
         showJob()
 
-        fab.setOnClickListener { showAlertDialog(job) }
+        fab.setOnClickListener { showAlertDialog() }
         imageBack.setOnClickListener {
             setAnimation()
             finish()
         }
 
         contentUri = Uri.EMPTY
+        val params = Bundle()
+        params.putString("job_name", job?.position)
+        tracker.logEvent("detail", params)
     }
 
     private fun setAnimation() {
@@ -88,52 +88,62 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAlertDialog(job: Job) {
+    private fun showAlertDialog() {
         alert {
             title = "Apply for this job"
-            message = "Position: ${job.position}\n" +
-                    "Company: ${job.company}\n" +
-                    "Created at: ${formatDate(job.date)}"
+            message = "Position: ${job?.position}\n" +
+                    "Company: ${job?.company}\n" +
+                    "Created at: ${job?.date}"
 
             noButton {}
             yesButton {
-                browse(job.url)
-                trackApplyedJob(job)
+                applyJob()
             }
 
         }.show()
     }
 
-    private fun trackApplyedJob(job: Job) {
+    private fun applyJob() {
+
+        if (job?.urlApply?.equals("/l/${job?.id}") == true) {
+
+            browse("https://remoteok.io${job?.urlApply}")
+            trackApplyedJob()
+
+        }else if (job?.urlApply?.contains("mailto:") == true) {
+
+            startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(job?.urlApply)))
+            trackApplyedJob()
+
+        }else if (job?.urlApply?.contains("javascript:") == true) {
+            alert {
+                title = "Alert"
+                message = "'This job post is older than 90 days and the position is probably filled. Try applying to jobs posted recently instead."
+                okButton {  }
+            }.show()
+        }
+    }
+
+    private fun trackApplyedJob() {
         val params = Bundle()
-        params.putString("job_id", job.id)
-        params.putString("job_name", job.position)
+        params.putString("job_id", job?.id)
+        params.putString("job_name", job?.position)
         tracker.logEvent("apply_job", params)
     }
 
     private fun showJob() {
-        imageViewLogo.loadImage(job.logo, progressImage)
+        imageViewLogo.loadImage(job?.logo, progressImage)
 
-        toolbar_layout.title = job.position
-        textViewName.text = job.position
+        toolbar_layout.title = job?.position
+        textViewName.text = job?.position
 
         val font = Typeface.createFromAsset(assets, "NotoSans_CondensedLight.ttf")
         textViewDescription.typeface = font
 
-        textViewDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(job.description, Html.FROM_HTML_MODE_COMPACT)
-        } else {
-            Html.fromHtml(job.description)
-        }
+        textViewDescription.textHtml(job?.description)
 
-        textViewReleaseDate.text = formatDate(job.date)
+        textViewReleaseDate.text = job?.date
         showProgress(textViewDescription, progressBar, false)
-    }
-
-    private fun formatDate(date: String?): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss-SS:SS", Locale.ENGLISH)
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-        return format.format(sdf.parse(date))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -158,8 +168,8 @@ class DetailActivity : AppCompatActivity() {
     private fun trackSharedJob() {
         shareActionProvider?.setOnShareTargetSelectedListener { source, intent ->
             val params = Bundle()
-            params.putString("job_id", job.id)
-            params.putString("job_name", job.position)
+            params.putString("job_id", job?.id)
+            params.putString("job_name", job?.position)
             tracker.logEvent("share_job", params)
 
             return@setOnShareTargetSelectedListener false
@@ -168,11 +178,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setShareIntent() {
 
-        val bitmap = if (imageViewLogo.drawingCache != null) {
-            imageViewLogo.drawingCache
-        } else {
-            BitmapFactory.decodeResource(resources, R.drawable.ic_logo_400x200)
-        }
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_logo_400x200)
 
         try {
             val cachePath = File(this.cacheDir, "/images")
@@ -195,7 +201,7 @@ class DetailActivity : AppCompatActivity() {
         shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
 
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job.description)}")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job?.description)}")
         shareActionProvider?.setShareIntent(shareIntent)
     }
 

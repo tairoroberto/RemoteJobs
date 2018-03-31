@@ -6,17 +6,20 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import com.remoteok.io.app.data.dao.CompaniesDao
+import com.remoteok.io.app.data.dao.HighestPaidDao
 import com.remoteok.io.app.data.dao.JobsDao
 import com.remoteok.io.app.model.Company
+import com.remoteok.io.app.model.HighestPaid
 import com.remoteok.io.app.model.Job
 
 
-@Database(entities = [(Job::class), (Company::class)], version = 5)
+@Database(entities = [(Job::class), (Company::class), (HighestPaid::class)], version = 5)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun jobsDAO(): JobsDao
     abstract fun companiesDAO(): CompaniesDao
+    abstract fun highestPaidDao(): HighestPaidDao
 
     companion object {
 

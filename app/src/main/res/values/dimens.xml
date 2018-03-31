@@ -31,4 +31,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="dimen_12sp">12sp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
+    <dimen name="dimen_13sp">13sp</dimen>
 </resources>

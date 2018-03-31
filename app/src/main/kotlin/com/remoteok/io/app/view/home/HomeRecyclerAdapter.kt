@@ -16,6 +16,7 @@ import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
 import com.remoteok.io.app.utils.extension.removeUnicodeCharacters
+import com.remoteok.io.app.utils.extension.textHtml
 import org.apache.commons.text.StringEscapeUtils
 
 
@@ -78,17 +79,8 @@ class HomeRecyclerAdapter(private val context: Context?,
             val textDescription = StringEscapeUtils.escapeJava(job.description)
             job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))
 
-            textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(job.position, Html.FROM_HTML_MODE_COMPACT)
-            } else {
-                Html.fromHtml(job.position)
-            }
-
-            textViewOverview.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(job.description, Html.FROM_HTML_MODE_COMPACT)
-            } else {
-                Html.fromHtml(job.description)
-            }
+            textViewTitle.textHtml(job.position)
+            textViewOverview.textHtml(job.description)
 
             tag1.visibility = View.GONE
             tag2.visibility = View.GONE

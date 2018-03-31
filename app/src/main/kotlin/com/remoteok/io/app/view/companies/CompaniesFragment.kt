@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Company
 import com.remoteok.io.app.utils.extension.showProgress
@@ -52,6 +53,7 @@ class CompaniesFragment : Fragment() {
 
         setHasOptionsMenu(true)
         retainInstance = true
+        FirebaseAnalytics.getInstance(activity).logEvent("companies", null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

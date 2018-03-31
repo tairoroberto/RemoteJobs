@@ -51,4 +51,8 @@ data class Job(
 
         @ColumnInfo(name = "tags")
         @SerializedName("tags")
-        var tags: List<String>? = null) : Parcelable
+        var tags: List<String>? = ArrayList(),
+
+        @ColumnInfo(name = "url_apply")
+        @SerializedName("url_apply")
+        var urlApply: String? = "") : Parcelable

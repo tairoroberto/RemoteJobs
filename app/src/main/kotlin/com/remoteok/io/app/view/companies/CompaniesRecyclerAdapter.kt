@@ -16,6 +16,7 @@ import com.remoteok.io.app.R
 import com.remoteok.io.app.R.id.textViewLogo
 import com.remoteok.io.app.model.Company
 import com.remoteok.io.app.utils.extension.loadImage
+import com.remoteok.io.app.utils.extension.textHtml
 
 /**
  * Created by tairo on 12/12/17.
@@ -62,17 +63,8 @@ class CompaniesRecyclerAdapter(private val context: Context?,
         fun bind(company: Company) {
             imageView.loadImage(company.image, progressImage)
 
-            textViewTitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(company.company, Html.FROM_HTML_MODE_COMPACT)
-            } else {
-                Html.fromHtml(company.company)
-            }
-
-            textViewOverview.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(company.aggregateRating, Html.FROM_HTML_MODE_COMPACT)
-            } else {
-                Html.fromHtml(company.aggregateRating)
-            }
+            textViewTitle.textHtml(company.company)
+            textViewOverview.textHtml(company.aggregateRating)
 
             tag1.visibility = View.GONE
             tag2.visibility = View.GONE
