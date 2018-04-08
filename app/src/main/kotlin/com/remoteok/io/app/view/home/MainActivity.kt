@@ -15,9 +15,10 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val HOME = "Home"
-        val HIGHEST_PAID = "valHighestPaid"
-        val COMPANIES = "valCompanies"
-        private val STATISTICS = "valStatistics"
+        val HIGHEST_PAID = "HighestPaid"
+        val HIGHEST_PAID_SELECTED = "HighestPaidSelected"
+        val COMPANIES = "Companies"
+        private val STATISTICS = "Statistics"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +58,16 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.container, fragment, tag)
+                    .commit()
+        }
+    }
+
+    fun addFragment(fragment: Fragment, tag: String) {
+        if (tag != currentTag) {
+            currentTag = tag
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.container, fragment, tag)
                     .commit()
         }
     }

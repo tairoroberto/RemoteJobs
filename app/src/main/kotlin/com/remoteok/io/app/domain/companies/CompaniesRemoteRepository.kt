@@ -1,6 +1,7 @@
 package com.remoteok.io.app.domain.companies
 
 import com.remoteok.io.app.model.CompaniesResponse
+import com.remoteok.io.app.model.JobsResponse
 import io.reactivex.Single
 
 /**
@@ -8,4 +9,5 @@ import io.reactivex.Single
  */
 interface CompaniesRemoteRepository {
     fun getCompanies(): Single<CompaniesResponse>
+    fun getCompaniesJobs(company: String): Single<JobsResponse>
 }

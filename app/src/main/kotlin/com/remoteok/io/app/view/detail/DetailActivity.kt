@@ -24,20 +24,16 @@ import com.remoteok.io.app.BuildConfig
 import com.remoteok.io.app.R
 import com.remoteok.io.app.model.Job
 import com.remoteok.io.app.utils.extension.loadImage
-import com.remoteok.io.app.utils.extension.removeUnicodeCharacters
 import com.remoteok.io.app.utils.extension.showProgress
 import com.remoteok.io.app.utils.extension.textHtml
 import com.remoteok.io.app.viewmodel.detail.DetailViewModel
 import com.remoteok.io.app.viewmodel.detail.DetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
-import org.apache.commons.text.StringEscapeUtils
 import org.jetbrains.anko.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class DetailActivity : AppCompatActivity() {
@@ -110,17 +106,20 @@ class DetailActivity : AppCompatActivity() {
             browse("https://remoteok.io${job?.urlApply}")
             trackApplyedJob()
 
-        }else if (job?.urlApply?.contains("mailto:") == true) {
+        } else if (job?.urlApply?.contains("mailto:") == true) {
 
             startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(job?.urlApply)))
             trackApplyedJob()
 
-        }else if (job?.urlApply?.contains("javascript:") == true) {
+        } else if (job?.urlApply?.contains("javascript:") == true) {
             alert {
                 title = "Alert"
                 message = "'This job post is older than 90 days and the position is probably filled. Try applying to jobs posted recently instead."
-                okButton {  }
+                okButton { }
             }.show()
+        } else {
+            browse("https://remoteok.io/l/${job?.id}")
+            trackApplyedJob()
         }
     }
 

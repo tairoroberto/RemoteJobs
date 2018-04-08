@@ -2,6 +2,8 @@ package com.remoteok.io.app.domain.highestpaid
 
 import com.remoteok.io.app.model.HighestPaid
 import com.remoteok.io.app.model.HighestPaidRespose
+import com.remoteok.io.app.model.Job
+import com.remoteok.io.app.model.JobsResponse
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -15,8 +17,16 @@ class HighestPaidUseCase(private val highestPaidLocalRepository: HighestPaidLoca
         return highestPaidRemoteRepository.getHighestPaidSalaries()
     }
 
+    fun getAllHighestPaidJobs(tag: String): Single<JobsResponse> {
+        return highestPaidRemoteRepository.getHighestPaidSalariesJobs(tag)
+    }
+
     fun listAllHighestPaidSalariesFromBD(): Flowable<List<HighestPaid>> {
         return highestPaidLocalRepository.getAll()
+    }
+
+    fun listAllHighestPaidJobsFromBD(tag: String): Flowable<List<Job>> {
+        return highestPaidLocalRepository.getAllByTag(tag)
     }
 
     fun addAllHighestPaidSalaries(highestPaidSalaries: List<HighestPaid>?) {

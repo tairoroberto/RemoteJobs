@@ -3,6 +3,7 @@ package com.remoteok.io.app.view.highestpaid
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -61,7 +62,9 @@ class HighestPaidFragment : Fragment() {
     }
 
     private fun onItemClick(tag: String) {
-
+        val intent = Intent(activity, HighestPaidSelectActivity::class.java)
+        intent.putExtra("tag", tag)
+        startActivity(intent)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -3,12 +3,9 @@ package com.remoteok.io.app.viewmodel.highestpaid
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.remoteok.io.app.domain.highestpaid.HighestPaidUseCase
-import com.remoteok.io.app.model.CompaniesResponse
-import com.remoteok.io.app.model.Company
 import com.remoteok.io.app.model.HighestPaid
-import com.remoteok.io.app.model.HighestPaidRespose
+import com.remoteok.io.app.model.Job
 import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +18,8 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
     private val disposables = CompositeDisposable()
 
     private val response: MutableLiveData<List<HighestPaid>> = MutableLiveData()
+
+    private val responseJobs: MutableLiveData<List<Job>> = MutableLiveData()
 
     private val loadingStatus = MutableLiveData<Boolean>()
 
@@ -38,17 +37,17 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
         return response
     }
 
-    fun getAllHighestPaidSalaries() {
-        loadResponse(highestPaidUseCase.getAllHighestPaidSalaries())
+    fun getHighestPaidJobsResponse(): MutableLiveData<List<Job>> {
+        return responseJobs
     }
 
-    private fun loadResponse(companiesResponse: Single<HighestPaidRespose>) {
-        disposables.add(companiesResponse
+    fun getAllHighestPaidSalaries() {
+        disposables.add(highestPaidUseCase.getAllHighestPaidSalaries()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe({ loadingStatus.setValue(true) })
                 .doAfterTerminate({ loadingStatus.setValue(false) })
-                .doOnError { loadResponseFromDataBase(highestPaidUseCase.listAllHighestPaidSalariesFromBD()) }
+                .doOnError { loadHighestPaidFromDataBase(highestPaidUseCase.listAllHighestPaidSalariesFromBD()) }
                 .subscribe(
                         { companies ->
                             response.value = companies.items
@@ -59,13 +58,13 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()
-                            loadResponseFromDataBase(highestPaidUseCase.listAllHighestPaidSalariesFromBD())
+                            loadHighestPaidFromDataBase(highestPaidUseCase.listAllHighestPaidSalariesFromBD())
                         }
                 )
         )
     }
 
-    private fun loadResponseFromDataBase(highestPaidResponse: Flowable<List<HighestPaid>>) {
+    private fun loadHighestPaidFromDataBase(highestPaidResponse: Flowable<List<HighestPaid>>) {
         disposables.add(highestPaidResponse
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -74,6 +73,41 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
                 .subscribe(
                         { companies ->
                             response.value = companies
+                        },
+                        { throwable ->
+                            errorStatus.value = throwable.message.toString()
+                        }
+                ))
+    }
+
+    fun loadHighestPaidJobs(tag: String) {
+        disposables.add(highestPaidUseCase.getAllHighestPaidJobs("remote-$tag-jobs")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe({ loadingStatus.setValue(true) })
+                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnError { loadHighestPaidJobsFromDataBase(highestPaidUseCase.listAllHighestPaidJobsFromBD(tag)) }
+                .subscribe(
+                        { jobs ->
+                            responseJobs.value = jobs.list
+                        },
+                        { throwable ->
+                            errorStatus.value = throwable.message.toString()
+                            loadHighestPaidJobsFromDataBase(highestPaidUseCase.listAllHighestPaidJobsFromBD(tag))
+                        }
+                )
+        )
+    }
+
+    private fun loadHighestPaidJobsFromDataBase(jobsResponse: Flowable<List<Job>>) {
+        disposables.add(jobsResponse
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe({ loadingStatus.setValue(true) })
+                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .subscribe(
+                        { jobs ->
+                            responseJobs.value = jobs
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()

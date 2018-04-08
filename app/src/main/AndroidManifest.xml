@@ -40,6 +40,14 @@
             android:name=".view.login.LoginActivity"
             android:label="@string/title_activity_login" />
 
+        <activity
+            android:name=".view.highestpaid.HighestPaidSelectActivity"
+            android:parentActivityName=".view.home.MainActivity" />
+
+        <activity
+            android:name=".view.companies.CompaniesSelectActivity"
+            android:parentActivityName=".view.home.MainActivity" />
+
         <service android:name=".domain.services.CustomFirebaseInstaceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

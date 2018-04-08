@@ -1,9 +1,7 @@
 package com.remoteok.io.app.view.companies
 
 import android.content.Context
-import android.os.Build
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.remoteok.io.app.R
-import com.remoteok.io.app.R.id.textViewLogo
 import com.remoteok.io.app.model.Company
 import com.remoteok.io.app.utils.extension.loadImage
 import com.remoteok.io.app.utils.extension.textHtml
@@ -23,16 +20,17 @@ import com.remoteok.io.app.utils.extension.textHtml
  */
 class CompaniesRecyclerAdapter(private val context: Context?,
                                private var list: MutableList<Company>,
-                               private val onClick: (company: Company, imageView: ImageView) -> Unit) : RecyclerView.Adapter<CompaniesRecyclerAdapter.ViewHolder>() {
+                               private val onClick: (company: Company) -> Unit) : RecyclerView.Adapter<CompaniesRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener({
-            onClick(item, holder.imageView)
-        })
+        holder.itemView.setOnClickListener({ onClick(item) })
+        holder.tag1.setOnClickListener({ onClick(item) })
+        holder.tag2.setOnClickListener({ onClick(item) })
+        holder.tag3.setOnClickListener({ onClick(item) })
         setAnimation(holder.itemView, position)
     }
 
@@ -56,9 +54,9 @@ class CompaniesRecyclerAdapter(private val context: Context?,
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
-        private val tag1: Button = view.findViewById(R.id.tag1)
-        private val tag2: Button = view.findViewById(R.id.tag2)
-        private val tag3: Button = view.findViewById(R.id.tag3)
+        val tag1: Button = view.findViewById(R.id.tag1)
+        val tag2: Button = view.findViewById(R.id.tag2)
+        val tag3: Button = view.findViewById(R.id.tag3)
 
         fun bind(company: Company) {
             imageView.loadImage(company.image, progressImage)

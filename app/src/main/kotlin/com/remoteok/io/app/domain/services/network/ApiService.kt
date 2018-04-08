@@ -21,7 +21,7 @@ interface ApiService {
     fun getCompanies(): Single<CompaniesResponse>
 
     @GET("getCompanyJobs")
-    fun getCompanyJobs(@Query("company") company: String): Single<CompaniesResponse>
+    fun getCompanyJobs(@Query("company") company: String): Single<JobsResponse>
 
     @GET("highestPaid/")
     fun getHighestPaid(): Single<HighestPaidRespose>

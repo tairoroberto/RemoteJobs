@@ -3,10 +3,9 @@ package com.remoteok.io.app.viewmodel.companies
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.remoteok.io.app.domain.companies.CompaniesUseCase
-import com.remoteok.io.app.model.CompaniesResponse
 import com.remoteok.io.app.model.Company
+import com.remoteok.io.app.model.Job
 import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -19,6 +18,8 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
     private val disposables = CompositeDisposable()
 
     private val response: MutableLiveData<List<Company>> = MutableLiveData()
+
+    private val responseJobs: MutableLiveData<List<Job>> = MutableLiveData()
 
     private val loadingStatus = MutableLiveData<Boolean>()
 
@@ -36,12 +37,12 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
         return response
     }
 
-    fun listAllCompanies() {
-        loadResponse(companiesUseCase.listAllCompanies())
+    fun getCompanyJobsResponse(): MutableLiveData<List<Job>> {
+        return responseJobs
     }
 
-    private fun loadResponse(companiesResponse: Single<CompaniesResponse>) {
-        disposables.add(companiesResponse
+    fun listAllCompanies() {
+        disposables.add(companiesUseCase.listAllCompanies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe({ loadingStatus.setValue(true) })
@@ -72,6 +73,41 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
                 .subscribe(
                         { companies ->
                             response.value = companies
+                        },
+                        { throwable ->
+                            errorStatus.value = throwable.message.toString()
+                        }
+                ))
+    }
+
+    fun listCompaniesJobs(company: String) {
+        disposables.add(companiesUseCase.listCompaniesJobs(company)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe({ loadingStatus.setValue(true) })
+                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnError { loadCompaniesJobsFromDataBase(companiesUseCase.listCompaniesJobsFromBD(company)) }
+                .subscribe(
+                        { response ->
+                            responseJobs.value = response.list
+                        },
+                        { throwable ->
+                            errorStatus.value = throwable.message.toString()
+                            loadCompaniesJobsFromDataBase(companiesUseCase.listCompaniesJobsFromBD(company))
+                        }
+                )
+        )
+    }
+
+    private fun loadCompaniesJobsFromDataBase(companiesResponse: Flowable<List<Job>>) {
+        disposables.add(companiesResponse
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe({ loadingStatus.setValue(true) })
+                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .subscribe(
+                        { companies ->
+                            responseJobs.value = companies
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()

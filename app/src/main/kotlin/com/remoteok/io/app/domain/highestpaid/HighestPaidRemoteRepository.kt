@@ -1,6 +1,7 @@
 package com.remoteok.io.app.domain.highestpaid
 
 import com.remoteok.io.app.model.HighestPaidRespose
+import com.remoteok.io.app.model.JobsResponse
 import io.reactivex.Single
 
 /**
@@ -8,4 +9,5 @@ import io.reactivex.Single
  */
 interface HighestPaidRemoteRepository {
     fun getHighestPaidSalaries(): Single<HighestPaidRespose>
+    fun getHighestPaidSalariesJobs(tag: String): Single<JobsResponse>
 }

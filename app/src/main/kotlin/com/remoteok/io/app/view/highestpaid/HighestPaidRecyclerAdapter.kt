@@ -24,9 +24,8 @@ class HighestPaidRecyclerAdapter(private val context: Context?,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener({
-            onClick(item.tags)
-        })
+        holder.itemView.setOnClickListener({ onClick(item.tags) })
+        holder.tag.setOnClickListener({ onClick(item.tags) })
         setAnimation(holder.itemView, position)
     }
 
@@ -47,7 +46,7 @@ class HighestPaidRecyclerAdapter(private val context: Context?,
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private val tag: Button = view.findViewById(R.id.tag)
+        val tag: Button = view.findViewById(R.id.tag)
         private val textViewSalary: TextView = view.findViewById(R.id.textViewSalary)
         private val textViewDeviation: TextView = view.findViewById(R.id.textViewDeviation)
         private val textViewAmount: TextView = view.findViewById(R.id.textViewAmount)
