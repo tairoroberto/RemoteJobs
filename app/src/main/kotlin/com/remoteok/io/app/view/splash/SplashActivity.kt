@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.DisplayMetrics
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
@@ -13,9 +14,7 @@ import com.remoteok.io.app.R
 import com.remoteok.io.app.view.home.MainActivity
 import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_splash.*
-import org.jetbrains.anko.startActivity
 import java.util.*
-
 
 class SplashActivity : AppCompatActivity() {
 
@@ -31,6 +30,13 @@ class SplashActivity : AppCompatActivity() {
         Fabric.with(this, crashlyticsKit)
 
         setContentView(R.layout.activity_splash)
+
+        val version = intent.getStringExtra("version")
+        if (!TextUtils.isEmpty(version) && version != BuildConfig.VERSION_NAME) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${applicationContext?.packageName}"))
+            startActivity(intent)
+            finish()
+        }
 
         try {
             val path = Uri.parse("android.resource://" + packageName + "/" + +R.raw.bg)

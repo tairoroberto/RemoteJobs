@@ -13,7 +13,7 @@ import com.remoteok.io.app.model.HighestPaid
 import com.remoteok.io.app.model.Job
 
 
-@Database(entities = [(Job::class), (Company::class), (HighestPaid::class)], version = 5)
+@Database(entities = [(Job::class), (Company::class), (HighestPaid::class)], version = 6)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -23,7 +23,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
-        @Volatile private var INSTANCE: AppDatabase? = null
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context?): AppDatabase =
                 INSTANCE ?: synchronized(this) {

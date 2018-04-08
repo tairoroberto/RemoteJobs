@@ -7,12 +7,10 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
-import android.text.TextUtils
-import com.remoteok.io.app.view.splash.SplashActivity
-
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.remoteok.io.app.R
+import com.remoteok.io.app.view.splash.SplashActivity
 
 /**
  * Created by tairo on 9/8/17.
@@ -20,24 +18,21 @@ import com.remoteok.io.app.R
 class CustomFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        if (remoteMessage?.data?.isNotEmpty() == true) {
 
-            val paramScreen = remoteMessage.data["screen"]
+        val intent = Intent(this, SplashActivity::class.java)
 
-            if (!TextUtils.isEmpty(paramScreen)) {
-                showNotification("screen", paramScreen)
-            }
+        if (remoteMessage?.data?.isEmpty() == false) {
+            intent.putExtra("version", remoteMessage.data["version"])
         }
 
         if (remoteMessage?.notification != null) {
-            showNotification(remoteMessage.notification?.title, remoteMessage.notification?.body)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            showNotification(remoteMessage.notification?.title, remoteMessage.notification?.body, intent)
         }
     }
 
-    private fun showNotification(title: String?, body: String?) {
-        val intent = Intent(this, SplashActivity::class.java)
+    private fun showNotification(title: String?, body: String?, intent: Intent) {
 
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
 
         val builder = NotificationCompat.Builder(this, "android")
