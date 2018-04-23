@@ -53,7 +53,7 @@ class CompaniesFragment : Fragment() {
 
         setHasOptionsMenu(true)
         retainInstance = true
-        FirebaseAnalytics.getInstance(activity).logEvent("companies", null)
+        FirebaseAnalytics.getInstance(context as Context).logEvent("companies", null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

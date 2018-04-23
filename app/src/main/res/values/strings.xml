@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Remote OK</string>
+    <string name="app_name">Remote Jobs</string>
     <string name="action_settings">Settings</string>
     <string name="share">share</string>
     <string name="donate">donate</string>
@@ -231,7 +231,7 @@
     <string name="title_highestpaid">Highest Paid</string>
     <string name="title_companies">Companies</string>
     <string name="title_statistics">Statistics</string>
-    <string name="remote_ok">remote|ok</string>
+    <string name="remote_jobs">remote Jobs</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

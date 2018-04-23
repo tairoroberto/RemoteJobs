@@ -79,7 +79,7 @@ class HomeFragment : Fragment() {
         observeResponse()
         getAllJobs()
 
-        FirebaseAnalytics.getInstance(activity).logEvent("home", null)
+        FirebaseAnalytics.getInstance(context as Context).logEvent("home", null)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

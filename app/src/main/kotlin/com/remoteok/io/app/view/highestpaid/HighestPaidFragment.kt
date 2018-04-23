@@ -48,7 +48,7 @@ class HighestPaidFragment : Fragment() {
 
         setHasOptionsMenu(true)
         retainInstance = true
-        FirebaseAnalytics.getInstance(activity).logEvent("highestpaid", null)
+        FirebaseAnalytics.getInstance(context as Context).logEvent("highestpaid", null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
