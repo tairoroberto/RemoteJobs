@@ -14,12 +14,12 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.remoteok.io.app"
+        applicationId "com.remotejobs.io.app"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        testInstrumentationRunner "com.remoteok.RemoteOkTestRunner"
+        testInstrumentationRunner "com.remotejobs.RemoteOkTestRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -112,7 +112,7 @@ dependencies {
     /*############################## Firebase #####################################*/
     implementation "com.google.firebase:firebase-core:${rootProject.firebase}"
     implementation "com.google.firebase:firebase-messaging:${rootProject.firebase}"
-    implementation "com.google.firebase:firebase-auth:${rootProject.firebase}"
+    implementation "com.google.firebase:firebase-auth:15.1.0"
     implementation "com.google.android.gms:play-services-analytics:${rootProject.firebase}"
     /*############################################################################*/
 
@@ -123,10 +123,9 @@ dependencies {
     /*############################################################################*/
 
     /*########################## kotlin ##########################################*/
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin_version"
     implementation "org.jetbrains.anko:anko-coroutines:${rootProject.anko_version}"
     implementation "org.jetbrains.anko:anko-commons:${rootProject.anko_version}"
-    implementation "org.jetbrains.kotlin:kotlin-test-junit:${rootProject.kotlin_version}"
     /*############################################################################*/
 
     /*########################### ReactiveX ######################################*/
@@ -184,6 +183,7 @@ dependencies {
     /*############################### Test ibs ###################################*/
     testImplementation "junit:junit:${rootProject.junit}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.runner}"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${rootProject.kotlin_version}"
 
     // Mokito
     testImplementation "org.mockito:mockito-core:${rootProject.mockitoVersion}"

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.remoteok.io.app.view.highestpaid.HighestPaidFragment">
+    tools:context="com.remotejobs.io.app.view.highestpaid.HighestPaidFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
