@@ -25,6 +25,8 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
@@ -35,15 +37,12 @@
             android:name=".view.detail.DetailActivity"
             android:parentActivityName=".view.home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".view.login.LoginActivity"
             android:label="@string/title_activity_login" />
-
         <activity
             android:name=".view.highestpaid.HighestPaidSelectActivity"
             android:parentActivityName=".view.home.MainActivity" />
-
         <activity
             android:name=".view.companies.CompaniesSelectActivity"
             android:parentActivityName=".view.home.MainActivity" />
