@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "52146017786",
+    "firebase_url": "https://remotejobs-aa979.firebaseio.com",
+    "project_id": "remotejobs-aa979",
+    "storage_bucket": "remotejobs-aa979.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52146017786:android:aa1faba8e70b5a0c",
+        "android_client_info": {
+          "package_name": "com.remotejobs.io.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52146017786-a9vn10e5oih2cg2r8mq0l9ifd3m678mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.remotejobs.io.app",
+            "certificate_hash": "0b00ca99a4c53cafea70697447fe73f9673809f1"
+          }
+        },
+        {
+          "client_id": "52146017786-5e26p17r3opj3unod9fggd2pkkp915oa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxNuS800WsONGXOJyT9FQu6AxP-61fQSY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52146017786-5e26p17r3opj3unod9fggd2pkkp915oa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

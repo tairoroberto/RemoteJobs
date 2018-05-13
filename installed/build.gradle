@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.remotejobs.io.app"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+        testInstrumentationRunner "com.remotejobs.RemoteOkTestRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        debug {}
+        release {}
+    }
+
+    buildTypes {
+        debug {
+            resValue "bool", "is_release", "false"
+            minifyEnabled false
+            testCoverageEnabled false
+        }
+
+        release {
+            resValue "bool", "is_release", "true"
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            debuggable false
+            testCoverageEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../base/proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    implementation project(':base')
+}
+
+apply plugin: 'com.google.gms.google-services'
