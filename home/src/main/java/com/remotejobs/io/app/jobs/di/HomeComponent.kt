@@ -1,11 +1,13 @@
 package com.remotejobs.io.app.jobs.di
 
 import com.remotejobs.io.app.CustomApplication
+import com.remotejobs.io.app.di.PerModuleScope
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
+@PerModuleScope
 @Singleton
 @Component(modules = [
     (AndroidSupportInjectionModule::class),
