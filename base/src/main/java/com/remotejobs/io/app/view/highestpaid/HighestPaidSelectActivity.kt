@@ -15,16 +15,15 @@ import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.showProgress
 import com.remotejobs.io.app.view.detail.DetailActivity
-import com.remotejobs.io.app.view.home.HomeRecyclerAdapter
 import com.remotejobs.io.app.viewmodel.highestpaid.HighestPaidViewModel
 import com.remotejobs.io.app.viewmodel.highestpaid.HighestPaidViewModelFactory
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_highestpaid_jobs.*
 import javax.inject.Inject
 
 class HighestPaidSelectActivity : AppCompatActivity() {
 
-    private lateinit var adapter: HomeRecyclerAdapter
+    private lateinit var adapter: HighestpaidJobsRecyclerAdapter
 
     private val list: MutableList<Job> = ArrayList()
     private var tag: String? = ""
@@ -41,7 +40,7 @@ class HighestPaidSelectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        setContentView(R.layout.fragment_home)
+        setContentView(R.layout.fragment_highestpaid_jobs)
 
         tag = intent?.getStringExtra("tag")
 
@@ -67,7 +66,7 @@ class HighestPaidSelectActivity : AppCompatActivity() {
     }
 
     private fun setListAdapter() {
-        adapter = HomeRecyclerAdapter(this, list, this::onItemClick)
+        adapter = HighestpaidJobsRecyclerAdapter(this, list, this::onItemClick)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)

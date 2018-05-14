@@ -49,6 +49,7 @@ android {
 
 dependencies {
     implementation project(':base')
+    implementation project(":home")
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -17,47 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".view.splash.SplashActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.home.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-            <intent-filter android:order="1">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="trmamobile.com"
-                    android:pathPattern="/remotejobs"
-                    android:scheme="https" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".view.detail.DetailActivity"
-            android:parentActivityName=".view.home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.login.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity
-            android:name=".view.highestpaid.HighestPaidSelectActivity"
-            android:parentActivityName=".view.home.MainActivity" />
-        <activity
-            android:name=".view.companies.CompaniesSelectActivity"
-            android:parentActivityName=".view.home.MainActivity" />
+        <activity android:name=".view.highestpaid.HighestPaidSelectActivity" />
+        <activity android:name=".view.companies.CompaniesSelectActivity" />
 
         <service android:name=".domain.services.CustomFirebaseInstaceIdService">
             <intent-filter>

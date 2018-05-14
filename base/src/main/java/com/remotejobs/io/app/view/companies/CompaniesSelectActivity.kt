@@ -15,16 +15,15 @@ import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.showProgress
 import com.remotejobs.io.app.view.detail.DetailActivity
-import com.remotejobs.io.app.view.home.HomeRecyclerAdapter
 import com.remotejobs.io.app.viewmodel.companies.CompaniesViewModel
 import com.remotejobs.io.app.viewmodel.companies.CompaniesViewModelFactory
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_companies_jobs.*
 import javax.inject.Inject
 
 class CompaniesSelectActivity : AppCompatActivity() {
 
-    private lateinit var adapter: HomeRecyclerAdapter
+    private lateinit var adapter: CompaniesJobsRecyclerAdapter
 
     private val list: MutableList<Job> = ArrayList()
     private var company: String? = ""
@@ -40,7 +39,7 @@ class CompaniesSelectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        setContentView(R.layout.fragment_home)
+        setContentView(R.layout.fragment_companies_jobs)
 
         company = intent?.getStringExtra("company")
 
@@ -66,7 +65,7 @@ class CompaniesSelectActivity : AppCompatActivity() {
     }
 
     private fun setListAdapter() {
-        adapter = HomeRecyclerAdapter(this, list, this::onItemClick)
+        adapter = CompaniesJobsRecyclerAdapter(this, list, this::onItemClick)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)

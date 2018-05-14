@@ -1,0 +1,226 @@
+<resources>
+    <string-array name="suggestions">
+        <item>abap</item>
+        <item>actionscript</item>
+        <item>admin</item>
+        <item>administrative assistant-customer service</item>
+        <item>ads</item>
+        <item>adult</item>
+        <item>advertising</item>
+        <item>adwords</item>
+        <item>after effects</item>
+        <item>amazon</item>
+        <item>analyst</item>
+        <item>analytics</item>
+        <item>android</item>
+        <item>angular</item>
+        <item>angularjs</item>
+        <item>ansible</item>
+        <item>apache</item>
+        <item>api</item>
+        <item>api dev</item>
+        <item>architecture</item>
+        <item>art direction</item>
+        <item>article writer</item>
+        <item>assembly</item>
+        <item>aws</item>
+        <item>babel</item>
+        <item>backbone</item>
+        <item>backend</item>
+        <item>big data</item>
+        <item>biotech</item>
+        <item>blog writer</item>
+        <item>bootstrap</item>
+        <item>bus dev</item>
+        <item>business analytics</item>
+        <item>c</item>
+        <item>c plus plus</item>
+        <item>c sharp</item>
+        <item>cassandra</item>
+        <item>chatbot</item>
+        <item>clojure</item>
+        <item>cloud</item>
+        <item>cobol</item>
+        <item>coldfusion</item>
+        <item>composer</item>
+        <item>consulting</item>
+        <item>content</item>
+        <item>content write</item>
+        <item>project management</item>
+        <item>continuous integration</item>
+        <item>contracting</item>
+        <item>controller</item>
+        <item>copy writer</item>
+        <item>copywriting</item>
+        <item>couchbase</item>
+        <item>couchdb</item>
+        <item>cro</item>
+        <item>css</item>
+        <item>css3</item>
+        <item>customer</item>
+        <item>data</item>
+        <item>data entry</item>
+        <item>data science</item>
+        <item>data viz</item>
+        <item>dba</item>
+        <item>dev</item>
+        <item>devops</item>
+        <item>django</item>
+        <item>docker</item>
+        <item>dot net</item>
+        <item>drupal</item>
+        <item>ecommerce</item>
+        <item>editors</item>
+        <item>education</item>
+        <item>elasticsearch</item>
+        <item>embedded</item>
+        <item>ember js</item>
+        <item>erlang</item>
+        <item>es6</item>
+        <item>excel</item>
+        <item>facebook</item>
+        <item>finance</item>
+        <item>firebase</item>
+        <item>frontend</item>
+        <item>full stack</item>
+        <item>functional programming</item>
+        <item>game dev</item>
+        <item>git</item>
+        <item>golang</item>
+        <item>grafana</item>
+        <item>graphql</item>
+        <item>groovy</item>
+        <item>growth hacker</item>
+        <item>hadoop</item>
+        <item>hardware</item>
+        <item>haskell</item>
+        <item>heroku</item>
+        <item>hive</item>
+        <item>hr</item>
+        <item>html</item>
+        <item>html5</item>
+        <item>illustrator</item>
+        <item>infosec</item>
+        <item>internet</item>
+        <item>internet marketing</item>
+        <item>internship</item>
+        <item>io js</item>
+        <item>ios</item>
+        <item>java</item>
+        <item>java script</item>
+        <item>javascript</item>
+        <item>jira</item>
+        <item>jquery</item>
+        <item>lamp</item>
+        <item>landing pages</item>
+        <item>laravel</item>
+        <item>legal</item>
+        <item>linode</item>
+        <item>linux</item>
+        <item>lisp</item>
+        <item>machine learning</item>
+        <item>macos</item>
+        <item>marionette</item>
+        <item>marketing</item>
+        <item>marketing manager</item>
+        <item>math</item>
+        <item>matlab</item>
+        <item>medical</item>
+        <item>meteor js</item>
+        <item>microsoft</item>
+        <item>mobile</item>
+        <item>mongo</item>
+        <item>mongodb</item>
+        <item>music</item>
+        <item>nginx</item>
+        <item>node js</item>
+        <item>nodejs</item>
+        <item>non-tech</item>
+        <item>nosql</item>
+        <item>npm</item>
+        <item>obj c</item>
+        <item>objective c</item>
+        <item>objective-c</item>
+        <item>online marketing</item>
+        <item>operations</item>
+        <item>ops</item>
+        <item>perl</item>
+        <item>phonegap</item>
+        <item>photoshop</item>
+        <item>php</item>
+        <item>postgres</item>
+        <item>postresql</item>
+        <item>product design</item>
+        <item>product manager</item>
+        <item>python</item>
+        <item>qa</item>
+        <item>quality assurance</item>
+        <item>rabbitmq</item>
+        <item>rails</item>
+        <item>react</item>
+        <item>react native</item>
+        <item>reactjs</item>
+        <item>recruiter</item>
+        <item>recruitment</item>
+        <item>redis</item>
+        <item>remote</item>
+        <item>robotics</item>
+        <item>ruby</item>
+        <item>saas</item>
+        <item>sales</item>
+        <item>salesforce</item>
+        <item>scala</item>
+        <item>scheme</item>
+        <item>scrum</item>
+        <item>seo</item>
+        <item>social media</item>
+        <item>spark</item>
+        <item>speech</item>
+        <item>spring</item>
+        <item>sql</item>
+        <item>startup</item>
+        <item>stats</item>
+        <item>struts</item>
+        <item>success</item>
+        <item>support</item>
+        <item>swift</item>
+        <item>symfony</item>
+        <item>sys admin</item>
+        <item>system administrator</item>
+        <item>telecom</item>
+        <item>testing</item>
+        <item>toronto</item>
+        <item>transcribing</item>
+        <item>travel</item>
+        <item>typescript</item>
+        <item>ui</item>
+        <item>ui design</item>
+        <item>user experience</item>
+        <item>user interface</item>
+        <item>user research</item>
+        <item>ux</item>
+        <item>vagrant</item>
+        <item>vfx</item>
+        <item>video</item>
+        <item>virtual reality</item>
+        <item>visual basic</item>
+        <item>voip</item>
+        <item>vuejs</item>
+        <item>web</item>
+        <item>web analytics</item>
+        <item>web design</item>
+        <item>web dev</item>
+        <item>webmaster</item>
+        <item>webpack</item>
+        <item>wildfly</item>
+        <item>win phone</item>
+        <item>wordpress</item>
+        <item>work from home</item>
+        <item>worldwide</item>
+        <item>writer</item>
+        <item>writers</item>
+        <item>xamarin</item>
+    </string-array>
+
+    <string name="title_jobs">Jobs</string>
+</resources>

@@ -1,0 +1,64 @@
+apply plugin: 'com.android.feature'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+        testInstrumentationRunner "com.remotejobs.RemoteOkTestRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        debug {}
+        release {}
+    }
+
+    buildTypes {
+        debug {
+            resValue "bool", "is_release", "false"
+            minifyEnabled false
+            testCoverageEnabled false
+        }
+
+        release {
+            resValue "bool", "is_release", "true"
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            debuggable false
+            testCoverageEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../base/proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    api "com.google.dagger:dagger:$project.dagger"
+    kapt "com.google.dagger:dagger-compiler:$project.dagger"
+
+    // Dagger Android
+    api "com.google.dagger:dagger-android-support:$rootProject.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$project.dagger"
+    implementation project(':base')
+}

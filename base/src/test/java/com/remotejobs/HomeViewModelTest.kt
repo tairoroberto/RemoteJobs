@@ -5,12 +5,12 @@ import android.arch.lifecycle.Observer
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import com.remotejobs.io.app.data.AppDatabase
-import com.remotejobs.io.app.data.home.HomeLocalDataStore
-import com.remotejobs.io.app.data.home.HomeRemoteDataStore
-import com.remotejobs.io.app.domain.home.HomeUseCase
+import com.remotejobs.io.app.jobs.data.home.HomeLocalDataStore
+import com.remotejobs.io.app.jobs.data.home.HomeRemoteDataStore
+import com.remotejobs.io.app.jobs.domain.home.HomeUseCase
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.model.JobsResponse
-import com.remotejobs.io.app.viewmodel.home.HomeViewModel
+import com.remotejobs.io.app.jobs.viewmodel.home.HomeViewModel
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Rule

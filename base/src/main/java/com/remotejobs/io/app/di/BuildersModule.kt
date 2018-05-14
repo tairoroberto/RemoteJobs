@@ -5,7 +5,6 @@ import com.remotejobs.io.app.view.companies.CompaniesSelectActivity
 import com.remotejobs.io.app.view.detail.DetailActivity
 import com.remotejobs.io.app.view.highestpaid.HighestPaidFragment
 import com.remotejobs.io.app.view.highestpaid.HighestPaidSelectActivity
-import com.remotejobs.io.app.view.home.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -14,9 +13,6 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module
 abstract class BuildersModule {
-
-    @ContributesAndroidInjector(modules = [(HomeModule::class)])
-    internal abstract fun bindHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector(modules = [(CompaniesModule::class)])
     internal abstract fun bindCompaniesFragment(): CompaniesFragment

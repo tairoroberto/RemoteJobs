@@ -9,8 +9,8 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.remotejobs.ApplicationTest
 import com.remotejobs.io.app.R
-import com.remotejobs.io.app.view.home.HomeFragment
-import com.remotejobs.io.app.view.home.MainActivity
+import com.remotejobs.io.app.jobs.view.home.HomeFragment
+import com.remotejobs.io.app.view.MainActivity
 import org.hamcrest.CoreMatchers
 import org.junit.Before
 import org.junit.Rule

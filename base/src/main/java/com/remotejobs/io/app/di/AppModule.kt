@@ -10,14 +10,10 @@ import com.remotejobs.io.app.data.dao.HighestPaidDao
 import com.remotejobs.io.app.data.dao.JobsDao
 import com.remotejobs.io.app.data.highestpaid.HighestPaidLocalDataStore
 import com.remotejobs.io.app.data.highestpaid.HighestPaidRemoteDataStore
-import com.remotejobs.io.app.data.home.HomeLocalDataStore
-import com.remotejobs.io.app.data.home.HomeRemoteDataStore
 import com.remotejobs.io.app.domain.companies.CompaniesLocalRepository
 import com.remotejobs.io.app.domain.companies.CompaniesRemoteRepository
 import com.remotejobs.io.app.domain.highestpaid.HighestPaidLocalRepository
 import com.remotejobs.io.app.domain.highestpaid.HighestPaidRemoteRepository
-import com.remotejobs.io.app.domain.home.HomeLocalRepository
-import com.remotejobs.io.app.domain.home.HomeRemoteRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -37,18 +33,6 @@ class AppModule {
     @Provides
     internal fun provideJobsDao(context: Context): JobsDao {
         return AppDatabase.getInstance(context).jobsDAO()
-    }
-
-    @Singleton
-    @Provides
-    internal fun provideHomeLocalRepository(jobsDao: JobsDao): HomeLocalRepository {
-        return HomeLocalDataStore(jobsDao)
-    }
-
-    @Singleton
-    @Provides
-    internal fun provideHomeRemoteRepository(): HomeRemoteRepository {
-        return HomeRemoteDataStore()
     }
 
     @Singleton
