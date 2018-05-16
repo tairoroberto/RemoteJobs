@@ -20,6 +20,7 @@ import android.view.View.VISIBLE
 import android.widget.ImageView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.jobs.R
+import com.remotejobs.io.app.jobs.di.HomeModuleInjector
 import com.remotejobs.io.app.jobs.viewmodel.home.HomeViewModel
 import com.remotejobs.io.app.jobs.viewmodel.home.HomeViewModelFactory
 import com.remotejobs.io.app.model.Job
@@ -28,7 +29,6 @@ import com.remotejobs.io.app.utils.extension.showProgress
 import com.remotejobs.io.app.utils.extension.showSnackBarError
 import com.remotejobs.io.app.utils.extension.showSoftKeyboard
 import com.remotejobs.io.app.view.detail.DetailActivity
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.browse
@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
     private lateinit var tracker: FirebaseAnalytics
 
     override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
+        HomeModuleInjector.inject(this)
         super.onAttach(context)
     }
 

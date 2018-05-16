@@ -1,5 +1,6 @@
 package com.remotejobs.io.app.jobs.di
 
+import com.remotejobs.io.app.di.PerUiScope
 import com.remotejobs.io.app.jobs.view.home.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,7 +11,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class HomeBuildersModule {
 
-    @ContributesAndroidInjector(modules = [(HomeModule::class)])
+    @PerUiScope
+    @ContributesAndroidInjector(modules = [HomeModule::class])
     internal abstract fun bindHomeFragment(): HomeFragment
 
     // Add bindings for other sub-components here

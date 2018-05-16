@@ -3,6 +3,7 @@ package com.remotejobs.io.app.di
 import com.remotejobs.io.app.CustomApplication
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
@@ -12,14 +13,16 @@ import javax.inject.Singleton
     (AppModule::class),
     (BuildersModule::class)]
 )
-interface AppComponent {
+interface AppComponent : AndroidInjector<CustomApplication>, DaggerComponent {
+
+    override fun inject(app: CustomApplication)
+
     @Component.Builder
     interface Builder {
+
         @BindsInstance
         fun application(application: CustomApplication): Builder
 
         fun build(): AppComponent
     }
-
-    fun inject(app: CustomApplication)
 }

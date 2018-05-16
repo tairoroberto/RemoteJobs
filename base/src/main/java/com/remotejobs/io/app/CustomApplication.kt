@@ -1,26 +1,24 @@
 package com.remotejobs.io.app
 
-import android.app.Activity
-import android.app.Application
-import android.support.v4.app.Fragment
+import android.content.Context
 import com.facebook.stetho.Stetho
 import com.remotejobs.io.app.di.DaggerAppComponent
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.support.HasSupportFragmentInjector
-import javax.inject.Inject
+import dagger.android.support.DaggerApplication
 
 /**
  * Created by tairo on 11/10/17 12:06 AM.
  */
-open class CustomApplication : Application(), HasActivityInjector, HasSupportFragmentInjector {
+open class CustomApplication : DaggerApplication() {
 
-    @Inject
-    lateinit var activityAndroidInjector: DispatchingAndroidInjector<Activity>
+    private val appComponent = DaggerAppComponent
+            .builder()
+            .application(this)
+            .build()
 
-    @Inject
-    lateinit var fragmentAndroidInjector: DispatchingAndroidInjector<Fragment>
+    companion object {
+        fun appComponent(context: Context?) = (context?.applicationContext as CustomApplication).appComponent
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -36,11 +34,6 @@ open class CustomApplication : Application(), HasActivityInjector, HasSupportFra
                 .inject(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return activityAndroidInjector
-    }
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return fragmentAndroidInjector
-    }
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+            appComponent.apply { inject(this@CustomApplication) }
 }

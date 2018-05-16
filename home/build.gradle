@@ -54,11 +54,11 @@ kapt {
 }
 
 dependencies {
-    api "com.google.dagger:dagger:$project.dagger"
+    implementation "com.google.dagger:dagger:$project.dagger"
     kapt "com.google.dagger:dagger-compiler:$project.dagger"
 
     // Dagger Android
-    api "com.google.dagger:dagger-android-support:$rootProject.dagger"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger"
     kapt "com.google.dagger:dagger-android-processor:$project.dagger"
     implementation project(':base')
 }
