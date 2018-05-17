@@ -23,22 +23,33 @@
             android:name=".view.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
+
+            <meta-data
+                android:name="default-url"
+                android:value="https://trmamobile/remotejobs/home" />
+
             <intent-filter android:order="1">
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="trmamobile/remotejobs"
                     android:pathPrefix="/home"
                     android:scheme="https" />
-                <data android:scheme="http" />
             </intent-filter>
+            <intent-filter android:order="1">
+                <action android:name="android.intent.action.VIEW" />
 
-            <meta-data
-                android:name="default-url"
-                android:value="https://trmamobile/remotejobs/home" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="trmamobile/remotejobs"
+                    android:pathPrefix="/home"
+                    android:scheme="http" />
+            </intent-filter>
 
         </activity>
     </application>

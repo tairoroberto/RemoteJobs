@@ -17,7 +17,7 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        navigation.setOnNavigationItemSelectedListener({ item ->
             var action = "https://trmamobile/remotejobs/home"
             when (item.itemId) {
                 R.id.navigation_home -> {

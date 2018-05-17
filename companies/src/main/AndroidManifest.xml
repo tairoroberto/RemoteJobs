@@ -8,22 +8,32 @@
 
     <application>
         <activity android:name=".view.CompaniesActivity">
-            <intent-filter android:order="2">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="trmamobile/remotejobs"
-                    android:pathPrefix="/companies"
-                    android:scheme="https" />
-                <data android:scheme="http" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:order="2">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="trmamobile/remotejobs"
+                    android:pathPrefix="/companies" />
+            </intent-filter>
+            <intent-filter android:order="2">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="trmamobile/remotejobs"
+                    android:pathPrefix="/companies" />
             </intent-filter>
         </activity>
 
