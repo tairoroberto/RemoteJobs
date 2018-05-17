@@ -5,12 +5,12 @@ import com.remotejobs.io.app.CustomApplication
 import com.remotejobs.io.app.data.AppDatabase
 import com.remotejobs.io.app.data.dao.JobsDao
 import com.remotejobs.io.app.di.PerUiScope
-import com.remotejobs.io.app.jobs.data.home.HomeLocalDataStore
-import com.remotejobs.io.app.jobs.data.home.HomeRemoteDataStore
-import com.remotejobs.io.app.jobs.domain.home.HomeLocalRepository
-import com.remotejobs.io.app.jobs.domain.home.HomeRemoteRepository
-import com.remotejobs.io.app.jobs.domain.home.HomeUseCase
-import com.remotejobs.io.app.jobs.viewmodel.home.HomeViewModelFactory
+import com.remotejobs.io.app.jobs.data.HomeLocalDataStore
+import com.remotejobs.io.app.jobs.data.HomeRemoteDataStore
+import com.remotejobs.io.app.jobs.domain.HomeLocalRepository
+import com.remotejobs.io.app.jobs.domain.HomeRemoteRepository
+import com.remotejobs.io.app.jobs.domain.HomeUseCase
+import com.remotejobs.io.app.jobs.viewmodel.HomeViewModelFactory
 import dagger.Module
 import dagger.Provides
 

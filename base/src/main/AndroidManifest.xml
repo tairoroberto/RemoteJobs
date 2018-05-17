@@ -25,7 +25,7 @@
             android:name=".view.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".view.highestpaid.HighestPaidSelectActivity" />
-        <activity android:name=".view.companies.CompaniesSelectActivity" />
+        <activity android:name=".companies.view.CompaniesSelectActivity" />
 
         <service android:name=".domain.services.CustomFirebaseInstaceIdService">
             <intent-filter>

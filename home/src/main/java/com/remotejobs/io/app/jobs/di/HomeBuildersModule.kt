@@ -1,7 +1,7 @@
 package com.remotejobs.io.app.jobs.di
 
 import com.remotejobs.io.app.di.PerUiScope
-import com.remotejobs.io.app.jobs.view.home.HomeFragment
+import com.remotejobs.io.app.jobs.view.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

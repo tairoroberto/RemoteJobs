@@ -3,15 +3,11 @@ package com.remotejobs.io.app.di
 import android.content.Context
 import com.remotejobs.io.app.CustomApplication
 import com.remotejobs.io.app.data.AppDatabase
-import com.remotejobs.io.app.data.companies.CompaniesLocalDataStore
-import com.remotejobs.io.app.data.companies.CompaniesRemoteDataStore
 import com.remotejobs.io.app.data.dao.CompaniesDao
 import com.remotejobs.io.app.data.dao.HighestPaidDao
 import com.remotejobs.io.app.data.dao.JobsDao
 import com.remotejobs.io.app.data.highestpaid.HighestPaidLocalDataStore
 import com.remotejobs.io.app.data.highestpaid.HighestPaidRemoteDataStore
-import com.remotejobs.io.app.domain.companies.CompaniesLocalRepository
-import com.remotejobs.io.app.domain.companies.CompaniesRemoteRepository
 import com.remotejobs.io.app.domain.highestpaid.HighestPaidLocalRepository
 import com.remotejobs.io.app.domain.highestpaid.HighestPaidRemoteRepository
 import dagger.Module
@@ -39,18 +35,6 @@ class AppModule {
     @Provides
     internal fun provideCompaniesDao(context: Context): CompaniesDao {
         return AppDatabase.getInstance(context).companiesDAO()
-    }
-
-    @Singleton
-    @Provides
-    internal fun provideCompaniesLocalRepository(companiesDao: CompaniesDao, jobsDao: JobsDao): CompaniesLocalRepository {
-        return CompaniesLocalDataStore(companiesDao, jobsDao)
-    }
-
-    @Singleton
-    @Provides
-    internal fun provideCompaniesRemoteRepository(): CompaniesRemoteRepository {
-        return CompaniesRemoteDataStore()
     }
 
     @Singleton

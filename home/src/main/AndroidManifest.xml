@@ -8,7 +8,7 @@
 
     <application>
         <activity
-            android:name=".view.home.SplashActivity"
+            android:name=".view.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter android:order="1">
@@ -30,10 +30,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="trmamobile"
-                    android:path="/remotejobs"
+                    android:host="trmamobile/remotejobs"
+                    android:pathPrefix="/home"
                     android:scheme="https" />
+                <data android:scheme="http" />
             </intent-filter>
+
+            <meta-data
+                android:name="default-url"
+                android:value="https://trmamobile/remotejobs/home" />
+
         </activity>
     </application>
 

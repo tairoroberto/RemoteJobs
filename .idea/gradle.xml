@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/companies" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/installed" />
             <option value="$PROJECT_DIR$/instantapp" />
