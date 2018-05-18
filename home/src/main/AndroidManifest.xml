@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.remotejobs.io.app.jobs">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <application>
         <activity
             android:name=".view.SplashActivity"
@@ -26,28 +22,24 @@
 
             <meta-data
                 android:name="default-url"
-                android:value="https://trmamobile/remotejobs/home" />
+                android:value="https://remotejobs.trmamobile.com/home" />
 
-            <intent-filter android:order="1">
+            <intent-filter
+                android:autoVerify="true"
+                android:order="1">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="trmamobile/remotejobs"
-                    android:pathPrefix="/home"
+                    android:host="remotejobs.trmamobile.com"
+                    android:path="/home"
                     android:scheme="https" />
-            </intent-filter>
-            <intent-filter android:order="1">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="trmamobile/remotejobs"
-                    android:pathPrefix="/home"
+                    android:host="remotejobs.trmamobile.com"
+                    android:path="/home"
                     android:scheme="http" />
             </intent-filter>
 

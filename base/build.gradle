@@ -72,16 +72,18 @@ androidExtensions {
 crashlytics { instantAppSupport true }
 
 dependencies {
-    api 'com.android.support:appcompat-v7:27.1.1'
-    api 'com.android.support.constraint:constraint-layout:1.1.0'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     /*###################### Android support  libs ###############################*/
-    api "com.android.support:appcompat-v7:${rootProject.supportLibs}"
+    api("com.android.support:appcompat-v7:${rootProject.supportLibs}") {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
     api "com.android.support.constraint:constraint-layout:$constraint_layout"
     api "com.android.support:design:${rootProject.supportLibs}"
-    api "com.android.support:support-vector-drawable:${rootProject.supportLibs}"
-    api "com.android.support:cardview-v7:${rootProject.supportLibs}"
+    /*api "com.android.support:support-vector-drawable:${rootProject.supportLibs}"*/
+    /*api "com.android.support:recyclerview-v7:${rootProject.supportLibs}"
+    api "com.android.support:cardview-v7:${rootProject.supportLibs}"*/
     api "com.google.android:flexbox:0.2.6"
     api "com.android.support:multidex:${rootProject.multidex}"
     api "org.apache.commons:commons-text:1.2"
@@ -91,8 +93,8 @@ dependencies {
     /*############################## Firebase #####################################*/
     api "com.google.firebase:firebase-core:${rootProject.firebase}"
     api "com.google.firebase:firebase-messaging:${rootProject.firebase}"
-    api "com.google.firebase:firebase-auth:15.1.0"
-    api "com.google.android.gms:play-services-analytics:${rootProject.firebase}"
+    /*api "com.google.firebase:firebase-auth:15.1.0"
+    api "com.google.android.gms:play-services-analytics:${rootProject.firebase}"*/
     /*############################################################################*/
 
     /*############################# Crashlytics ####################################*/
@@ -127,15 +129,15 @@ dependencies {
     /*############################################################################*/
 
     /*################ Facebook Sthetho for debug conections #####################*/
-    api "com.facebook.stetho:stetho:${rootProject.stetho}"
-    api "com.facebook.stetho:stetho-okhttp3:${rootProject.stetho}"
+    /*api "com.facebook.stetho:stetho:${rootProject.stetho}"
+    api "com.facebook.stetho:stetho-okhttp3:${rootProject.stetho}"*/
     /*############################################################################*/
 
     /*######################## Architetures Components ###########################*/
     // Room Database
     api "android.arch.persistence.room:runtime:${rootProject.arch}"
     api "android.arch.persistence.room:rxjava2:${rootProject.arch}"
-    api "android.arch.persistence.room:testing:${rootProject.arch}"
+    /*api "android.arch.persistence.room:testing:${rootProject.arch}"*/
     kapt "android.arch.persistence.room:compiler:${rootProject.arch}"
 
     // Lifecycle
@@ -192,6 +194,5 @@ dependencies {
     application project(':installed')
     feature project(':home')
     feature project(":companies")
-    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 apply plugin: 'com.google.gms.google-services'

@@ -11,6 +11,11 @@ buildscript {
 
     ext.supportLibs = '27.1.1'
     ext.constraint_layout = '1.1.0'
+
+    ext.arch = "1.1.0"
+    ext.arch_lifecycle = "1.1.1"
+    ext.nav_version = "1.0.0-alpha01"
+
     ext.multidex = '1.0.3'
 
     ext.crashlytics = '2.8.0'
@@ -35,8 +40,7 @@ buildscript {
     ext.junit = '4.12'
     ext.runner = '0.5'
     ext.espresso = '3.0.1'
-    ext.arch = "1.1.0"
-    ext.arch_lifecycle = "1.1.1"
+
     ext.mockwebserver = "3.8.1"
     ext.mockitoVersion = '2.13.0'
     ext.mockito_kotlin = "1.5.0"
@@ -53,10 +57,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha15'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.25.2'
         classpath 'com.google.gms:google-services:3.2.1'
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha01"
     }
 }
 

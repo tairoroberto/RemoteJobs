@@ -1,7 +1,6 @@
 package com.remotejobs.io.app
 
 import android.content.Context
-import com.facebook.stetho.Stetho
 import com.remotejobs.io.app.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -22,10 +21,6 @@ open class CustomApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this)
-        }
 
         DaggerAppComponent
                 .builder()

@@ -1,6 +1,5 @@
 package com.remotejobs.io.app.domain.services.network
 
-import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -17,7 +16,6 @@ class RemoteApiService {
 
     init {
         val httpClient = OkHttpClient.Builder()
-                .addNetworkInterceptor(StethoInterceptor())
                 .readTimeout(20, TimeUnit.SECONDS)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)

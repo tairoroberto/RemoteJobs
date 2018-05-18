@@ -1,7 +1,5 @@
 package com.remotejobs.io.app.view
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -16,28 +14,10 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
 
-        navigation.setOnNavigationItemSelectedListener({ item ->
-            var action = "https://trmamobile/remotejobs/home"
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    action = "https://trmamobile/remotejobs/jobs"
-                }
-                R.id.navigation_highestpaid -> {
-                    action = "https://trmamobile/remotejobs/highestpaid"
-                }
-                R.id.navigation_companies -> {
-                    action = "https://trmamobile/remotejobs/companies"
-                }
-            }
-
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(action))
-            intent.`package` = packageName
-            intent.addCategory(Intent.CATEGORY_BROWSABLE)
-            startActivity(intent)
-            finish()
-            false
-        })
+    fun setNavigationListener(listener:BottomNavigationView.OnNavigationItemSelectedListener){
+        navigation.setOnNavigationItemSelectedListener(listener)
     }
 
     fun replaceFragment(fragment: Fragment, tag: String) {

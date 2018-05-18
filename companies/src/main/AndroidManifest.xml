@@ -2,44 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.remotejobs.io.app.companies">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <application>
         <activity android:name=".view.CompaniesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter android:order="2">
+            <intent-filter
+                android:autoVerify="true"
+                android:order="2">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
-                    android:host="trmamobile/remotejobs"
-                    android:pathPrefix="/companies" />
-            </intent-filter>
-            <intent-filter android:order="2">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                    android:host="remotejobs.trmamobile.com"
+                    android:path="/companies"
+                    android:scheme="https" />
 
                 <data
-                    android:scheme="http"
-                    android:host="trmamobile/remotejobs"
-                    android:pathPrefix="/companies" />
+                    android:host="remotejobs.trmamobile.com"
+                    android:path="/companies"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.CompaniesSelectActivity" />
+
         <meta-data
             android:name="default-url"
-            android:value="https://trmamobile/remotejobs/companies" />
+            android:value="https://remotejobs.trmamobile.com/companies" />
     </application>
 
 </manifest>

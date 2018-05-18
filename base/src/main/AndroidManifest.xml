@@ -17,7 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".view.detail.DetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -25,7 +24,6 @@
             android:name=".view.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".view.highestpaid.HighestPaidSelectActivity" />
-        <activity android:name=".companies.view.CompaniesSelectActivity" />
 
         <service android:name=".domain.services.CustomFirebaseInstaceIdService">
             <intent-filter>
