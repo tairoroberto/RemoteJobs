@@ -30,5 +30,6 @@
     <string name="highest_salary">Salary: <b>%s</b></string>
     <string name="highest_deviation">Range: <b>%s</b></string>
     <string name="highest_amout">Remote jobs: <b>%s</b></string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

@@ -73,6 +73,7 @@ crashlytics { instantAppSupport true }
 
 dependencies {
 
+    api 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     /*###################### Android support  libs ###############################*/
@@ -144,6 +145,9 @@ dependencies {
     api "android.arch.lifecycle:runtime:${rootProject.arch_lifecycle}"
     api "android.arch.lifecycle:extensions:${rootProject.arch_lifecycle}"
     kapt "android.arch.lifecycle:compiler:${rootProject.arch}"
+
+    implementation "android.arch.navigation:navigation-fragment-ktx:${rootProject.nav_version}"
+    implementation "android.arch.navigation:navigation-ui-ktx:${rootProject.nav_version}"
     /*############################################################################*/
 
     /*######################## Dependency injection ###########################*/
