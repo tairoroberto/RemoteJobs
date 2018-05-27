@@ -38,12 +38,12 @@ class RemoteApiService {
             if (isNetworkAvailable) {
                 val maxAge = 60 // read from cache for 1 minute
                 originalResponse?.newBuilder()
-                        ?.header("Cache-Control", "public, max-age=" + maxAge)
+                        ?.header("Cache-Control", "public, max-age=$maxAge")
                         ?.build()
             } else {
                 val maxStale = 60 * 60 * 24 * 28 // tolerate 4-weeks stale
                 originalResponse.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
                         .build()
             }
         }
