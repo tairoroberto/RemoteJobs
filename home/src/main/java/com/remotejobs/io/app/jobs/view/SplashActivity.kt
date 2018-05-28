@@ -40,28 +40,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }
 
-       /* try {
-            val path = Uri.parse("android.resource://" + packageName + "/" + +R.raw.bg)
-            videoView.setVideoURI(path)
-
-            videoView.setOnCompletionListener { jump() }
-
-            val metrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(metrics)
-            val params = ConstraintLayout.LayoutParams(metrics.widthPixels, metrics.heightPixels)
-            params.bottomToBottom = content.id
-            params.endToEnd = content.id
-            params.startToStart = content.id
-            params.topToBottom = imageView.id
-            params.verticalBias = 1.0f
-            videoView.layoutParams = params
-
-            videoView.start()
-        } catch (e: Exception) {
-            jump()
-        }*/
-
-        val animation = videoView.getDrawable() as AnimationDrawable
+        val animation = videoView.drawable as AnimationDrawable
         animation.start()
 
         Timer().schedule(object : TimerTask() {

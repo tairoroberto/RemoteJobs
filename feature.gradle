@@ -14,8 +14,6 @@ android {
         versionCode rootProject.versionCode
         versionName rootProject.versionName
         testInstrumentationRunner "com.remotejobs.RemoteOkTestRunner"
-        vectorDrawables.useSupportLibrary = true
-        multiDexEnabled true
     }
 
     signingConfigs {
