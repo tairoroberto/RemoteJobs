@@ -24,7 +24,6 @@ android {
         debug {
             resValue "bool", "is_release", "false"
             minifyEnabled false
-            testCoverageEnabled false
         }
 
         release {
@@ -32,9 +31,8 @@ android {
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
-            debuggable false
-            testCoverageEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../base/proguard-rules.pro'
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../proguard-rules.pro'
         }
     }
 
@@ -50,9 +48,9 @@ android {
 
 dependencies {
     implementation project(':base')
-    implementation project(":home")
-    implementation project(":highestpaid")
-    implementation project(":companies")
+    implementation project(':home')
+    implementation project(':highestpaid')
+    implementation project(':companies')
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -12,12 +12,12 @@ import android.view.View.VISIBLE
 import android.widget.ImageView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.highestpaid.R
+import com.remotejobs.io.app.highestpaid.di.HighestPaidModuleInjector
+import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModel
+import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModelFactory
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.showProgress
 import com.remotejobs.io.app.view.detail.DetailActivity
-import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModel
-import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModelFactory
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.fragment_highestpaid_jobs.*
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class HighestPaidSelectActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
+        HighestPaidModuleInjector.inject(this)
 
         setContentView(R.layout.fragment_highestpaid_jobs)
 

@@ -19,9 +19,11 @@ import android.support.v7.widget.ShareActionProvider
 import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
+import com.google.android.instantapps.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.BuildConfig
 import com.remotejobs.io.app.R
+import com.remotejobs.io.app.R.id.*
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
 import com.remotejobs.io.app.utils.extension.showProgress
@@ -148,20 +150,24 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menuInflater.inflate(R.menu.menu_detail, menu)
-        val shareItem = menu.findItem(R.id.menu_share)
 
-        shareActionProvider = MenuItemCompat.getActionProvider(shareItem) as ShareActionProvider
+        if (!InstantApps.isInstantApp(this)) {
+            val shareItem = menu.findItem(R.id.menu_share)
 
-        trackSharedJob()
+            shareActionProvider = MenuItemCompat.getActionProvider(shareItem) as ShareActionProvider
 
-        val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE)
-        } else {
-            setShareIntent()
+            trackSharedJob()
+
+            val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE)
+            } else {
+                setShareIntent()
+            }
+            return super.onCreateOptionsMenu(menu)
         }
 
-        return super.onCreateOptionsMenu(menu)
+        return false
     }
 
     private fun trackSharedJob() {

@@ -46,9 +46,7 @@ class ActivityLaunchHelper {
                     ActivityCompat.startActivity(activity, intent, options.toBundle())
                 }
 
-                if (intent.dataString == URL_HOME){
-                    activity.finishAfterTransition()
-                }
+                activity.finishAfterTransition()
             }
         }
 
