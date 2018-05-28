@@ -14,6 +14,9 @@ import com.remotejobs.io.app.jobs.R
 import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
+import android.graphics.drawable.AnimationDrawable
+
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -37,7 +40,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }
 
-        try {
+       /* try {
             val path = Uri.parse("android.resource://" + packageName + "/" + +R.raw.bg)
             videoView.setVideoURI(path)
 
@@ -56,7 +59,10 @@ class SplashActivity : AppCompatActivity() {
             videoView.start()
         } catch (e: Exception) {
             jump()
-        }
+        }*/
+
+        val animation = videoView.getDrawable() as AnimationDrawable
+        animation.start()
 
         Timer().schedule(object : TimerTask() {
             override fun run() {

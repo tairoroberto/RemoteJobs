@@ -73,7 +73,6 @@ crashlytics { instantAppSupport true }
 
 dependencies {
 
-    api 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     /*###################### Android support  libs ###############################*/
@@ -198,5 +197,6 @@ dependencies {
     application project(':installed')
     feature project(':home')
     feature project(":companies")
+    feature project(":highestpaid")
 }
 apply plugin: 'com.google.gms.google-services'

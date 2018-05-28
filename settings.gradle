@@ -1,1 +1,1 @@
-include ':base', ':installed', ':instantapp', ':home', ':companies'
+include ':base', ':installed', ':instantapp', ':home', ':companies', ':highestpaid'

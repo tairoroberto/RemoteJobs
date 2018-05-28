@@ -27,51 +27,47 @@ class ActivityLaunchHelper {
 
     companion object {
 
-        const val EXTRA_EDIT = "EDIT"
-
-        private const val URL_BASE = "https://remotejobs.trmamobile"
+        private const val URL_BASE = "https://remotejobs.trmamobile.com"
         private const val URL_HOME = "$URL_BASE/home"
         private const val URL_SIGNIN = "$URL_BASE/signin"
+        private const val URL_HIGHESTPAID = "$URL_BASE/highestpaid"
         private const val URL_COMPANIES = "$URL_BASE/companies"
 
-        fun launchHome(activity: Activity, options: ActivityOptionsCompat? = null) {
-            val starter = homeIntent(activity)
-            if (options == null) {
-                activity.startActivity(starter)
-            } else {
-                ActivityCompat.startActivity(activity, starter, options.toBundle())
-            }
-        }
+        private var currentTag = ""
 
-        fun launchCompanies(activity: Activity, options: ActivityOptionsCompat? = null) {
-            val starter = companiesIntent(activity)
-            if (options == null) {
-                activity.startActivity(starter)
-            } else {
-                ActivityCompat.startActivity(activity, starter, options.toBundle())
-            }
-        }
+        fun launchActivity(activity: Activity, intent: Intent, options: ActivityOptionsCompat? = null, tag: String) {
 
-        fun launchSignIn(activity: Activity, edit: Boolean = false) {
-            ActivityCompat.startActivity(activity,
-                    signInIntent(activity, edit),
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle())
+            if (tag != currentTag) {
+                currentTag = tag
+
+                if (options == null) {
+                    activity.startActivity(intent)
+                } else {
+                    ActivityCompat.startActivity(activity, intent, options.toBundle())
+                }
+
+                if (intent.dataString == URL_HOME){
+                    activity.finishAfterTransition()
+                }
+            }
         }
 
         fun homeIntent(context: Context? = null) = baseIntent(URL_HOME, context)
 
+        fun highestpaidIntent(context: Context? = null) = baseIntent(URL_HIGHESTPAID, context)
+
         fun companiesIntent(context: Context? = null) = baseIntent(URL_COMPANIES, context)
 
-        fun signInIntent(context: Context? = null, edit: Boolean = false): Intent =
-                baseIntent(URL_SIGNIN, context).putExtra(EXTRA_EDIT, edit)
 
         private fun baseIntent(url: String, context: Context? = null): Intent {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     .addCategory(Intent.CATEGORY_DEFAULT)
                     .addCategory(Intent.CATEGORY_BROWSABLE)
+
             if (context != null) {
                 intent.`package` = context.packageName
             }
+
             return intent
         }
     }

@@ -1,4 +1,1 @@
 apply from: rootProject.file('feature.gradle')
-
-dependencies {
-}

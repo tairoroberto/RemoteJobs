@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/RemoteJobs.iml" filepath="$PROJECT_DIR$/RemoteJobs.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
       <module fileurl="file://$PROJECT_DIR$/companies/companies.iml" filepath="$PROJECT_DIR$/companies/companies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/highestpaid/highestpaid.iml" filepath="$PROJECT_DIR$/highestpaid/highestpaid.iml" />
       <module fileurl="file://$PROJECT_DIR$/home/home.iml" filepath="$PROJECT_DIR$/home/home.iml" />
       <module fileurl="file://$PROJECT_DIR$/installed/installed.iml" filepath="$PROJECT_DIR$/installed/installed.iml" />
       <module fileurl="file://$PROJECT_DIR$/instantapp/instantapp.iml" filepath="$PROJECT_DIR$/instantapp/instantapp.iml" />
