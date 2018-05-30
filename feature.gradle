@@ -2,8 +2,6 @@ apply plugin: 'com.android.feature'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
-
 
 android {
 
@@ -29,9 +27,7 @@ android {
 
         release {
             resValue "bool", "is_release", "true"
-            minifyEnabled true
             signingConfig signingConfigs.release
-            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), '../proguard-rules.pro'
         }
     }
@@ -45,8 +41,6 @@ android {
         checkReleaseBuilds false
     }
 }
-
-crashlytics { instantAppSupport true }
 
 dependencies {
     implementation project(':base')

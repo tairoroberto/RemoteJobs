@@ -37,7 +37,7 @@ android {
             resValue "bool", "is_release", "true"
             minifyEnabled true
             signingConfig signingConfigs.release
-            debuggable true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), '../proguard-rules.pro'
         }
     }
@@ -50,10 +50,6 @@ android {
     lintOptions {
         checkReleaseBuilds false
     }
-}
-
-kapt {
-    generateStubs = true
 }
 
 kotlin {
