@@ -6,8 +6,8 @@ buildscript {
     ext.buildToolsVersion = '27.0.3'
     ext.minSdkVersion = 21
     ext.targetSdkVersion = 27
-    ext.versionCode = 4
-    ext.versionName = '1.4'
+    ext.versionCode = 5
+    ext.versionName = '1.5'
 
     ext.supportLibs = '27.1.1'
     ext.constraint_layout = '1.1.0'
@@ -18,7 +18,7 @@ buildscript {
 
     ext.multidex = '1.0.3'
 
-    ext.crashlytics = '2.8.0'
+    ext.crashlytics = '2.9.3'
     ext.firebase = '16.0.0'
     ext.firebase_message = '17.0.0'
 

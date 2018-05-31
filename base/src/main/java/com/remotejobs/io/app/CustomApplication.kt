@@ -1,6 +1,7 @@
 package com.remotejobs.io.app
 
 import android.content.Context
+import android.support.multidex.MultiDex
 import com.remotejobs.io.app.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -17,6 +18,11 @@ open class CustomApplication : DaggerApplication() {
 
     companion object {
         fun appComponent(context: Context?) = (context?.applicationContext as CustomApplication).appComponent
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     override fun onCreate() {

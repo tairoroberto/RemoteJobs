@@ -250,11 +250,6 @@
   @com.google.android.gms.common.annotation.KeepName *;
 }
 
--keep @interface com.google.android.gms.common.util.DynamiteApi
--keep public @com.google.android.gms.common.util.DynamiteApi class * {
-  public <fields>;
-  public <methods>;
-}
 
 -dontwarn android.security.NetworkSecurityPolicy
 
