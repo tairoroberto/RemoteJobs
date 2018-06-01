@@ -24,6 +24,7 @@ android {
         debug {
             resValue "bool", "is_release", "false"
             minifyEnabled false
+            ext.enableCrashlytics = false
         }
 
         release {

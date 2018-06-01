@@ -23,6 +23,7 @@ android {
     buildTypes {
         debug {
             resValue "bool", "is_release", "false"
+            ext.enableCrashlytics = false
         }
 
         release {

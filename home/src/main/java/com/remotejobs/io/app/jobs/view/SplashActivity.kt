@@ -1,12 +1,11 @@
 package com.remotejobs.io.app.jobs.view
 
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.util.DisplayMetrics
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.remotejobs.io.app.BuildConfig
@@ -14,8 +13,6 @@ import com.remotejobs.io.app.jobs.R
 import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
-import android.graphics.drawable.AnimationDrawable
-
 
 
 class SplashActivity : AppCompatActivity() {
