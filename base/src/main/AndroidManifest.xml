@@ -44,7 +44,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="d3fd30ea6904578ebda38a784ab4b13d180db17a" />
+            android:value="64f062bc6b62cea865d47208c0e9d4b4e4f79251" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
