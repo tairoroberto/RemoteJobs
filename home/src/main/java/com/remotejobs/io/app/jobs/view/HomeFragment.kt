@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
@@ -22,19 +21,14 @@ import android.widget.ImageView
 import com.google.android.instantapps.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.jobs.R
-import com.remotejobs.io.app.jobs.R.id.*
 import com.remotejobs.io.app.jobs.di.HomeModuleInjector
 import com.remotejobs.io.app.jobs.viewmodel.HomeViewModel
 import com.remotejobs.io.app.jobs.viewmodel.HomeViewModelFactory
 import com.remotejobs.io.app.model.Job
-import com.remotejobs.io.app.utils.extension.hideSoftKeyboard
-import com.remotejobs.io.app.utils.extension.showProgress
-import com.remotejobs.io.app.utils.extension.showSnackBarError
-import com.remotejobs.io.app.utils.extension.showSoftKeyboard
+import com.remotejobs.io.app.utils.extension.*
 import com.remotejobs.io.app.view.detail.DetailActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.browse
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
 import javax.inject.Inject
@@ -255,7 +249,7 @@ class HomeFragment : Fragment() {
 
                 noButton {}
                 yesButton {
-                    activity?.browse("market://details?id=${activity?.packageName}")
+                    activity?.launchPlayStore()
                     activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)?.apply()
                 }
 

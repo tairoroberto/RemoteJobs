@@ -1,14 +1,18 @@
 package com.remotejobs.io.app.view
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
+import com.google.android.instantapps.InstantApps
+import com.remotejobs.io.app.BuildConfig
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.utils.extension.ActivityLaunchHelper
 import com.remotejobs.io.app.utils.extension.ActivityLaunchHelper.Companion.companiesIntent
 import com.remotejobs.io.app.utils.extension.ActivityLaunchHelper.Companion.highestpaidIntent
 import com.remotejobs.io.app.utils.extension.ActivityLaunchHelper.Companion.homeIntent
+import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_main.*
 
 open class BaseActivity : AppCompatActivity() {
@@ -26,10 +30,19 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setNavigationListener()
+
+        // Set up Crashlytics, disabled for debug builds
+        val crashlyticsKit = Crashlytics.Builder()
+                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build()
+
+        // Initialize Fabric with the debug-disabled crashlytics.
+        Fabric.with(this, crashlyticsKit)
+        Crashlytics.setBool("InstantApp", InstantApps.isInstantApp(this))
     }
 
-    fun setNavigationListener(){
-        navigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private fun setNavigationListener() {
+        navigation.setOnNavigationItemSelectedListener({ item ->
 
             when (item.itemId) {
                 R.id.navigation_home -> {

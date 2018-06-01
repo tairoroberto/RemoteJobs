@@ -27,7 +27,7 @@ class ActivityLaunchHelper {
 
     companion object {
 
-        private const val URL_BASE = "https://remotejobs.trmamobile.com"
+        private const val URL_BASE = "https://remotejobs-aa979.firebaseapp.com"
         private const val URL_HOME = "$URL_BASE/home"
         private const val URL_SIGNIN = "$URL_BASE/signin"
         private const val URL_HIGHESTPAID = "$URL_BASE/highestpaid"

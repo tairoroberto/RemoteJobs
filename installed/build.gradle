@@ -24,7 +24,6 @@ android {
         debug {
             resValue "bool", "is_release", "false"
             minifyEnabled false
-            ext.enableCrashlytics = false
         }
 
         release {
@@ -53,3 +52,5 @@ dependencies {
     implementation project(':highestpaid')
     implementation project(':companies')
 }
+
+apply plugin: 'com.google.gms.google-services'

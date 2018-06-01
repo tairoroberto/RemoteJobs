@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
+import org.jetbrains.anko.browse
 
 
 /**
@@ -84,4 +85,8 @@ fun Context.removeUnicodeCharacters(data: String): String {
             .replace("\\u00C3\\u00A9", "é")
             .replace("\\u00C3\\u00A0", "à")
             .replace("\\u00c3\\u00a0", "à")
+}
+
+fun Activity.launchPlayStore() {
+    browse("https://play.google.com/store/apps/details?id=com.remotejobs.io.app")
 }
