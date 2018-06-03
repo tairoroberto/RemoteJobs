@@ -1,4 +1,4 @@
-package com.remotejobs.io.app.domain.services
+package com.remotejobs.io.app.jobs.domain.services
 
 import android.util.Log
 import com.google.firebase.iid.FirebaseInstanceId

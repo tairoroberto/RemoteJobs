@@ -17,7 +17,15 @@ android {
 
     signingConfigs {
         debug {}
-        release {}
+        release {
+            Properties localProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+
+            storeFile file(localProps["RELEASE_STORE_FILE"])
+            keyAlias localProps["RELEASE_KEY_ALIAS"]
+            storePassword localProps["RELEASE_STORE_PASSWORD"]
+            keyPassword localProps["RELEASE_KEY_PASSWORD"]
+        }
     }
 
     buildTypes {

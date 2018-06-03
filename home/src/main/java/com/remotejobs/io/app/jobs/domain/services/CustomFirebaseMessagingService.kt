@@ -1,15 +1,19 @@
-package com.remotejobs.io.app.domain.services
+package com.remotejobs.io.app.jobs.domain.services
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
+import android.os.Build
 import android.support.v4.app.NotificationCompat
+import android.support.v4.app.TaskStackBuilder
 import android.support.v4.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.remotejobs.io.app.R
+import com.remotejobs.io.app.jobs.view.SplashActivity
 
 
 /**
@@ -19,7 +23,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
 
-        val intent = Intent(this, getActivityClass("com.remotejobs.io.app.jobs.view.home.SplashActivity"))
+        val intent = Intent(this, SplashActivity::class.java)
 
         if (remoteMessage?.data?.isEmpty() == false) {
             intent.putExtra("version", remoteMessage.data["version"])
@@ -33,15 +37,27 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun showNotification(title: String?, body: String?, intent: Intent) {
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        val mChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel("jobs", "jobs", NotificationManager.IMPORTANCE_DEFAULT)
+            "jobs"
+        } else {
+            "jobs"
+        }
 
-        val builder = NotificationCompat.Builder(this, "android")
+        val builder = NotificationCompat.Builder(this, mChannel)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setColor(ContextCompat.getColor(this, R.color.colorAccent))
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
+
+        val resultIntent = Intent(this, SplashActivity::class.java)
+
+        val stackBuilder = TaskStackBuilder.create(this)
+        stackBuilder.addParentStack(SplashActivity::class.java)
+        stackBuilder.addNextIntent(resultIntent)
+        val resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        builder.setContentIntent(resultPendingIntent)
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         builder.setSound(defaultSoundUri)
@@ -50,12 +66,5 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0, notification)
-    }
-
-    @Throws(Exception::class)
-    private fun getActivityClass(target: String): Class<*>? {
-        val classLoader = this.baseContext.classLoader
-
-        return classLoader.loadClass(target)
     }
 }
