@@ -38,7 +38,7 @@ fun ImageView.loadImage(url: String?, progress: ProgressBar?) {
                     //Try again online if cache failed
                     Picasso.get().load(url).networkPolicy(NetworkPolicy.NO_CACHE)
                             .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(R.drawable.ic_logo_400x200)
-                            .transform(BitmapTransform(1024, 768))
+                            .transform(BitmapTransform(500, 500))
                             .resize(512, 512)
                             .into(this@loadImage, object : Callback {
 

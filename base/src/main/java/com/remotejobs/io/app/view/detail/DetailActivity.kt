@@ -138,9 +138,6 @@ class DetailActivity : AppCompatActivity() {
         toolbar_layout.title = job?.position
         textViewName.text = job?.position
 
-        val font = Typeface.createFromAsset(assets, "NotoSans_CondensedLight.ttf")
-        textViewDescription.typeface = font
-
         textViewDescription.textHtml(job?.description)
 
         textViewReleaseDate.text = job?.date

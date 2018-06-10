@@ -18,6 +18,7 @@ open class CustomApplication : DaggerApplication() {
 
     companion object {
         fun appComponent(context: Context?) = (context?.applicationContext as CustomApplication).appComponent
+        private val TAG = "RemoteJobs"
     }
 
     override fun attachBaseContext(base: Context?) {

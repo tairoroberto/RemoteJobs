@@ -20,6 +20,7 @@ open class BaseActivity : AppCompatActivity() {
     private var currentTag = ""
 
     companion object {
+        val SPLASH = "splash"
         val HOME = "home"
         val HIGHEST_PAID = "highest_paid"
         val COMPANIES = "companies"

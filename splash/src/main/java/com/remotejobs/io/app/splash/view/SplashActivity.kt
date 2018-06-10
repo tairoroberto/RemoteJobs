@@ -1,12 +1,14 @@
-package com.remotejobs.io.app.jobs.view
+package com.remotejobs.io.app.splash.view
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import com.remotejobs.io.app.BuildConfig
-import com.remotejobs.io.app.jobs.R
+import com.remotejobs.io.app.splash.R
+import com.remotejobs.io.app.utils.extension.ActivityLaunchHelper
 import com.remotejobs.io.app.utils.extension.launchPlayStore
 import com.remotejobs.io.app.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -40,10 +42,15 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun jump() {
-        if (isFinishing)
+        if (isFinishing) {
             return
+        }
 
-        startActivity(Intent(this, HomeActivity::class.java))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("${ActivityLaunchHelper.URL_BASE}/home"))
+                .addCategory(Intent.CATEGORY_DEFAULT)
+                .addCategory(Intent.CATEGORY_BROWSABLE)
+        intent.`package` = packageName
+        startActivity(intent)
         finish()
     }
 }

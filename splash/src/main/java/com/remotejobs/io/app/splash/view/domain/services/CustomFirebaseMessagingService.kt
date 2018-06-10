@@ -1,4 +1,4 @@
-package com.remotejobs.io.app.jobs.domain.services
+package com.remotejobs.io.app.splash.view.domain.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,7 +13,7 @@ import android.support.v4.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.remotejobs.io.app.R
-import com.remotejobs.io.app.jobs.view.SplashActivity
+import com.remotejobs.io.app.splash.view.SplashActivity
 
 
 /**

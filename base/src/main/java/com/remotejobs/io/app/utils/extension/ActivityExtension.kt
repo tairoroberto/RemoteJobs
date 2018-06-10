@@ -85,6 +85,9 @@ fun Context.removeUnicodeCharacters(data: String): String {
             .replace("\\u00C3\\u00A9", "é")
             .replace("\\u00C3\\u00A0", "à")
             .replace("\\u00c3\\u00a0", "à")
+            .replace("&#x2019;", "'")
+            .replace("&#xA0;", " ")
+            .replace("&amp;", "&")
 }
 
 fun Activity.launchPlayStore() {

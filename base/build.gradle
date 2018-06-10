@@ -179,6 +179,7 @@ dependencies {
     /*############################################################################*/
 
     application project(':installed')
+    feature project(':splash')
     feature project(':home')
     feature project(":companies")
     feature project(":highestpaid")
