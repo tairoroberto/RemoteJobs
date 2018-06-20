@@ -19,6 +19,8 @@ import android.support.v7.widget.ShareActionProvider
 import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.google.android.instantapps.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.BuildConfig
@@ -61,7 +63,7 @@ class DetailActivity : AppCompatActivity() {
 
         tracker = FirebaseAnalytics.getInstance(this@DetailActivity)
 
-        showProgress(textViewDescription, progressBar, true)
+        showProgress(textViewName, progressBar, true)
         job = intent?.getParcelableExtra("job")
 
         showJob()
@@ -103,25 +105,28 @@ class DetailActivity : AppCompatActivity() {
 
     private fun applyJob() {
 
-        if (job?.urlApply?.equals("/l/${job?.id}") == true) {
+        when {
+            job?.urlApply?.equals("/l/${job?.id}") == true -> {
+                browse("https://remoteok.io${job?.urlApply}")
+                trackApplyedJob()
+            }
 
-            browse("https://remoteok.io${job?.urlApply}")
-            trackApplyedJob()
+            job?.urlApply?.contains("mailto:") == true -> {
+                startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(job?.urlApply)))
+                trackApplyedJob()
+            }
 
-        } else if (job?.urlApply?.contains("mailto:") == true) {
+            job?.urlApply?.contains("javascript:") == true ->
+                alert {
+                    title = "Alert"
+                    message = "'This job post is older than 90 days and the position is probably filled. Try applying to jobs posted recently instead."
+                    okButton { }
+                }.show()
 
-            startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(job?.urlApply)))
-            trackApplyedJob()
-
-        } else if (job?.urlApply?.contains("javascript:") == true) {
-            alert {
-                title = "Alert"
-                message = "'This job post is older than 90 days and the position is probably filled. Try applying to jobs posted recently instead."
-                okButton { }
-            }.show()
-        } else {
-            browse("https://remoteok.io/l/${job?.id}")
-            trackApplyedJob()
+            else -> {
+                browse("https://remoteok.io/l/${job?.id}")
+                trackApplyedJob()
+            }
         }
     }
 
@@ -135,13 +140,21 @@ class DetailActivity : AppCompatActivity() {
     private fun showJob() {
         imageViewLogo.loadImage(job?.logo, progressImage)
 
-        toolbar_layout.title = job?.position
-        textViewName.text = job?.position
+        val index = job?.description?.indexOf("<p style=\"text-align:center\">See more jobs") as Int
 
-        textViewDescription.textHtml(job?.description)
+        val data = if (index >= 0) {
+            job?.description?.removeRange(index, job?.description?.length as Int) + "</div>"
+        } else {
+            job?.description
+        }
 
         textViewReleaseDate.text = job?.date
-        showProgress(textViewDescription, progressBar, false)
+        webiewViewDescription.loadData(data, "text/html", "UTF-8")
+        webiewViewDescription.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView, url: String) {
+                showProgress(textViewName, progressBar, false)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

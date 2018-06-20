@@ -30,15 +30,14 @@
             tools:text="Title" />
 
 
-        <TextView
-            android:id="@+id/textViewDescription"
+        <WebView
+            android:id="@+id/webiewViewDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
             android:layout_marginStart="@dimen/dimen_16dp"
             android:layout_marginTop="16dp"
-            android:autoLink="web|email"
             android:fontFamily="@font/sf_ui_text_light"
             android:textSize="@dimen/dimen_16sp"
             app:layout_constraintBottom_toBottomOf="parent"
