@@ -6,13 +6,13 @@ buildscript {
     ext.buildToolsVersion = '27.0.3'
     ext.minSdkVersion = 21
     ext.targetSdkVersion = 27
-    ext.versionCode = 8
-    ext.versionName = '1.8'
+    ext.versionCode = 9
+    ext.versionName = '1.9'
 
     ext.supportLibs = '27.1.1'
     ext.constraint_layout = '1.1.1'
 
-    ext.arch = "1.1.0"
+    ext.arch = "1.1.1"
     ext.arch_lifecycle = "1.1.1"
     ext.nav_version = "1.0.0-alpha01"
 
@@ -38,6 +38,7 @@ buildscript {
     ext.dagger_processor = '2.13'
     ext.stetho = '1.5.0'
     ext.picasso = '2.71828'
+    ext.lottie = '2.5.5'
 
     ext.junit = '4.12'
     ext.runner = '0.5'

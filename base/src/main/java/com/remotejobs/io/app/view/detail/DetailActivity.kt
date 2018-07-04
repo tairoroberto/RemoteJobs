@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -25,11 +24,9 @@ import com.google.android.instantapps.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.BuildConfig
 import com.remotejobs.io.app.R
-import com.remotejobs.io.app.R.id.*
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
 import com.remotejobs.io.app.utils.extension.showProgress
-import com.remotejobs.io.app.utils.extension.textHtml
 import com.remotejobs.io.app.viewmodel.detail.DetailViewModel
 import com.remotejobs.io.app.viewmodel.detail.DetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -71,7 +68,7 @@ class DetailActivity : AppCompatActivity() {
         fab.setOnClickListener { showAlertDialog() }
         imageBack.setOnClickListener {
             setAnimation()
-            finish()
+            onBackPressed()
         }
 
         contentUri = Uri.EMPTY
@@ -139,6 +136,9 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showJob() {
         imageViewLogo.loadImage(job?.logo, progressImage)
+
+        toolbar_layout.title = job?.position
+        textViewName.text = job?.position
 
         val index = job?.description?.indexOf("<p style=\"text-align:center\">See more jobs") as Int
 
@@ -226,10 +226,6 @@ class DetailActivity : AppCompatActivity() {
             file.delete()
         }
         super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        finish()
     }
 
     companion object {

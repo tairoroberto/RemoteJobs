@@ -53,7 +53,6 @@ class HomeRecyclerAdapter(private val context: Context?,
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
-        private val textViewLogo: TextView = view.findViewById(R.id.textViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
         private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
@@ -63,12 +62,8 @@ class HomeRecyclerAdapter(private val context: Context?,
 
         fun bind(job: Job) {
             if (!job.logo.isBlank()) {
-                textViewLogo.visibility = View.GONE
                 imageView.visibility = View.VISIBLE
                 imageView.loadImage(job.logo, progressImage)
-            } else {
-                textViewLogo.visibility = View.VISIBLE
-                imageView.visibility = View.GONE
             }
 
             val textTitle = StringEscapeUtils.escapeJava(job.position)

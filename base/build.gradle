@@ -117,6 +117,10 @@ dependencies {
     api "com.squareup.picasso:picasso:${rootProject.picasso}"
     /*############################################################################*/
 
+    /*########################### Animation #####################################*/
+    api "com.airbnb.android:lottie:${rootProject.lottie}"
+    /*############################################################################*/
+
     /*######################## Architetures Components ###########################*/
     // Room Database
     api "android.arch.persistence.room:runtime:${rootProject.arch}"

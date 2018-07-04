@@ -1,7 +1,6 @@
 package com.remotejobs.io.app.splash.view
 
 import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -29,8 +28,7 @@ class SplashActivity : BaseActivity() {
             finish()
         }
 
-        val animation = videoView.drawable as AnimationDrawable
-        animation.start()
+        lottieAnimationView.setOnClickListener { jump() }
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
@@ -38,7 +36,7 @@ class SplashActivity : BaseActivity() {
                     jump()
                 }
             }
-        }, 2500)
+        }, 3000)
     }
 
     private fun jump() {
