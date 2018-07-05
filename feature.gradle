@@ -17,7 +17,15 @@ android {
 
     signingConfigs {
         debug {}
-        release {}
+        release {
+            Properties localProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+
+            storeFile file(localProps["RELEASE_STORE_FILE"])
+            keyAlias localProps["RELEASE_KEY_ALIAS"]
+            storePassword localProps["RELEASE_STORE_PASSWORD"]
+            keyPassword localProps["RELEASE_KEY_PASSWORD"]
+        }
     }
 
     buildTypes {
@@ -28,7 +36,6 @@ android {
         release {
             resValue "bool", "is_release", "true"
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../proguard-rules.pro'
         }
     }
 
@@ -45,8 +52,9 @@ android {
 dependencies {
     implementation project(':base')
 
-    implementation "com.google.dagger:dagger:$project.dagger"
-    kapt "com.google.dagger:dagger-compiler:$project.dagger"
+    implementation "com.google.android.instantapps:instantapps:${rootProject.instant_app}"
+    implementation "com.google.dagger:dagger:$rootProject.dagger"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger"
 
     // Dagger Android
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger"
