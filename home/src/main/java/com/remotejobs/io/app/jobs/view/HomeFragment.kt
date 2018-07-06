@@ -75,8 +75,13 @@ class HomeFragment : Fragment() {
         //observeErrorStatus()
         observeResponse()
         getAllJobs()
+        tracker = FirebaseAnalytics.getInstance(context as Context)
 
-        FirebaseAnalytics.getInstance(context as Context).logEvent("home", null)
+        if (InstantApps.isInstantApp(context as Context)) {
+            tracker.logEvent("home_intantapp", null)
+        }else{
+            tracker.logEvent("home", null)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -43,7 +43,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     private fun setNavigationListener() {
-        navigation.setOnNavigationItemSelectedListener({ item ->
+        navigation.setOnNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -58,7 +58,7 @@ open class BaseActivity : AppCompatActivity() {
             }
 
             false
-        })
+        }
     }
 
     fun replaceFragment(fragment: Fragment, tag: String) {
