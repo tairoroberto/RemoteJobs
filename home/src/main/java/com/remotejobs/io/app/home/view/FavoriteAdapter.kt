@@ -37,11 +37,11 @@ class FavoriteAdapter(private val context: Context?, private val jobs: MutableLi
             (context as Activity).hideSoftKeyboard()
             context.alert {
                 title = "Favorites"
-                message = "Do you whant add this job to favorites?"
+                message = "Do you whant remove this job from favorites?"
 
-                positiveButton("Add to favorites") {
-                    doAsync { favoritesDao.add(Favorite(getItem(position))) }
-                    imgFavorite.setImageDrawable(ContextCompat.getDrawable(imgFavorite.context, R.drawable.ic_star_yellow_24dp))
+                positiveButton("Remove") {
+                    doAsync { favoritesDao.delete(Favorite(getItem(position))) }
+                    imgFavorite.setImageDrawable(ContextCompat.getDrawable(imgFavorite.context, R.drawable.ic_star_border_white_24dp))
                     context.toast("Success :)")
                     it.dismiss()
                 }
