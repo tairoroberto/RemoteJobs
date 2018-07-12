@@ -17,14 +17,13 @@ import android.transition.ChangeBounds
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.AdapterView
 import android.widget.ImageView
 import com.google.android.instantapps.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.data.dao.FavoritesDao
 import com.remotejobs.io.app.home.R
-import com.remotejobs.io.app.home.viewmodel.HomeViewModel
 import com.remotejobs.io.app.home.di.HomeModuleInjector
+import com.remotejobs.io.app.home.viewmodel.HomeViewModel
 import com.remotejobs.io.app.home.viewmodel.HomeViewModelFactory
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.*
@@ -40,12 +39,15 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  */
 class HomeFragment : Fragment() {
-
     @Inject
     lateinit var homeViewModelFactory: HomeViewModelFactory
 
     @Inject
     lateinit var favoritesDao: FavoritesDao
+
+    companion object {
+        const val SEARCH_PARAM = "search"
+    }
 
     private val viewModel by lazy {
         ViewModelProviders.of(this, homeViewModelFactory).get(HomeViewModel::class.java)
@@ -84,8 +86,13 @@ class HomeFragment : Fragment() {
 
         if (InstantApps.isInstantApp(context as Context)) {
             tracker.logEvent("home_intantapp", null)
-        }else{
+        } else {
             tracker.logEvent("home", null)
+        }
+
+        if (arguments?.get(SEARCH_PARAM) != null) {
+            showProgress(true)
+            viewModel.search("remote-${arguments?.get(SEARCH_PARAM)}-jobs")
         }
     }
 
@@ -237,6 +244,11 @@ class HomeFragment : Fragment() {
         if (item.itemId == R.id.search) {
             return super.onOptionsItemSelected(item)
         }
+
+        if (item.itemId == R.id.favorites) {
+            startActivity(Intent(context, FavoritesActivity::class.java))
+        }
+
 
         if (item.itemId == R.id.donate) {
             //activity?.browse("https://www.paypal.com/your_paypal")

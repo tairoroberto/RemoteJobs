@@ -18,7 +18,7 @@ interface FavoriteLocalRepository {
 
     fun deleteAll()
 
-    fun getAll(): Flowable<List<Favorite>>
+    fun getAll(): List<Favorite>
 
     fun getByName(name: String): Favorite
 }

@@ -73,6 +73,8 @@ crashlytics { instantAppSupport true }
 
 dependencies {
 
+    api 'com.android.support.constraint:constraint-layout:1.1.2'
+    api 'com.android.support:support-v4:27.1.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     /*###################### Android support  libs ###############################*/

@@ -5,6 +5,8 @@ import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
@@ -21,7 +23,7 @@ import org.jetbrains.anko.uiThread
 /**
  * Created by tairo on 1/13/18 5:30 PM.
  */
-class FavoriteAdapter(private val context: Context?, private val jobs: MutableList<String>, private val favoritesDao: FavoritesDao) : BaseAdapter() {
+class FavoriteAdapter(private val context: Context?, private val favorites: MutableList<String>, private val favoritesDao: FavoritesDao) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         var view = convertView
@@ -43,6 +45,14 @@ class FavoriteAdapter(private val context: Context?, private val jobs: MutableLi
                     doAsync { favoritesDao.delete(Favorite(getItem(position))) }
                     imgFavorite.setImageDrawable(ContextCompat.getDrawable(imgFavorite.context, R.drawable.ic_star_border_white_24dp))
                     context.toast("Success :)")
+                    favorites.remove(getItem(position))
+                    notifyDataSetChanged()
+
+                    (context as FavoritesActivity).showMessageNoDataFound(GONE)
+                    if (favorites.isEmpty()){
+                        context.showMessageNoDataFound(VISIBLE)
+                    }
+
                     it.dismiss()
                 }
                 negativeButton("Cancel") { it.dismiss() }
@@ -65,7 +75,7 @@ class FavoriteAdapter(private val context: Context?, private val jobs: MutableLi
     }
 
     override fun getItem(position: Int): String {
-        return jobs[position]
+        return favorites[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -73,12 +83,12 @@ class FavoriteAdapter(private val context: Context?, private val jobs: MutableLi
     }
 
     override fun getCount(): Int {
-        return jobs.size
+        return favorites.size
     }
 
     fun updateItems(jobs: List<String>){
-        this.jobs.clear()
-        this.jobs.addAll(jobs)
+        this.favorites.clear()
+        this.favorites.addAll(jobs)
         notifyDataSetChanged()
     }
 }

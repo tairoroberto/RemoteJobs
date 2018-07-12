@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RemoteOK.iml" filepath="$PROJECT_DIR$/RemoteOK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RemoteJobs.iml" filepath="$PROJECT_DIR$/RemoteJobs.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
       <module fileurl="file://$PROJECT_DIR$/companies/companies.iml" filepath="$PROJECT_DIR$/companies/companies.iml" />
       <module fileurl="file://$PROJECT_DIR$/highestpaid/highestpaid.iml" filepath="$PROJECT_DIR$/highestpaid/highestpaid.iml" />

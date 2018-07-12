@@ -22,6 +22,7 @@ open class BaseActivity : AppCompatActivity() {
     companion object {
         val SPLASH = "splash"
         val HOME = "home"
+        val HOME_SEARCH = "home_search"
         val HIGHEST_PAID = "highest_paid"
         val COMPANIES = "companies"
         val STATISTICS = "statistics"

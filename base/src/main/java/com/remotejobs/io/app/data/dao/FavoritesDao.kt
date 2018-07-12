@@ -25,7 +25,7 @@ interface FavoritesDao {
     fun deleteAll()
 
     @Query("SELECT * FROM favorites LIMIT 30")
-    fun getAll(): Flowable<List<Favorite>>
+    fun getAll(): List<Favorite>
 
     @Query("select * from favorites where name = :name")
     fun getByName(name: String): Favorite

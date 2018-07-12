@@ -29,7 +29,7 @@ class FavoritesLocalDataStore(private val favoritesDao: FavoritesDao) : Favorite
         favoritesDao.deleteAll()
     }
 
-    override fun getAll(): Flowable<List<Favorite>> {
+    override fun getAll(): List<Favorite> {
         return favoritesDao.getAll()
     }
 
