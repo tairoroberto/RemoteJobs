@@ -49,7 +49,7 @@ class FavoriteAdapter(private val context: Context?, private val favorites: Muta
                     notifyDataSetChanged()
 
                     (context as FavoritesActivity).showMessageNoDataFound(GONE)
-                    if (favorites.isEmpty()){
+                    if (favorites.isEmpty()) {
                         context.showMessageNoDataFound(VISIBLE)
                     }
 
@@ -58,7 +58,6 @@ class FavoriteAdapter(private val context: Context?, private val favorites: Muta
                 negativeButton("Cancel") { it.dismiss() }
             }.show()
         }
-
 
         doAsync {
             val favorite = favoritesDao.getByName(getItem(position))
@@ -86,7 +85,7 @@ class FavoriteAdapter(private val context: Context?, private val favorites: Muta
         return favorites.size
     }
 
-    fun updateItems(jobs: List<String>){
+    fun updateItems(jobs: List<String>) {
         this.favorites.clear()
         this.favorites.addAll(jobs)
         notifyDataSetChanged()
