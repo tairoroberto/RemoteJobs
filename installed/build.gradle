@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+//apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.remotejobs.io.app"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+        testInstrumentationRunner "com.remotejobs.RemoteOkTestRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        debug {}
+        release {
+            Properties localProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+
+            storeFile file(localProps["RELEASE_STORE_FILE"])
+            keyAlias localProps["RELEASE_KEY_ALIAS"]
+            storePassword localProps["RELEASE_STORE_PASSWORD"]
+            keyPassword localProps["RELEASE_KEY_PASSWORD"]
+        }
+    }
+
+    buildTypes {
+        debug {
+            resValue "bool", "is_release", "false"
+            minifyEnabled false
+        }
+
+        release {
+            resValue "bool", "is_release", "true"
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    implementation project(':base')
+    implementation project(':splash')
+    implementation project(':home')
+    implementation project(':highestpaid')
+    implementation project(':companies')
+}
+
+apply plugin: 'com.google.gms.google-services'

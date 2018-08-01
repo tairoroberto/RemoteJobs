@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.remotejobs.io.app.home">
+
+    <application>
+        <activity
+            android:name=".view.HomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="default-url"
+                android:value="https://remotejobs-aa979.firebaseapp.com/home" />
+
+            <intent-filter
+                android:autoVerify="true"
+                android:order="1">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="remotejobs-aa979.firebaseapp.com"
+                    android:path="/home"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="true"
+                android:order="1">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="remotejobs-aa979.firebaseapp.com"
+                    android:path="/home"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="Favorites"
+            android:name=".view.FavoritesActivity"
+            android:parentActivityName=".view.HomeActivity" />
+    </application>
+
+</manifest>
