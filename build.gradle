@@ -2,14 +2,14 @@
 
 buildscript {
 
-    ext.compileSdkVersion = 27
-    ext.buildToolsVersion = '27.0.3'
+    ext.compileSdkVersion = 28
+    ext.buildToolsVersion = '28.0.0'
     ext.minSdkVersion = 21
-    ext.targetSdkVersion = 27
-    ext.versionCode = 12
-    ext.versionName = '1.12'
+    ext.targetSdkVersion = 28
+    ext.versionCode = 13
+    ext.versionName = '1.13'
 
-    ext.supportLibs = '27.1.1'
+    ext.supportLibs = '28.0.0'
     ext.constraint_layout = '1.1.2'
     ext.instant_app = '1.1.0'
 
@@ -23,7 +23,7 @@ buildscript {
     ext.firebase = '16.0.1'
     ext.firebase_message = '17.1.0'
 
-    ext.kotlin_version = '1.2.50'
+    ext.kotlin_version = '1.2.71'
     ext.anko_version = '0.10.4'
 
     ext.gson = '2.8.0'
@@ -61,10 +61,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.25.4'
-        classpath 'com.google.gms:google-services:3.2.1'
+        classpath 'com.google.gms:google-services:4.0.1'
         //classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha01"
     }
 }
