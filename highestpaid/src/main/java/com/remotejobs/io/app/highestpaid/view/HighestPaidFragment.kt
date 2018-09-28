@@ -1,27 +1,26 @@
 package com.remotejobs.io.app.highestpaid.view
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.highestpaid.R
 import com.remotejobs.io.app.highestpaid.di.HighestPaidModuleInjector
-import com.remotejobs.io.app.model.HighestPaid
-import com.remotejobs.io.app.utils.extension.showProgress
 import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModel
 import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModelFactory
-import dagger.android.support.AndroidSupportInjection
+import com.remotejobs.io.app.model.HighestPaid
+import com.remotejobs.io.app.utils.extension.showProgress
 import kotlinx.android.synthetic.main.fragment_highest_paid.*
 import javax.inject.Inject
 
-class HighestPaidFragment : androidx.fragment.app.Fragment() {
+class HighestPaidFragment : Fragment() {
 
     private lateinit var adapter: HighestPaidRecyclerAdapter
 
@@ -45,7 +44,7 @@ class HighestPaidFragment : androidx.fragment.app.Fragment() {
         viewModel.getResponse().observe(this, Observer {
             adapter.update(it)
         })
-        viewModel.getLoadingStatus().observe(this, androidx.lifecycle.Observer { isLoading -> showProgress(isLoading) })
+        viewModel.getLoadingStatus().observe(this, Observer { isLoading -> showProgress(isLoading) })
 
         setHasOptionsMenu(true)
         retainInstance = true
@@ -56,7 +55,7 @@ class HighestPaidFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = HighestPaidRecyclerAdapter(activity, list, this::onItemClick)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter

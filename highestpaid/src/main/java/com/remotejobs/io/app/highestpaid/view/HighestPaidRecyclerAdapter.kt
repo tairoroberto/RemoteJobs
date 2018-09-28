@@ -1,13 +1,13 @@
 package com.remotejobs.io.app.highestpaid.view
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.remotejobs.io.app.highestpaid.R
 import com.remotejobs.io.app.model.HighestPaid
 import com.remotejobs.io.app.utils.extension.textHtml
@@ -17,7 +17,7 @@ import com.remotejobs.io.app.utils.extension.textHtml
  */
 class HighestPaidRecyclerAdapter(private val context: Context?,
                                  private var list: MutableList<HighestPaid>,
-                                 private val onClick: (tag: String) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<HighestPaidRecyclerAdapter.ViewHolder>() {
+                                 private val onClick: (tag: String) -> Unit) : RecyclerView.Adapter<HighestPaidRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
@@ -44,7 +44,7 @@ class HighestPaidRecyclerAdapter(private val context: Context?,
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val tag: Button = view.findViewById(R.id.tag)
         private val textViewSalary: TextView = view.findViewById(R.id.textViewSalary)

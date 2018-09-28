@@ -1,7 +1,6 @@
 package com.remotejobs.io.app.companies.view
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.remotejobs.io.app.companies.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
@@ -23,16 +23,16 @@ import org.apache.commons.text.StringEscapeUtils
  */
 class CompaniesJobsRecyclerAdapter(private val context: Context?,
                                    private var list: MutableList<Job>,
-                                   private val onClick: (job: Job, imageView: ImageView) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<CompaniesJobsRecyclerAdapter.ViewHolder>() {
+                                   private val onClick: (job: Job, imageView: ImageView) -> Unit) : RecyclerView.Adapter<CompaniesJobsRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener({
+        holder.itemView.setOnClickListener {
             onClick(item, holder.imageView)
-        })
+        }
         setAnimation(holder.itemView, position)
     }
 
@@ -51,7 +51,7 @@ class CompaniesJobsRecyclerAdapter(private val context: Context?,
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewLogo: TextView = view.findViewById(R.id.textViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)

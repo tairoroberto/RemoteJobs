@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.companies.R
 import com.remotejobs.io.app.companies.di.CompaniesModuleInjector
@@ -48,7 +48,7 @@ class CompaniesFragment : Fragment() {
         viewModel.getResponse().observe(this, Observer {
             adapter.update(it)
         })
-        viewModel.getLoadingStatus().observe(this, androidx.lifecycle.Observer { isLoading -> /*showProgress(isLoading)*/ })
+        viewModel.getLoadingStatus().observe(this, Observer { isLoading -> /*showProgress(isLoading)*/ })
 
         setHasOptionsMenu(true)
         retainInstance = true
@@ -59,7 +59,7 @@ class CompaniesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = CompaniesRecyclerAdapter(activity, list, this::onItemClick)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter

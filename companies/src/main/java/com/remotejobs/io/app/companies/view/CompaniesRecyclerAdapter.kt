@@ -1,7 +1,6 @@
 package com.remotejobs.io.app.companies.view
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.remotejobs.io.app.companies.R
 import com.remotejobs.io.app.model.Company
 import com.remotejobs.io.app.utils.extension.loadImage
@@ -20,17 +20,17 @@ import com.remotejobs.io.app.utils.extension.textHtml
  */
 class CompaniesRecyclerAdapter(private val context: Context?,
                                private var list: MutableList<Company>,
-                               private val onClick: (company: Company) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<CompaniesRecyclerAdapter.ViewHolder>() {
+                               private val onClick: (company: Company) -> Unit) : RecyclerView.Adapter<CompaniesRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener({ onClick(item) })
-        holder.tag1.setOnClickListener({ onClick(item) })
-        holder.tag2.setOnClickListener({ onClick(item) })
-        holder.tag3.setOnClickListener({ onClick(item) })
+        holder.itemView.setOnClickListener { onClick(item) }
+        holder.tag1.setOnClickListener { onClick(item) }
+        holder.tag2.setOnClickListener { onClick(item) }
+        holder.tag3.setOnClickListener { onClick(item) }
         setAnimation(holder.itemView, position)
     }
 
@@ -49,7 +49,7 @@ class CompaniesRecyclerAdapter(private val context: Context?,
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)

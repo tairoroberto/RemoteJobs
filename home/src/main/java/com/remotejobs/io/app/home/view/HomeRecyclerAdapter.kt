@@ -1,7 +1,6 @@
 package com.remotejobs.io.app.home.view
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
@@ -51,7 +51,7 @@ class HomeRecyclerAdapter(private val context: Context?,
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)

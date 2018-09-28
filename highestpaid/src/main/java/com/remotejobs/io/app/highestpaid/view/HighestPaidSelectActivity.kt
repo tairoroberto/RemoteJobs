@@ -1,15 +1,15 @@
 package com.remotejobs.io.app.highestpaid.view
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.highestpaid.R
 import com.remotejobs.io.app.highestpaid.di.HighestPaidModuleInjector
@@ -61,17 +61,17 @@ class HighestPaidSelectActivity : AppCompatActivity() {
             swipeRefreshLayout?.isRefreshing = false
         })
 
-        viewModel.getLoadingStatus().observe(this, androidx.lifecycle.Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
+        viewModel.getLoadingStatus().observe(this, Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
         FirebaseAnalytics.getInstance(this).logEvent("highestpaid_jobs", null)
     }
 
     private fun setListAdapter() {
         adapter = HighestpaidJobsRecyclerAdapter(this, list, this::onItemClick)
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-        swipeRefreshLayout.setOnRefreshListener({ viewModel.loadHighestPaidJobs(tag as String) })
+        swipeRefreshLayout.setOnRefreshListener { viewModel.loadHighestPaidJobs(tag as String) }
     }
 
     private fun onItemClick(job: Job, imageView: ImageView) {

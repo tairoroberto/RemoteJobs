@@ -14,7 +14,6 @@ import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -191,7 +190,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
 
     private fun setUpSearchView(menu: Menu?) {
 
-        val searchView = MenuItemCompat.getActionView(menu?.findItem(R.id.search)) as SearchView
+        val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
         searchView.setIconifiedByDefault(false)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -226,8 +225,9 @@ class HomeFragment : androidx.fragment.app.Fragment() {
                 return true
             }
         })
-        MenuItemCompat.setOnActionExpandListener(menu?.findItem(R.id.search),
-                object : MenuItemCompat.OnActionExpandListener {
+
+        menu.findItem(R.id.search)?.setOnActionExpandListener(
+                object : MenuItem.OnActionExpandListener {
                     override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                         searchView.requestFocus()
                         activity?.showSoftKeyboard()

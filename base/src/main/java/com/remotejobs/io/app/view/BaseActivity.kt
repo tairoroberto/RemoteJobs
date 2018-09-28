@@ -1,8 +1,8 @@
 package com.remotejobs.io.app.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.instantapps.InstantApps
@@ -62,7 +62,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun replaceFragment(fragment: androidx.fragment.app.Fragment, tag: String) {
+    fun replaceFragment(fragment: Fragment, tag: String) {
         if (tag != currentTag) {
             currentTag = tag
             supportFragmentManager
@@ -72,7 +72,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun addFragment(fragment: androidx.fragment.app.Fragment, tag: String) {
+    fun addFragment(fragment: Fragment, tag: String) {
         if (tag != currentTag) {
             currentTag = tag
             supportFragmentManager

@@ -45,8 +45,8 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
         disposables.add(highestPaidUseCase.getAllHighestPaidSalaries()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .doOnError { loadHighestPaidFromDataBase(highestPaidUseCase.listAllHighestPaidSalariesFromBD()) }
                 .subscribe(
                         { companies ->
@@ -68,8 +68,8 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
         disposables.add(highestPaidResponse
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .subscribe(
                         { companies ->
                             response.value = companies
@@ -84,8 +84,8 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
         disposables.add(highestPaidUseCase.getAllHighestPaidJobs("remote-$tag-jobs")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .doOnError { loadHighestPaidJobsFromDataBase(highestPaidUseCase.listAllHighestPaidJobsFromBD(tag)) }
                 .subscribe(
                         { jobs ->
@@ -103,8 +103,8 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
         disposables.add(jobsResponse
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .subscribe(
                         { jobs ->
                             responseJobs.value = jobs
