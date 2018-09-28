@@ -4,18 +4,14 @@
     tools:context=".io.app.home.view.MainActivity">
     <item
         android:id="@+id/search"
-        android:title="@android:string/search_go"
         android:icon="@drawable/abc_ic_search_api_material"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+        android:title="@android:string/search_go"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
 
     <item
         android:id="@+id/favorites"
         android:title="@string/favorites"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/donate"
-        android:title="@string/donate"
-        app:showAsAction="never" />
 </menu>

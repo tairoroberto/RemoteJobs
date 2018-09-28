@@ -1,7 +1,6 @@
 package com.remotejobs.io.app.view.detail
 
 import android.Manifest
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,17 +8,18 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.view.MenuItemCompat
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.ShareActionProvider
 import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.ShareActionProvider
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.view.MenuItemCompat
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.instantapps.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.BuildConfig
@@ -164,7 +164,7 @@ class DetailActivity : AppCompatActivity() {
         if (!InstantApps.isInstantApp(this)) {
             val shareItem = menu.findItem(R.id.menu_share)
 
-            shareActionProvider = MenuItemCompat.getActionProvider(shareItem) as ShareActionProvider
+            shareActionProvider = MenuItemCompat.getActionProvider(shareItem) as ShareActionProvider?
 
             trackSharedJob()
 
@@ -178,6 +178,14 @@ class DetailActivity : AppCompatActivity() {
         }
 
         return false
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            setShareIntent()
+        }
     }
 
     private fun trackSharedJob() {

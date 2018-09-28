@@ -10,7 +10,9 @@ import android.transition.ChangeBounds
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
@@ -19,7 +21,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.instantapps.InstantApps
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.hsalf.smilerating.BaseRating
+import com.hsalf.smilerating.SmileRating
 import com.remotejobs.io.app.data.dao.FavoritesDao
 import com.remotejobs.io.app.home.R
 import com.remotejobs.io.app.home.di.HomeModuleInjector
@@ -250,33 +255,92 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             startActivity(Intent(context, FavoritesActivity::class.java))
         }
 
-
-        if (item.itemId == R.id.donate) {
-            //activity?.browse("https://www.paypal.com/your_paypal")
-            activity?.alert {
-                title = "Donate"
-                message = "Option is disable for now"
-                yesButton { }
-            }?.show()
-        }
-
         return true
     }
 
     private fun showAlertDialogHateUs() {
+
         val rated = activity?.getSharedPreferences("Home", MODE_PRIVATE)?.getBoolean("rated", false)
-        if (rated != true) {
-            activity?.alert {
-                title = "Rate us"
-                message = "Rate us and help us improve with new features for the community, give us 5 stars to help in the disclosure, but leave a comment to improve the app :)"
+        val ratedCount: Int = activity?.getSharedPreferences("Home", MODE_PRIVATE)?.getInt("ratedCount", 0) as Int
 
-                noButton {}
-                yesButton {
-                    activity?.launchPlayStore()
-                    activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)?.apply()
+        if (rated != true || ratedCount % 10 == 0) {
+
+            val alertBuilder = AlertDialog.Builder(context as Context)
+            var alertDialog: AlertDialog? = null
+            var feeling: String? = "GREAT"
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_rate_us, null)
+            val btnOk = view.findViewById<Button>(R.id.btn_ok)
+            val btnCancel = view.findViewById<Button>(R.id.btn_cancel)
+            val smileRating = view.findViewById<SmileRating>(R.id.smile_rating)
+            val textInputTellUs = view.findViewById<TextInputLayout>(R.id.text_input_tell_us)
+
+            btnOk.setOnClickListener {
+                alertDialog?.dismiss()
+                val value = textInputTellUs.editText?.text.toString()
+                trackRateUs(feeling, value)
+
+                if (feeling == "GOOD" || feeling == "GREAT") {
+                    showAlert()
                 }
+            }
 
-            }?.show()
+            btnCancel.setOnClickListener {
+                alertDialog?.dismiss()
+            }
+
+            smileRating.selectedSmile = BaseRating.GREAT
+            smileRating.setOnSmileySelectionListener { smiley, reselected ->
+                when (smiley) {
+                    SmileRating.TERRIBLE -> {
+                        textInputTellUs.visibility = VISIBLE
+                        feeling = "TERRIBLE"
+                    }
+                    SmileRating.BAD -> {
+                        textInputTellUs.visibility = VISIBLE
+                        feeling = "BAD"
+                    }
+                    SmileRating.OKAY -> {
+                        textInputTellUs.visibility = VISIBLE
+                        feeling = "OKAY"
+                    }
+                    SmileRating.GOOD -> {
+                        textInputTellUs.visibility = GONE
+                        feeling = "GOOD"
+                    }
+                    SmileRating.GREAT -> {
+                        textInputTellUs.visibility = GONE
+                        feeling = "GREAT"
+                    }
+                }
+            }
+
+            alertBuilder.setView(view)
+            alertDialog = alertBuilder.create()
+            alertDialog.show()
         }
+
+        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putInt("ratedCount", ratedCount.plus(1))?.apply()
+    }
+
+    private fun showAlert() {
+        activity?.alert {
+
+            title = "Rate us on PlayStore"
+            message = "Rate us and help us improve with new features for the community, give us 5 stars to help in the disclosure, but leave a comment to improve the app :)"
+
+            noButton {}
+            yesButton {
+                activity?.launchPlayStore()
+                activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)?.apply()
+            }
+
+        }?.show()
+    }
+
+    private fun trackRateUs(feeling: String?, value: String) {
+        val bundle = Bundle()
+        bundle.putString(feeling, value)
+        tracker.logEvent("rate_us", bundle)
+        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)?.apply()
     }
 }

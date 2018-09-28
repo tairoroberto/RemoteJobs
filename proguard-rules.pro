@@ -171,9 +171,8 @@
 -keep class com.google.android.gms.maps.SupportMapFragment { *; }
 -keep class com.google.android.gms.maps.MapFragment { *; }
 
--keep public class * extends android.support.v4.view.ActionProvider {
-    public <init>(android.content.Context);
-}
+-keep class androidx.appcompat.widget.** { *; }
+-keepnames class androidx.appcompat.widget.** { *; }
 
 
 ## Google Play Services 4.3.23 specific rules ##
