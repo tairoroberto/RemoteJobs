@@ -1,7 +1,7 @@
 package com.remotejobs.io.app.viewmodel.detail
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 
 /**
  * Created by tairo on 11/30/17 11:26 PM.

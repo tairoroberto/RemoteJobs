@@ -1,13 +1,13 @@
 package com.remotejobs.io.app.companies.view
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.util.Pair
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -60,13 +60,13 @@ class CompaniesSelectActivity : AppCompatActivity() {
             swipeRefreshLayout?.isRefreshing = false
         })
 
-        viewModel.getLoadingStatus().observe(this, android.arch.lifecycle.Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
+        viewModel.getLoadingStatus().observe(this, androidx.lifecycle.Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
         FirebaseAnalytics.getInstance(this).logEvent("company_jobs", null)
     }
 
     private fun setListAdapter() {
         adapter = CompaniesJobsRecyclerAdapter(this, list, this::onItemClick)
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter

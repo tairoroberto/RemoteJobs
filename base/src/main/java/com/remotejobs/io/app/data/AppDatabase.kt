@@ -1,9 +1,9 @@
 package com.remotejobs.io.app.data
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import android.content.Context
 import com.remotejobs.io.app.data.dao.CompaniesDao
 import com.remotejobs.io.app.data.dao.FavoritesDao
@@ -15,7 +15,7 @@ import com.remotejobs.io.app.model.HighestPaid
 import com.remotejobs.io.app.model.Job
 
 
-@Database(entities = [(Job::class), (Company::class), (HighestPaid::class), (Favorite::class)], version = 7)
+@Database(entities = [(Job::class), (Company::class), (HighestPaid::class), (Favorite::class)], version = 7, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

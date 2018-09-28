@@ -5,18 +5,18 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.browse
 
 
 /**
  * Created by tairo on 11/12/17.
  */
-fun Activity.showProgress(form: View?, progressBar: ProgressBar?, show: Boolean) {
+fun Context.showProgress(form: View?, progressBar: ProgressBar?, show: Boolean) {
     val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
     form?.visibility = if (show) View.GONE else View.VISIBLE
@@ -40,29 +40,29 @@ fun Activity.showProgress(form: View?, progressBar: ProgressBar?, show: Boolean)
             })
 }
 
-fun Activity.showSnackBarError(view: View?, msg: String) {
+fun Context.showSnackBarError(view: View?, msg: String) {
     val snackbar: Snackbar = Snackbar.make(view as View, msg, Snackbar.LENGTH_LONG)
             .setAction("OK", null)
     snackbar.view.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
     snackbar.show()
 }
 
-fun Activity.isConected(): Boolean {
+fun Context.isConected(): Boolean {
     val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val netInfo = cm.activeNetworkInfo
     return netInfo != null && netInfo.isConnectedOrConnecting
 }
 
-fun Activity.hideSoftKeyboard() {
-    val view = currentFocus
+fun Context.hideSoftKeyboard() {
+    val view = (this as Activity).currentFocus
     if (view != null) {
         (getSystemService(Context.INPUT_METHOD_SERVICE)
                 as? InputMethodManager)?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
 
-fun Activity.showSoftKeyboard() {
-    val view = currentFocus
+fun Context.showSoftKeyboard() {
+    val view = (this as Activity).currentFocus
     if (view != null) {
         (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)
     }
@@ -90,6 +90,6 @@ fun Context.removeUnicodeCharacters(data: String): String {
             .replace("&amp;", "&")
 }
 
-fun Activity.launchPlayStore() {
+fun Context.launchPlayStore() {
     browse("https://play.google.com/store/apps/details?id=com.remotejobs.io.app")
 }

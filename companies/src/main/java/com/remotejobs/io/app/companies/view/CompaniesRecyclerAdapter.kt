@@ -1,7 +1,7 @@
 package com.remotejobs.io.app.companies.view
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +20,7 @@ import com.remotejobs.io.app.utils.extension.textHtml
  */
 class CompaniesRecyclerAdapter(private val context: Context?,
                                private var list: MutableList<Company>,
-                               private val onClick: (company: Company) -> Unit) : RecyclerView.Adapter<CompaniesRecyclerAdapter.ViewHolder>() {
+                               private val onClick: (company: Company) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<CompaniesRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
@@ -49,7 +49,7 @@ class CompaniesRecyclerAdapter(private val context: Context?,
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)

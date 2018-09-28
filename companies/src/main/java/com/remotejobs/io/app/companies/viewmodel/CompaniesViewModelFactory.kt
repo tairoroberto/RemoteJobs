@@ -1,7 +1,7 @@
 package com.remotejobs.io.app.companies.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.remotejobs.io.app.companies.domain.CompaniesUseCase
 
 /**

@@ -1,7 +1,7 @@
 package com.remotejobs.io.app.view.detail
 
 import android.Manifest
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,12 +9,12 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.ShareActionProvider
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.view.MenuItemCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.ShareActionProvider
 import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu

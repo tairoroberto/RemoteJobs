@@ -1,12 +1,12 @@
 package com.remotejobs.io.app.highestpaid.view
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_highest_paid.*
 import javax.inject.Inject
 
-class HighestPaidFragment : Fragment() {
+class HighestPaidFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var adapter: HighestPaidRecyclerAdapter
 
@@ -45,7 +45,7 @@ class HighestPaidFragment : Fragment() {
         viewModel.getResponse().observe(this, Observer {
             adapter.update(it)
         })
-        viewModel.getLoadingStatus().observe(this, android.arch.lifecycle.Observer { isLoading -> showProgress(isLoading) })
+        viewModel.getLoadingStatus().observe(this, androidx.lifecycle.Observer { isLoading -> showProgress(isLoading) })
 
         setHasOptionsMenu(true)
         retainInstance = true
@@ -56,7 +56,7 @@ class HighestPaidFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = HighestPaidRecyclerAdapter(activity, list, this::onItemClick)
-        val layoutManager = LinearLayoutManager(activity)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter

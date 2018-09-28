@@ -1,9 +1,9 @@
 package com.remotejobs
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
-import android.arch.lifecycle.Observer
-import android.arch.persistence.room.Room
-import android.support.test.InstrumentationRegistry
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
+import androidx.room.Room
+import androidx.test.InstrumentationRegistry
 import com.remotejobs.io.app.data.AppDatabase
 import com.remotejobs.io.app.jobs.data.home.HomeLocalDataStore
 import com.remotejobs.io.app.jobs.data.home.HomeRemoteDataStore

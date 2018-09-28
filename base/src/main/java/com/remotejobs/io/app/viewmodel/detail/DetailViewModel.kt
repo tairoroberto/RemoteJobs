@@ -1,6 +1,6 @@
 package com.remotejobs.io.app.viewmodel.detail
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.util.Log
 import com.remotejobs.io.app.model.Job
 

@@ -2,7 +2,7 @@ package com.remotejobs.io.app.home.view
 
 import android.app.Activity
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

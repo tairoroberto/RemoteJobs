@@ -32,11 +32,11 @@ buildscript {
     ext.logging_interceptor = '3.4.1'
     ext.okhttp = '3.7.0'
 
-    ext.rxandroid = '2.0.1'
+    ext.rxandroid = '2.0.2'
     ext.rxjava = '2.1.0'
 
-    ext.dagger = '2.14.1'
-    ext.dagger_processor = '2.13'
+    ext.dagger = '2.16'
+    ext.dagger_processor = '2.16'
     ext.stetho = '1.5.0'
     ext.picasso = '2.71828'
     ext.lottie = '2.5.5'

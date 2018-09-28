@@ -1,7 +1,7 @@
 package com.remotejobs.io.app.home.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.remotejobs.io.app.home.domain.HomeUseCase
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.model.JobsResponse

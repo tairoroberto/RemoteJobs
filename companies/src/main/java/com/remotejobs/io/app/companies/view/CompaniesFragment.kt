@@ -1,23 +1,22 @@
 package com.remotejobs.io.app.companies.view
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.companies.R
 import com.remotejobs.io.app.companies.di.CompaniesModuleInjector
 import com.remotejobs.io.app.companies.viewmodel.CompaniesViewModel
 import com.remotejobs.io.app.companies.viewmodel.CompaniesViewModelFactory
 import com.remotejobs.io.app.model.Company
-import com.remotejobs.io.app.utils.extension.showProgress
 import kotlinx.android.synthetic.main.fragment_companies.*
 import javax.inject.Inject
 
@@ -49,7 +48,7 @@ class CompaniesFragment : Fragment() {
         viewModel.getResponse().observe(this, Observer {
             adapter.update(it)
         })
-        viewModel.getLoadingStatus().observe(this, android.arch.lifecycle.Observer { isLoading -> showProgress(isLoading) })
+        viewModel.getLoadingStatus().observe(this, androidx.lifecycle.Observer { isLoading -> /*showProgress(isLoading)*/ })
 
         setHasOptionsMenu(true)
         retainInstance = true
@@ -60,7 +59,7 @@ class CompaniesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = CompaniesRecyclerAdapter(activity, list, this::onItemClick)
-        val layoutManager = LinearLayoutManager(activity)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
@@ -78,7 +77,7 @@ class CompaniesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_companies, container, false)
     }
 
-    private fun showProgress(b: Boolean?) {
+    /*private fun showProgress(b: Boolean?) {
         activity?.showProgress(recyclerView, progress, b == true)
-    }
+    }*/
 }

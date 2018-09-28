@@ -1,6 +1,6 @@
 package com.remotejobs.io.app.data.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.remotejobs.io.app.model.Company
 import io.reactivex.Flowable
 
