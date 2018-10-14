@@ -34,7 +34,7 @@ node {
                     sh("docker run --env-file .env --rm ${project} ./gradlew clean build assembleRelease crashlyticsUploadDistributionRelease")
                     sh("rm -rf .env")
                     break
-                case "dev":
+                case "develop":
                     sh("env >> .env")
                     sh("docker run --env-file .env --rm ${project} ./gradlew clean build assembleDebug crashlyticsUploadDistributionDebug")
                     sh("rm -rf .env")
