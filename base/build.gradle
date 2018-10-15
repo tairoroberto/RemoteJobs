@@ -18,7 +18,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        testInstrumentationRunner "com.remotejobs.RemoteOkTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -186,6 +186,8 @@ dependencies {
     testImplementation "org.mockito:mockito-core:${rootProject.mockitoVersion}"
 
     // Mockserver for resquest mock
+    testImplementation "br.com.concretesolutions:requestmatcher:${rootProject.requestMatcherVersion}"
+    androidTestImplementation "br.com.concretesolutions:requestmatcher:${rootProject.requestMatcherVersion}"
     testImplementation "com.squareup.okhttp3:mockwebserver:${rootProject.mockwebserver}"
 
     // Arch Test for Archtecture components test

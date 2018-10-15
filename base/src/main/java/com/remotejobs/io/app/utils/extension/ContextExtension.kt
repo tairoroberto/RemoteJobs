@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.browse
+import java.io.IOException
 
 
 /**
@@ -92,4 +93,21 @@ fun Context.removeUnicodeCharacters(data: String): String {
 
 fun Context.launchPlayStore() {
     browse("https://play.google.com/store/apps/details?id=com.remotejobs.io.app")
+}
+
+fun Context.loadJSONFromAsset(path: String): String? {
+    var json: String? = null
+    try {
+        val `is` = assets.open(path)
+        val size = `is`.available()
+        val buffer = ByteArray(size)
+        `is`.read(buffer)
+        `is`.close()
+        json = String(buffer, Charsets.UTF_8)
+    } catch (ex: IOException) {
+        ex.printStackTrace()
+        return null
+    }
+
+    return json
 }
