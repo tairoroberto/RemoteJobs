@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.remotejobs.io.app.splash", appContext.packageName)
+        assertEquals("com.remotejobs.io.app.splash.test", appContext.packageName)
     }
 }
