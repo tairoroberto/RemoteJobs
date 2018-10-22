@@ -15,16 +15,39 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    def keystoreProperties = new Properties()
+    def keystorePropertiesFile = file('../local.properties')
+    def env = System.getenv()
+
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    } else {
+
+        // Load keystore properties from environment or set their default values
+
+        if (env['REMOTEJOBS_KEYSTORE_STORE']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_STORE', env['REMOTEJOBS_KEYSTORE_STORE'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_STORE', "../remotejobs.jks")
+
+        if (env['REMOTEJOBS_KEYSTORE_ALIAS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS', env['REMOTEJOBS_KEYSTORE_ALIAS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS', "myDefaultAlias")
+
+        if (env['REMOTEJOBS_KEYSTORE_KEY_PASS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_KEY_PASS', env['REMOTEJOBS_KEYSTORE_KEY_PASS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_KEY_PASS', "myDefaultStorePass")
+
+        if (env['REMOTEJOBS_KEYSTORE_ALIAS_PASS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS_PASS', env['REMOTEJOBS_KEYSTORE_ALIAS_PASS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS_PASS', "myDefaultKeyPass")
+    }
+
     signingConfigs {
         debug {}
         release {
             Properties localProps = new Properties()
             localProps.load(new FileInputStream(file('../local.properties')))
 
-            storeFile file(localProps["RELEASE_STORE_FILE"])
-            keyAlias localProps["RELEASE_KEY_ALIAS"]
-            storePassword localProps["RELEASE_STORE_PASSWORD"]
-            keyPassword localProps["RELEASE_KEY_PASSWORD"]
+            storeFile file(localProps["REMOTEJOBS_KEYSTORE_STORE"])
+            keyAlias localProps["REMOTEJOBS_KEYSTORE_ALIAS"]
+            storePassword localProps["REMOTEJOBS_KEYSTORE_KEY_PASS"]
+            keyPassword localProps["REMOTEJOBS_KEYSTORE_ALIAS_PASS"]
         }
     }
 

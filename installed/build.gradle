@@ -26,26 +26,26 @@ android {
 
         // Load keystore properties from environment or set their default values
 
-        if (env['KEYSTORE_HOME']) keystoreProperties.put('RELEASE_STORE_FILE', env['RELEASE_STORE_FILE'])
-        else keystoreProperties.put('RELEASE_STORE_FILE', "../remotejobs.jks")
+        if (env['REMOTEJOBS_KEYSTORE_STORE']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_STORE', env['REMOTEJOBS_KEYSTORE_STORE'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_STORE', "../remotejobs.jks")
 
-        if (env['KEYSTORE_ALIAS']) keystoreProperties.put('RELEASE_KEY_ALIAS', env['RELEASE_KEY_ALIAS'])
-        else keystoreProperties.put('RELEASE_KEY_ALIAS', "remotejobs")
+        if (env['REMOTEJOBS_KEYSTORE_ALIAS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS', env['REMOTEJOBS_KEYSTORE_ALIAS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS', "remotejobs")
 
-        if (env['KEYSTORE_KEY_PASS']) keystoreProperties.put('RELEASE_STORE_PASSWORD', env['RELEASE_STORE_PASSWORD'])
-        else keystoreProperties.put('RELEASE_STORE_PASSWORD', "myDefaultStorePass")
+        if (env['REMOTEJOBS_KEYSTORE_KEY_PASS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_KEY_PASS', env['REMOTEJOBS_KEYSTORE_KEY_PASS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_KEY_PASS', "myDefaultStorePass")
 
-        if (env['KEYSTORE_KEY_PASS']) keystoreProperties.put('RELEASE_KEY_PASSWORD', env['RELEASE_KEY_PASSWORD'])
-        else keystoreProperties.put('RELEASE_KEY_PASSWORD', "myDefaultKeyPass")
+        if (env['REMOTEJOBS_KEYSTORE_ALIAS_PASS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS_PASS', env['REMOTEJOBS_KEYSTORE_ALIAS_PASS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS_PASS', "myDefaultKeyPass")
     }
 
     signingConfigs {
         debug {}
         release {
-            storeFile file(keystoreProperties["RELEASE_STORE_FILE"])
-            keyAlias keystoreProperties["RELEASE_KEY_ALIAS"]
-            storePassword keystoreProperties["RELEASE_STORE_PASSWORD"]
-            keyPassword keystoreProperties["RELEASE_KEY_PASSWORD"]
+            storeFile file(keystoreProperties["REMOTEJOBS_KEYSTORE_STORE"])
+            keyAlias keystoreProperties["REMOTEJOBS_KEYSTORE_ALIAS"]
+            storePassword keystoreProperties["REMOTEJOBS_KEYSTORE_KEY_PASS"]
+            keyPassword keystoreProperties["REMOTEJOBS_KEYSTORE_ALIAS_PASS"]
         }
     }
 
