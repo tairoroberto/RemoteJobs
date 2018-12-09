@@ -59,20 +59,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
         tools:text="13 remote jojs" />
 
-    <ProgressBar
-        android:id="@+id/progressImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewLogo"
-        app:layout_constraintStart_toStartOf="@+id/imageViewLogo"
-        app:layout_constraintTop_toTopOf="@+id/imageViewLogo" />
-
-
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/buttonsContainer"
         android:layout_width="0dp"

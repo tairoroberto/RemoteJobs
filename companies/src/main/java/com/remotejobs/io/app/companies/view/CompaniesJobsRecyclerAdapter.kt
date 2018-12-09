@@ -7,15 +7,12 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.remotejobs.io.app.companies.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
-import com.remotejobs.io.app.utils.extension.removeUnicodeCharacters
 import com.remotejobs.io.app.utils.extension.textHtml
-import org.apache.commons.text.StringEscapeUtils
 
 
 /**
@@ -56,7 +53,6 @@ class CompaniesJobsRecyclerAdapter(private val context: Context?,
         private val textViewLogo: TextView = view.findViewById(R.id.textViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
-        private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
         private val tag1: Button = view.findViewById(R.id.tag1)
         private val tag2: Button = view.findViewById(R.id.tag2)
         private val tag3: Button = view.findViewById(R.id.tag3)
@@ -65,18 +61,18 @@ class CompaniesJobsRecyclerAdapter(private val context: Context?,
             if (!job.logo.isBlank()) {
                 textViewLogo.visibility = View.GONE
                 imageView.visibility = View.VISIBLE
-                imageView.loadImage(job.logo, progressImage)
+                imageView.loadImage(job.logo)
             } else {
                 textViewLogo.visibility = View.VISIBLE
                 imageView.visibility = View.GONE
             }
 
-            val textTitle = StringEscapeUtils.escapeJava(job.position)
-            job.position = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textTitle))
+            /*    val textTitle = StringEscapeUtils.escapeJava(job.position)
+                job.position = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textTitle))
 
-            val textDescription = StringEscapeUtils.escapeJava(job.description)
-            job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))
-
+                val textDescription = StringEscapeUtils.escapeJava(job.description)
+                job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))
+    */
             textViewTitle.textHtml(job.position)
             textViewOverview.textHtml(job.description)
 

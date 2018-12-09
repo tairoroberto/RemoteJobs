@@ -135,7 +135,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showJob() {
-        imageViewLogo.loadImage(job?.logo, progressImage)
+        imageViewLogo.loadImage(job?.logo)
 
         toolbar_layout.title = job?.position
         textViewName.text = job?.position

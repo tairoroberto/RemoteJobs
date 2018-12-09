@@ -35,7 +35,7 @@ class FavoriteAdapter(private val context: Context?, private val favorites: Muta
         val imgFavorite = view?.findViewById<ImageView>(R.id.imgFavorite)
         textViewJob?.text = getItem(position)
 
-        imgFavorite?.setOnClickListener {
+        imgFavorite?.setOnClickListener { _ ->
             (context as Activity).hideSoftKeyboard()
             context.alert {
                 title = "Favorites"

@@ -39,12 +39,6 @@
                 android:layout_marginTop="0dp"
                 app:srcCompat="@drawable/gradient_black" />
 
-            <ProgressBar
-                android:id="@+id/progressImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"

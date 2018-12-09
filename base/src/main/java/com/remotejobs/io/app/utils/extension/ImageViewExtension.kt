@@ -13,45 +13,18 @@ import java.lang.Exception
  * Created by tairo on 11/12/17.
  */
 
-fun ImageView.loadImage(url: String?, progress: ProgressBar?) {
-
-    progress?.visibility = View.VISIBLE
+fun ImageView.loadImage(url: String?) {
 
     if (url.isNullOrBlank()) {
-        progress?.visibility = View.GONE
         return
     }
 
     Picasso.get()
             .load(url)
             .networkPolicy(NetworkPolicy.OFFLINE)
-            .transform(BitmapTransform(1024, 768))
-            .resize(512, 512)
-            .into(this, object : Callback {
-
-                override fun onSuccess() {
-                    progress?.visibility = View.GONE
-                }
-
-                override fun onError(e: Exception?) {
-                    progress?.visibility = View.VISIBLE
-                    //Try again online if cache failed
-                    Picasso.get().load(url).networkPolicy(NetworkPolicy.NO_CACHE)
-                            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(R.drawable.ic_logo_400x200)
-                            .transform(BitmapTransform(500, 500))
-                            .resize(512, 512)
-                            .into(this@loadImage, object : Callback {
-
-                                override fun onSuccess() {
-                                    progress?.visibility = View.GONE
-                                }
-
-                                override fun onError(e: Exception?) {
-                                    progress?.visibility = View.GONE
-                                }
-                            })
-                }
-            })
+            .placeholder(R.drawable.ic_logo_400x200)
+            .error(R.drawable.ic_logo_400x200)
+            .into(this)
 }
 
 internal class BitmapTransform(private val maxWidth: Int, private val maxHeight: Int) : Transformation {

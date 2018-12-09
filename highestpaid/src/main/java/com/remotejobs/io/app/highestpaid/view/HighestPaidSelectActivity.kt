@@ -51,7 +51,7 @@ class HighestPaidSelectActivity : AppCompatActivity() {
         }
 
         setListAdapter()
-        viewModel.getHighestPaidJobsResponse().observe(this, Observer {
+        viewModel.responseJobs.observe(this, Observer {
 
             if (it?.isEmpty() == true) {
                 withoutData.visibility = VISIBLE
@@ -61,7 +61,7 @@ class HighestPaidSelectActivity : AppCompatActivity() {
             swipeRefreshLayout?.isRefreshing = false
         })
 
-        viewModel.getLoadingStatus().observe(this, Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
+        viewModel.loadingStatus.observe(this, Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
         FirebaseAnalytics.getInstance(this).logEvent("highestpaid_jobs", null)
     }
 

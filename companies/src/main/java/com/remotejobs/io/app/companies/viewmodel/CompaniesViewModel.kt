@@ -17,36 +17,20 @@ import org.jetbrains.anko.doAsync
 class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
     private val disposables = CompositeDisposable()
 
-    private val response: MutableLiveData<List<Company>> = MutableLiveData()
+    val response: MutableLiveData<List<Company>> = MutableLiveData()
 
-    private val responseJobs: MutableLiveData<List<Job>> = MutableLiveData()
+    val responseJobs: MutableLiveData<List<Job>> = MutableLiveData()
 
-    private val loadingStatus = MutableLiveData<Boolean>()
+    val loadingStatus = MutableLiveData<Boolean>()
 
-    private val errorStatus = MutableLiveData<String>()
-
-    fun getLoadingStatus(): MutableLiveData<Boolean> {
-        return loadingStatus
-    }
-
-    fun getErrorStatus(): MutableLiveData<String> {
-        return errorStatus
-    }
-
-    fun getResponse(): MutableLiveData<List<Company>> {
-        return response
-    }
-
-    fun getCompanyJobsResponse(): MutableLiveData<List<Job>> {
-        return responseJobs
-    }
+    val errorStatus = MutableLiveData<String>()
 
     fun listAllCompanies() {
         disposables.add(companiesUseCase.listAllCompanies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .doOnError { loadResponseFromDataBase(companiesUseCase.listCompaniesFromBD()) }
                 .subscribe(
                         { companies ->
@@ -68,8 +52,8 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
         disposables.add(companiesResponse
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .subscribe(
                         { companies ->
                             response.value = companies
@@ -84,8 +68,8 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
         disposables.add(companiesUseCase.listCompaniesJobs(company)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .doOnError { loadCompaniesJobsFromDataBase(companiesUseCase.listCompaniesJobsFromBD(company)) }
                 .subscribe(
                         { response ->

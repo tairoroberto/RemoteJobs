@@ -45,10 +45,10 @@ class CompaniesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.listAllCompanies()
-        viewModel.getResponse().observe(this, Observer {
+        viewModel.response.observe(this, Observer {
             adapter.update(it)
         })
-        viewModel.getLoadingStatus().observe(this, Observer { isLoading -> /*showProgress(isLoading)*/ })
+        viewModel.loadingStatus.observe(this, Observer { isLoading -> /*showProgress(isLoading)*/ })
 
         setHasOptionsMenu(true)
         retainInstance = true

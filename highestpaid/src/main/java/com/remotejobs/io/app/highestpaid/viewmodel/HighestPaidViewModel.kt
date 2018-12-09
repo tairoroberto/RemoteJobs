@@ -17,29 +17,14 @@ import org.jetbrains.anko.doAsync
 class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewModel() {
     private val disposables = CompositeDisposable()
 
-    private val response: MutableLiveData<List<HighestPaid>> = MutableLiveData()
+    val response: MutableLiveData<List<HighestPaid>> = MutableLiveData()
 
-    private val responseJobs: MutableLiveData<List<Job>> = MutableLiveData()
+    val responseJobs: MutableLiveData<List<Job>> = MutableLiveData()
 
-    private val loadingStatus = MutableLiveData<Boolean>()
+    val loadingStatus = MutableLiveData<Boolean>()
 
-    private val errorStatus = MutableLiveData<String>()
+    val errorStatus = MutableLiveData<String>()
 
-    fun getLoadingStatus(): MutableLiveData<Boolean> {
-        return loadingStatus
-    }
-
-    fun getErrorStatus(): MutableLiveData<String> {
-        return errorStatus
-    }
-
-    fun getResponse(): MutableLiveData<List<HighestPaid>> {
-        return response
-    }
-
-    fun getHighestPaidJobsResponse(): MutableLiveData<List<Job>> {
-        return responseJobs
-    }
 
     fun getAllHighestPaidSalaries() {
         disposables.add(highestPaidUseCase.getAllHighestPaidSalaries()

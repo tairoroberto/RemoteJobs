@@ -55,7 +55,6 @@ class HighestpaidJobsRecyclerAdapter(private val context: Context?,
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
-        private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
         private val tag1: Button = view.findViewById(R.id.tag1)
         private val tag2: Button = view.findViewById(R.id.tag2)
         private val tag3: Button = view.findViewById(R.id.tag3)
@@ -63,15 +62,15 @@ class HighestpaidJobsRecyclerAdapter(private val context: Context?,
         fun bind(job: Job) {
             if (!job.logo.isBlank()) {
                 imageView.visibility = View.VISIBLE
-                imageView.loadImage(job.logo, progressImage)
+                imageView.loadImage(job.logo)
             }
 
-            val textTitle = StringEscapeUtils.escapeJava(job.position)
+        /*    val textTitle = StringEscapeUtils.escapeJava(job.position)
             job.position = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textTitle))
 
             val textDescription = StringEscapeUtils.escapeJava(job.description)
             job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))
-
+*/
             textViewTitle.textHtml(job.position)
             textViewOverview.textHtml(job.description)
 

@@ -1,28 +1,23 @@
 package com.remotejobs.io.app.home.view
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
-import com.remotejobs.io.app.utils.extension.removeUnicodeCharacters
 import com.remotejobs.io.app.utils.extension.textHtml
-import org.apache.commons.text.StringEscapeUtils
 
 
 /**
  * Created by tairo on 12/12/17.
  */
-class HomeRecyclerAdapter(private val context: Context?,
-                          private var list: MutableList<Job>,
+class HomeRecyclerAdapter(private var list: MutableList<Job>,
                           private val onClick: (job: Job, imageView: ImageView) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>() {
 
     private var lastPosition = -1
@@ -43,7 +38,7 @@ class HomeRecyclerAdapter(private val context: Context?,
 
     private fun setAnimation(viewToAnimate: View, position: Int) {
         if (position > 0) {
-            val animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left)
+            val animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
             viewToAnimate.startAnimation(animation)
             lastPosition = position
         }
@@ -55,22 +50,20 @@ class HomeRecyclerAdapter(private val context: Context?,
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
-        private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
         private val tag1: Button = view.findViewById(R.id.tag1)
         private val tag2: Button = view.findViewById(R.id.tag2)
         private val tag3: Button = view.findViewById(R.id.tag3)
 
         fun bind(job: Job) {
             if (!job.logo.isBlank()) {
-                imageView.visibility = View.VISIBLE
-                imageView.loadImage(job.logo, progressImage)
+                imageView.loadImage(job.logo)
             }
 
-            val textTitle = StringEscapeUtils.escapeJava(job.position)
+            /*val textTitle = StringEscapeUtils.escapeJava(job.position)
             job.position = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textTitle))
 
             val textDescription = StringEscapeUtils.escapeJava(job.description)
-            job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))
+            job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))*/
 
             textViewTitle.textHtml(job.position)
             textViewOverview.textHtml(job.description)

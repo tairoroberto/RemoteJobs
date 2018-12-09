@@ -50,7 +50,7 @@ class CompaniesSelectActivity : AppCompatActivity() {
         }
 
         setListAdapter()
-        viewModel.getCompanyJobsResponse().observe(this, Observer {
+        viewModel.responseJobs.observe(this, Observer {
 
             if (it?.isEmpty() == true) {
                 withoutData.visibility = VISIBLE
@@ -60,7 +60,7 @@ class CompaniesSelectActivity : AppCompatActivity() {
             swipeRefreshLayout?.isRefreshing = false
         })
 
-        viewModel.getLoadingStatus().observe(this, Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
+        viewModel.loadingStatus.observe(this, Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
         FirebaseAnalytics.getInstance(this).logEvent("company_jobs", null)
     }
 

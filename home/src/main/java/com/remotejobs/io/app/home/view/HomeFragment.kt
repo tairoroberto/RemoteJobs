@@ -44,15 +44,12 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  */
 class HomeFragment : androidx.fragment.app.Fragment() {
+
     @Inject
     lateinit var homeViewModelFactory: HomeViewModelFactory
 
     @Inject
     lateinit var favoritesDao: FavoritesDao
-
-    companion object {
-        const val SEARCH_PARAM = "search"
-    }
 
     private val viewModel by lazy {
         ViewModelProviders.of(this, homeViewModelFactory).get(HomeViewModel::class.java)
@@ -70,6 +67,11 @@ class HomeFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var tracker: FirebaseAnalytics
 
+    companion object {
+        const val SEARCH_PARAM = "search"
+
+    }
+
     override fun onAttach(context: Context?) {
         HomeModuleInjector.inject(this)
         super.onAttach(context)
@@ -79,7 +81,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         super.onCreate(savedInstanceState)
         resources.getStringArray(R.array.suggestions).forEach { suggestions.add(it) }
         adapterSearch = SearchAdapter(activity, suggestions, favoritesDao)
-        adapter = HomeRecyclerAdapter(activity, list, this::onItemClick)
+        adapter = HomeRecyclerAdapter(list, this::onItemClick)
         setHasOptionsMenu(true)
         retainInstance = true
 
@@ -136,15 +138,15 @@ class HomeFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun observeLoadingStatus() {
-        viewModel.getLoadingStatus().observe(this, Observer { isLoading -> showProgress(isLoading) })
+        viewModel.loadingStatus.observe(this, Observer { isLoading -> showProgress(isLoading) })
     }
 
     private fun observeErrorStatus() {
-        viewModel.getErrorStatus().observe(this, Observer { msg -> showSnackBarError(msg.toString()) })
+        viewModel.errorStatus.observe(this, Observer { msg -> showSnackBarError(msg.toString()) })
     }
 
     private fun observeResponse() {
-        viewModel.getResponse().observe(this, androidx.lifecycle.Observer { response -> showJobsList(response) })
+        viewModel.response.observe(this, Observer { response -> showJobsList(response) })
     }
 
     private fun setAnimation() {

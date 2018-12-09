@@ -20,23 +20,11 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
-    private val response: MutableLiveData<List<Job>> = MutableLiveData()
+    val response: MutableLiveData<List<Job>> = MutableLiveData()
 
-    private val loadingStatus = MutableLiveData<Boolean>()
+    val loadingStatus = MutableLiveData<Boolean>()
 
-    private val errorStatus = MutableLiveData<String>()
-
-    fun getLoadingStatus(): MutableLiveData<Boolean> {
-        return loadingStatus
-    }
-
-    fun getErrorStatus(): MutableLiveData<String> {
-        return errorStatus
-    }
-
-    fun getResponse(): MutableLiveData<List<Job>> {
-        return response
-    }
+    val errorStatus = MutableLiveData<String>()
 
     fun getAllJobs() {
         loadResponse(homeUseCase.listAllJobs())
@@ -50,8 +38,8 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
         disposables.add(jobsResponse
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .doOnError { loadResponseFromDataBase(homeUseCase.listJobsFromBD()) }
                 .subscribe(
                         { jobs ->
@@ -73,8 +61,8 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
         disposables.add(jobsResponse
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({ loadingStatus.setValue(true) })
-                .doAfterTerminate({ loadingStatus.setValue(false) })
+                .doOnSubscribe { loadingStatus.setValue(true) }
+                .doAfterTerminate { loadingStatus.setValue(false) }
                 .subscribe(
                         { jobs ->
                             response.value = jobs

@@ -53,13 +53,12 @@ class CompaniesRecyclerAdapter(private val context: Context?,
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
-        private val progressImage: ProgressBar = view.findViewById(R.id.progressImage)
         val tag1: Button = view.findViewById(R.id.tag1)
         val tag2: Button = view.findViewById(R.id.tag2)
         val tag3: Button = view.findViewById(R.id.tag3)
 
         fun bind(company: Company) {
-            imageView.loadImage(company.image, progressImage)
+            imageView.loadImage(company.image)
 
             textViewTitle.textHtml(company.company)
             textViewOverview.textHtml(company.aggregateRating)
