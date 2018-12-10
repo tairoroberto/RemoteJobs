@@ -1,7 +1,0 @@
-apply from: rootProject.file('feature.gradle')
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-
-dependencies {
-    implementation 'com.github.sujithkanna:smileyrating:1.6.8'
-}
