@@ -12,31 +12,33 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.R
+import com.remotejobs.io.app.companies.repository.CompaniesLocalDataStore
+import com.remotejobs.io.app.companies.repository.CompaniesRemoteDataStore
+import com.remotejobs.io.app.companies.usecase.CompaniesUseCase
 import com.remotejobs.io.app.companies.viewmodel.CompaniesViewModel
 import com.remotejobs.io.app.companies.viewmodel.CompaniesViewModelFactory
+import com.remotejobs.io.app.data.database.AppDatabase
 import com.remotejobs.io.app.detail.DetailActivity
 import com.remotejobs.io.app.home.view.JobsRecyclerAdapter
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.showProgress
 import kotlinx.android.synthetic.main.fragment_companies_jobs.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
-import org.kodein.di.generic.instance
 
-class CompaniesSelectActivity : AppCompatActivity(), KodeinAware {
-
-    override val kodein: Kodein by closestKodein()
+class CompaniesSelectActivity : AppCompatActivity() {
 
     private lateinit var adapter: JobsRecyclerAdapter
 
     private val list: MutableList<Job> = ArrayList()
     private var company: String? = ""
 
-    private val companiesViewModelFactory: CompaniesViewModelFactory by instance()
-
     private val viewModel by lazy {
-        ViewModelProviders.of(this, companiesViewModelFactory).get(CompaniesViewModel::class.java)
+        val local = CompaniesLocalDataStore(
+            AppDatabase.getInstance(this).companiesDAO(),
+            AppDatabase.getInstance(this).jobsDAO()
+        )
+        val remote = CompaniesRemoteDataStore()
+        val useCase = CompaniesUseCase(local, remote)
+        ViewModelProviders.of(this, CompaniesViewModelFactory(useCase)).get(CompaniesViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,8 +65,8 @@ class CompaniesSelectActivity : AppCompatActivity(), KodeinAware {
         })
 
         viewModel.loadingStatus.observe(
-                this,
-                Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
+            this,
+            Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
         FirebaseAnalytics.getInstance(this).logEvent("company_jobs", null)
     }
 
@@ -80,7 +82,7 @@ class CompaniesSelectActivity : AppCompatActivity(), KodeinAware {
     private fun onItemClick(job: Job, imageView: ImageView) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
+            .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
 
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("job", job)

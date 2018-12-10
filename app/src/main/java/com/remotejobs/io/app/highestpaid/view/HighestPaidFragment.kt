@@ -12,28 +12,30 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.R
+import com.remotejobs.io.app.data.database.AppDatabase
+import com.remotejobs.io.app.highestpaid.repository.HighestPaidLocalDataStore
+import com.remotejobs.io.app.highestpaid.repository.HighestPaidRemoteDataStore
+import com.remotejobs.io.app.highestpaid.usecase.HighestPaidUseCase
 import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModel
 import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModelFactory
 import com.remotejobs.io.app.model.HighestPaid
 import com.remotejobs.io.app.utils.extension.showProgress
 import kotlinx.android.synthetic.main.fragment_highest_paid.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
-import org.kodein.di.generic.instance
 
-class HighestPaidFragment : Fragment(), KodeinAware {
-
-    override val kodein: Kodein by closestKodein()
+class HighestPaidFragment : Fragment() {
 
     private lateinit var adapter: HighestPaidRecyclerAdapter
 
     private val list: MutableList<HighestPaid> = ArrayList()
 
-    private val highestPaidViewModelFactory: HighestPaidViewModelFactory by instance()
-
     private val viewModel by lazy {
-        ViewModelProviders.of(this, highestPaidViewModelFactory).get(HighestPaidViewModel::class.java)
+        val local = HighestPaidLocalDataStore(
+            AppDatabase.getInstance(context).highestPaidDao(),
+            AppDatabase.getInstance(context).jobsDAO()
+        )
+        val remote = HighestPaidRemoteDataStore()
+        val useCase = HighestPaidUseCase(local, remote)
+        ViewModelProviders.of(this, HighestPaidViewModelFactory(useCase)).get(HighestPaidViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

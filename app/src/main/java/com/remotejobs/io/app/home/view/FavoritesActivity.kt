@@ -5,19 +5,19 @@ import android.os.Bundle
 import android.view.View.VISIBLE
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.base.BaseActivity
+import com.remotejobs.io.app.data.database.AppDatabase
 import com.remotejobs.io.app.data.database.dao.FavoritesDao
 import com.remotejobs.io.app.home.view.HomeFragment.Companion.SEARCH_PARAM
 import kotlinx.android.synthetic.main.activity_favorites.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
-import org.kodein.di.generic.instance
 import java.util.*
 
-class FavoritesActivity : BaseActivity(), KodeinAware {
-    override val kodein by closestKodein()
-    private val favoritesDao: FavoritesDao by instance()
+class FavoritesActivity : BaseActivity() {
+
+    private val favoritesDao: FavoritesDao by lazy {
+        AppDatabase.getInstance(this).favoritesDaoDao()
+    }
 
     private val list: MutableList<String> = ArrayList()
 

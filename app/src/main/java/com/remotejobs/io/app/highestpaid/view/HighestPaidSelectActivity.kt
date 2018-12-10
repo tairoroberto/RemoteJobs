@@ -12,29 +12,33 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.R
+import com.remotejobs.io.app.data.database.AppDatabase
 import com.remotejobs.io.app.detail.DetailActivity
+import com.remotejobs.io.app.highestpaid.repository.HighestPaidLocalDataStore
+import com.remotejobs.io.app.highestpaid.repository.HighestPaidRemoteDataStore
+import com.remotejobs.io.app.highestpaid.usecase.HighestPaidUseCase
 import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModel
 import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModelFactory
 import com.remotejobs.io.app.home.view.JobsRecyclerAdapter
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.showProgress
 import kotlinx.android.synthetic.main.fragment_highestpaid_jobs.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
-import org.kodein.di.generic.instance
 
-class HighestPaidSelectActivity : AppCompatActivity(), KodeinAware {
-    override val kodein: Kodein by closestKodein()
+class HighestPaidSelectActivity : AppCompatActivity() {
+
     private lateinit var adapter: JobsRecyclerAdapter
 
     private val list: MutableList<Job> = ArrayList()
     private var tag: String? = ""
 
-    private val highestPaidViewModelFactory: HighestPaidViewModelFactory by instance()
-
     private val viewModel by lazy {
-        ViewModelProviders.of(this, highestPaidViewModelFactory).get(HighestPaidViewModel::class.java)
+        val local = HighestPaidLocalDataStore(
+            AppDatabase.getInstance(this).highestPaidDao(),
+            AppDatabase.getInstance(this).jobsDAO()
+        )
+        val remote = HighestPaidRemoteDataStore()
+        val useCase = HighestPaidUseCase(local, remote)
+        ViewModelProviders.of(this, HighestPaidViewModelFactory(useCase)).get(HighestPaidViewModel::class.java)
     }
 
 
@@ -62,8 +66,8 @@ class HighestPaidSelectActivity : AppCompatActivity(), KodeinAware {
         })
 
         viewModel.loadingStatus.observe(
-                this,
-                Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
+            this,
+            Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
         FirebaseAnalytics.getInstance(this).logEvent("highestpaid_jobs", null)
     }
 
@@ -79,7 +83,7 @@ class HighestPaidSelectActivity : AppCompatActivity(), KodeinAware {
     private fun onItemClick(job: Job, imageView: ImageView) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
+            .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
 
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("job", job)

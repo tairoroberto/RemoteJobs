@@ -1,13 +1,9 @@
 # Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in /home/tairo/Android/Sdk/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
+# You can control the set of applied configuration files using the
+# proguardFiles setting in build.gradle.
 #
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
-
-# Add any project specific keep options here:
 
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
@@ -22,8 +18,6 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-
-
 
 
 ##--- Begin:GSON ----
@@ -57,19 +51,6 @@
 ##--- End:GSON ----
 # For using GSON @Expose annotation
 
-
-
-## New rules for EventBus 3.0.x ##
-# http://greenrobot.org/eventbus/documentation/proguard/
--keepclassmembers class ** {
-    @org.greenrobot.eventbus.Subscribe <methods>;
-}
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-
-# Only required if you use AsyncExecutor
--keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
-    <init>(java.lang.Throwable);
-}
 
 ## Google Analytics 3.0 specific rules ##
 -keep class com.google.analytics.** { *; }
@@ -122,7 +103,6 @@
     @org.simpleframework.xml.* *;
 }
 
-
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
@@ -154,25 +134,14 @@
     @retrofit2.* <methods>;
 }
 
-## SUPPORT DESIGN ##
--dontwarn android.support.design.**
--keep class android.support.design.** { *; }
--keep interface android.support.design.** { *; }
--keep public class android.support.design.R$* { *; }
-
-
-# http://stackoverflow.com/questions/29679177/cardview-shadow-not-appearing-in-lollipop-after-obfuscate-with-proguard/29698051
--keep class android.support.v7.widget.RoundRectDrawable { *; }
-
-## SUPPORT V7 ##
--keep public class android.support.v7.widget.** { *; }
--keep public class android.support.v7.internal.widget.** { *; }
--keep public class android.support.v7.internal.view.menu.** { *; }
--keep class com.google.android.gms.maps.SupportMapFragment { *; }
--keep class com.google.android.gms.maps.MapFragment { *; }
-
 -keep class androidx.appcompat.widget.** { *; }
 -keepnames class androidx.appcompat.widget.** { *; }
+-keep class com.google.android.material.** { *; }
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *; }
 
 
 ## Google Play Services 4.3.23 specific rules ##
@@ -194,7 +163,6 @@
 ## AndroidAnnotations specific rules ##
 # Only required if not using the Spring RestTemplate
 -dontwarn org.androidannotations.api.rest.**
-
 
 
 -keepclassmembers class * implements java.io.Serializable {
@@ -222,7 +190,6 @@
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
-
 
 
 -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
@@ -352,20 +319,3 @@
 -dontwarn org.hamcrest.**
 -dontwarn com.squareup.javawriter.JavaWriter
 -dontwarn org.mockito.**
-
-# Dagger ProGuard rules.
-# https://github.com/square/dagger
-
--dontwarn dagger.internal.codegen.**
--keepclassmembers,allowobfuscation class * {
-    @javax.inject.* *;
-    @dagger.* *;
-    <init>();
-}
-
--keep class dagger.* { *; }
--keep class javax.inject.* { *; }
--keep class * extends dagger.internal.Binding
--keep class * extends dagger.internal.ModuleAdapter
--keep class * extends dagger.internal.StaticInjection
--dontwarn com.google.errorprone.annotations.*

@@ -13,30 +13,33 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.R
+import com.remotejobs.io.app.companies.repository.CompaniesLocalDataStore
+import com.remotejobs.io.app.companies.repository.CompaniesRemoteDataStore
+import com.remotejobs.io.app.companies.usecase.CompaniesUseCase
 import com.remotejobs.io.app.companies.viewmodel.CompaniesViewModel
 import com.remotejobs.io.app.companies.viewmodel.CompaniesViewModelFactory
+import com.remotejobs.io.app.data.database.AppDatabase
 import com.remotejobs.io.app.model.Company
+import com.remotejobs.io.app.utils.extension.showProgress
 import kotlinx.android.synthetic.main.fragment_companies.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
-import org.kodein.di.generic.instance
 
 /**
  * A simple [Fragment] subclass.
  */
-class CompaniesFragment : Fragment(), KodeinAware {
-
-    override val kodein: Kodein by closestKodein()
+class CompaniesFragment : Fragment() {
 
     private lateinit var adapter: CompaniesRecyclerAdapter
 
     private val list: MutableList<Company> = ArrayList()
 
-    private val companiesViewModelFactory: CompaniesViewModelFactory by instance()
-
     private val viewModel by lazy {
-        ViewModelProviders.of(this, companiesViewModelFactory).get(CompaniesViewModel::class.java)
+        val local = CompaniesLocalDataStore(
+            AppDatabase.getInstance(context).companiesDAO(),
+            AppDatabase.getInstance(context).jobsDAO()
+        )
+        val remote = CompaniesRemoteDataStore()
+        val useCase = CompaniesUseCase(local, remote)
+        ViewModelProviders.of(this, CompaniesViewModelFactory(useCase)).get(CompaniesViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +48,7 @@ class CompaniesFragment : Fragment(), KodeinAware {
         viewModel.response.observe(this, Observer {
             adapter.update(it)
         })
-        viewModel.loadingStatus.observe(this, Observer { isLoading -> /*showProgress(isLoading)*/ })
+        viewModel.loadingStatus.observe(this, Observer { isLoading -> showProgress(isLoading) })
 
         setHasOptionsMenu(true)
         retainInstance = true
@@ -76,7 +79,7 @@ class CompaniesFragment : Fragment(), KodeinAware {
         return inflater.inflate(R.layout.fragment_companies, container, false)
     }
 
-    /*private fun showProgress(b: Boolean?) {
+    private fun showProgress(b: Boolean?) {
         activity?.showProgress(recyclerView, progress, b == true)
-    }*/
+    }
 }

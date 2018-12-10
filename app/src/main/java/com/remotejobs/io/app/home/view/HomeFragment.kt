@@ -26,8 +26,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.hsalf.smilerating.BaseRating
 import com.hsalf.smilerating.SmileRating
 import com.remotejobs.io.app.R
+import com.remotejobs.io.app.data.database.AppDatabase
 import com.remotejobs.io.app.data.database.dao.FavoritesDao
 import com.remotejobs.io.app.detail.DetailActivity
+import com.remotejobs.io.app.home.repository.FavoritesLocalDataStore
+import com.remotejobs.io.app.home.repository.HomeLocalDataStore
+import com.remotejobs.io.app.home.repository.HomeRemoteDataStore
+import com.remotejobs.io.app.home.usecase.HomeUseCase
 import com.remotejobs.io.app.home.viewmodel.HomeViewModel
 import com.remotejobs.io.app.home.viewmodel.HomeViewModelFactory
 import com.remotejobs.io.app.model.Job
@@ -36,24 +41,22 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
-import org.kodein.di.generic.instance
-
 
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment(), KodeinAware {
+class HomeFragment : Fragment() {
 
-    override val kodein by closestKodein()
-
-    private val homeViewModelFactory: HomeViewModelFactory by instance()
-
-    private val favoritesDao: FavoritesDao by instance()
+    private val favoritesDao: FavoritesDao by lazy {
+        AppDatabase.getInstance(context).favoritesDaoDao()
+    }
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, homeViewModelFactory).get(HomeViewModel::class.java)
+        val local = HomeLocalDataStore(AppDatabase.getInstance(context).jobsDAO())
+        val remote = HomeRemoteDataStore()
+        val favorites = FavoritesLocalDataStore(AppDatabase.getInstance(context).favoritesDaoDao())
+        val useCase = HomeUseCase(local, remote, favorites)
+        ViewModelProviders.of(this, HomeViewModelFactory(useCase)).get(HomeViewModel::class.java)
     }
 
     private val list: MutableList<Job> = ArrayList()
@@ -75,7 +78,6 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resources.getStringArray(R.array.suggestions).forEach { suggestions.add(it) }
-        adapterSearch = SearchAdapter(suggestions, favoritesDao)
         adapter = JobsRecyclerAdapter(list, this::onItemClick)
         setHasOptionsMenu(true)
         retainInstance = true
@@ -100,7 +102,10 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapterSearch = SearchAdapter(suggestions, favoritesDao)
+
         setRecyclerViewListJobs()
+
 
         listSearch.setOnItemClickListener { _, _, position, _ ->
             viewModel.search("remote-${filteredValues[position]}-jobs")
@@ -171,7 +176,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private fun onItemClick(job: Job, imageView: ImageView) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(context as Activity, Pair.create(imageView, "image"))
+            .makeSceneTransitionAnimation(context as Activity, Pair.create(imageView, "image"))
 
         val intent = Intent(context, DetailActivity::class.java)
         intent.putExtra("job", job)
@@ -223,18 +228,18 @@ class HomeFragment : Fragment(), KodeinAware {
         })
 
         menu.findItem(R.id.search)?.setOnActionExpandListener(
-                object : MenuItem.OnActionExpandListener {
-                    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                        searchView.requestFocus()
-                        activity?.showSoftKeyboard()
-                        return true
-                    }
+            object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                    searchView.requestFocus()
+                    activity?.showSoftKeyboard()
+                    return true
+                }
 
-                    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                        activity?.hideSoftKeyboard()
-                        return true
-                    }
-                })
+                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                    activity?.hideSoftKeyboard()
+                    return true
+                }
+            })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

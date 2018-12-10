@@ -15,8 +15,6 @@ android {
         applicationId "com.remotejobs.io.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 14
-        versionName "1.14"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -56,6 +54,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "experience"
+    productFlavors {
+        instant {
+            versionCode 17
+            versionName "1.17"
+        }
+        installed {
+            versionCode 18
+            versionName "1.18"
+        }
+    }
+
 
     compileOptions {
         targetCompatibility 1.8
@@ -149,9 +160,9 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:${rootProject.lifecycle_compiler}"
 
     /*######################## Dependency injection ###########################*/
-    implementation "org.kodein.di:kodein-di-generic-jvm:${rootProject.kodein}"
+   /* implementation "org.kodein.di:kodein-di-generic-jvm:${rootProject.kodein}"
     implementation "org.kodein.di:kodein-di-framework-android-x:${rootProject.kodein}"
-    implementation "org.kodein.di:kodein-di-conf-jvm:${rootProject.kodein}"
+    implementation "org.kodein.di:kodein-di-conf-jvm:${rootProject.kodein}"*/
     /*############################################################################*/
 
     /*############################### Test ibs ###################################*/
