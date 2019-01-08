@@ -8,13 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/base" />
-            <option value="$PROJECT_DIR$/companies" />
-            <option value="$PROJECT_DIR$/highestpaid" />
-            <option value="$PROJECT_DIR$/home" />
-            <option value="$PROJECT_DIR$/installed" />
-            <option value="$PROJECT_DIR$/instantapp" />
-            <option value="$PROJECT_DIR$/splash" />
+            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

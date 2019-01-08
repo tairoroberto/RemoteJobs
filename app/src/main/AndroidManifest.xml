@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:dist="http://schemas.android.com/apk/distribution"
+          package="com.remotejobs.io.app">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+            android:name=".CustomApplication"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:installLocation="preferExternal"
+            android:largeHeap="true"
+            android:theme="@style/AppTheme">
+
+        <activity
+                android:name=".splash.view.SplashActivity"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".home.view.HomeActivity"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme">
+            <meta-data
+                    android:name="default-url"
+                    android:value="https://remotejobs-aa979.firebaseapp.com/home"/>
+
+            <intent-filter
+                    android:autoVerify="true"
+                    android:order="1">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="remotejobs-aa979.firebaseapp.com"
+                        android:path="/home"
+                        android:scheme="https"/>
+            </intent-filter>
+            <intent-filter
+                    android:autoVerify="true"
+                    android:order="1">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="remotejobs-aa979.firebaseapp.com"
+                        android:path="/home"
+                        android:scheme="http"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:label="Favorites"
+                android:name=".home.view.FavoritesActivity"
+                android:parentActivityName=".home.view.HomeActivity"/>
+
+        <activity android:name=".highestpaid.view.HighestActivity">
+            <intent-filter
+                    android:autoVerify="true"
+                    android:order="2">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="remotejobs-aa979.firebaseapp.com"
+                        android:path="/highestpaid"
+                        android:scheme="http"/>
+            </intent-filter>
+            <intent-filter
+                    android:autoVerify="true"
+                    android:order="2">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="remotejobs-aa979.firebaseapp.com"
+                        android:path="/highestpaid"
+                        android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".highestpaid.view.HighestPaidSelectActivity"/>
+
+        <activity android:name=".companies.view.CompaniesActivity">
+            <intent-filter
+                    android:autoVerify="true"
+                    android:order="3">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="remotejobs-aa979.firebaseapp.com"
+                        android:path="/companies"
+                        android:scheme="http"/>
+            </intent-filter>
+            <intent-filter
+                    android:autoVerify="true"
+                    android:order="3">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                        android:host="remotejobs-aa979.firebaseapp.com"
+                        android:path="/companies"
+                        android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".companies.view.CompaniesSelectActivity"/>
+
+        <activity
+                android:name=".detail.DetailActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+
+        <service android:name=".services.CustomFirebaseInstaceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".services.CustomFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="com.remotejobs.io.app.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/filepaths"/>
+        </provider>
+
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/ic_stat_name"/>
+
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorAccent"/>
+
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="64f062bc6b62cea865d47208c0e9d4b4e4f79251"/>
+
+    </application>
+
+</manifest>
