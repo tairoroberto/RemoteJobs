@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
  * Created by tairo on 11/12/17.
  */
 class RemoteApiService {
-    private val URL_BASE = "https://us-central1-remotejobs-aa979.cloudfunctions.net/"
+    private val URL_BASE = " https://remotejobs-android.herokuapp.com/"
     private var retrofit: Retrofit
 
     init {

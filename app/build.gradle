@@ -26,21 +26,32 @@ android {
 
     if (keystorePropertiesFile.exists()) {
         keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-    } else {
+    }
+
+    if(keystoreProperties["REMOTEJOBS_KEYSTORE_STORE"] == null) {
         // Load keystore properties from environment or set their default values
         if (env['REMOTEJOBS_KEYSTORE_STORE']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_STORE', env['REMOTEJOBS_KEYSTORE_STORE'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_STORE', "../debug.keystore")
+
         if (env['REMOTEJOBS_KEYSTORE_ALIAS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS', env['REMOTEJOBS_KEYSTORE_ALIAS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS', "AndroidDebugKey")
+
         if (env['REMOTEJOBS_KEYSTORE_KEY_PASS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_KEY_PASS', env['REMOTEJOBS_KEYSTORE_KEY_PASS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_KEY_PASS', "android")
+
         if (env['REMOTEJOBS_KEYSTORE_ALIAS_PASS']) keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS_PASS', env['REMOTEJOBS_KEYSTORE_ALIAS_PASS'])
+        else keystoreProperties.put('REMOTEJOBS_KEYSTORE_ALIAS_PASS', "android")
     }
 
     signingConfigs {
         debug {}
         release {
-            storeFile file(keystoreProperties["REMOTEJOBS_KEYSTORE_STORE"])
-            keyAlias keystoreProperties["REMOTEJOBS_KEYSTORE_ALIAS"]
-            storePassword keystoreProperties["REMOTEJOBS_KEYSTORE_KEY_PASS"]
-            keyPassword keystoreProperties["REMOTEJOBS_KEYSTORE_ALIAS_PASS"]
+            if(keystoreProperties["REMOTEJOBS_KEYSTORE_STORE"] != '') {
+                storeFile file(keystoreProperties["REMOTEJOBS_KEYSTORE_STORE"])
+                keyAlias keystoreProperties["REMOTEJOBS_KEYSTORE_ALIAS"]
+                storePassword keystoreProperties["REMOTEJOBS_KEYSTORE_KEY_PASS"]
+                keyPassword keystoreProperties["REMOTEJOBS_KEYSTORE_ALIAS_PASS"]
+            }
         }
     }
 
@@ -58,12 +69,12 @@ android {
     flavorDimensions "experience"
     productFlavors {
         instant {
-            versionCode 17
-            versionName "1.17"
+            versionCode 19
+            versionName "1.19"
         }
         installed {
-            versionCode 18
-            versionName "1.18"
+            versionCode 20
+            versionName "1.20"
         }
     }
 

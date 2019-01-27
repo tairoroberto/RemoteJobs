@@ -319,3 +319,9 @@
 -dontwarn org.hamcrest.**
 -dontwarn com.squareup.javawriter.JavaWriter
 -dontwarn org.mockito.**
+
+# keep everything in this package from being removed or renamed
+-keep class com.remotejobs.io.app.base.** { *; }
+
+# keep everything in this package from being renamed only
+-keepnames class com.remotejobs.io.app.base.** { *; }
