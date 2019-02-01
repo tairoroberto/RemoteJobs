@@ -30,7 +30,6 @@ class JobsRecyclerAdapter(
         holder.itemView.setOnClickListener {
             onClick(item, holder.imageView)
         }
-        setAnimation(holder.itemView, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -95,11 +94,17 @@ class JobsRecyclerAdapter(
         }
     }
 
-    fun update(items: List<Job>?) {
-        this.list.clear()
-        if (items != null) {
+    fun update(items: MutableList<Job>) {
+        if (this.list.size == 0) {
+            this.list = items
+        }else{
             this.list.addAll(items)
         }
+
         notifyDataSetChanged()
+    }
+
+    fun clear() {
+        this.list.clear()
     }
 }

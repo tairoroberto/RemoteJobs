@@ -1,10 +1,10 @@
 package com.remotejobs.io.app.model
 
 import android.annotation.SuppressLint
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -12,6 +12,20 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "jobs")
 @Parcelize
 data class Job(
+
+        @PrimaryKey
+        @ColumnInfo(name = "id")
+        @SerializedName("id")
+        var id: String = "",
+
+        @ColumnInfo(name = "categoryKey")
+        @SerializedName("categoryKey")
+        var categoryKey: String = "",
+
+        @ColumnInfo(name = "companyKey")
+        @SerializedName("companyKey")
+        var companyKey: String = "",
+
         @ColumnInfo(name = "date")
         @SerializedName("date")
         var date: String = "",
@@ -31,11 +45,6 @@ data class Job(
         @ColumnInfo(name = "company")
         @SerializedName("company")
         var company: String = "",
-
-        @PrimaryKey
-        @ColumnInfo(name = "id")
-        @SerializedName("id")
-        var id: String = "",
 
         @ColumnInfo(name = "position")
         @SerializedName("position")

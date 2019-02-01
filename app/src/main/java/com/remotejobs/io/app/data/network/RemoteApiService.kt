@@ -1,5 +1,8 @@
 package com.remotejobs.io.app.data.network
 
+
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.remotejobs.io.app.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,7 +14,7 @@ import java.util.concurrent.TimeUnit
  * Created by tairo on 11/12/17.
  */
 class RemoteApiService {
-    private val URL_BASE = " https://remotejobs-android.herokuapp.com/"
+    private val URL_BASE = "https://remotejobs-android.herokuapp.com/"
     private var retrofit: Retrofit
 
     init {
@@ -19,13 +22,16 @@ class RemoteApiService {
                 .readTimeout(20, TimeUnit.SECONDS)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
-                .build()
+
+        if (BuildConfig.DEBUG) {
+            httpClient.addNetworkInterceptor(StethoInterceptor())
+        }
 
         retrofit = Retrofit.Builder()
                 .baseUrl(URL_BASE)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient)
+                .client(httpClient.build())
                 .build()
     }
 

@@ -1,7 +1,7 @@
 package com.remotejobs.io.app.home.repository
 
-import com.remotejobs.io.app.interfaces.HomeRemoteRepository
 import com.remotejobs.io.app.data.network.RemoteApiService
+import com.remotejobs.io.app.interfaces.HomeRemoteRepository
 import com.remotejobs.io.app.model.JobsResponse
 import io.reactivex.Single
 
@@ -10,10 +10,10 @@ import io.reactivex.Single
  */
 class HomeRemoteDataStore : HomeRemoteRepository {
     override fun listAll(): Single<JobsResponse> {
-        return search("remote-jobs")
+        return getJobs("remote-jobs")
     }
 
-    override fun search(query: String): Single<JobsResponse> {
-        return RemoteApiService.getInstance().getApiService().search(query)
+    override fun getJobs(lastItem: String?): Single<JobsResponse> {
+        return RemoteApiService.getInstance().getApiService().getJobs(lastItem = lastItem)
     }
 }

@@ -103,8 +103,8 @@ class DetailActivity : AppCompatActivity() {
     private fun applyJob() {
 
         when {
-            job?.urlApply?.equals("/l/${job?.id}") == true -> {
-                browse("https://remoteok.io${job?.urlApply}")
+            job?.urlApply?.startsWith("http") == true -> {
+                browse(job?.urlApply.toString())
                 trackApplyedJob()
             }
 
@@ -121,7 +121,7 @@ class DetailActivity : AppCompatActivity() {
                 }.show()
 
             else -> {
-                browse("https://remoteok.io/l/${job?.id}")
+                browse(job?.urlApply.toString())
                 trackApplyedJob()
             }
         }
@@ -137,7 +137,7 @@ class DetailActivity : AppCompatActivity() {
     private fun showJob() {
         imageViewLogo.loadImage(job?.logo)
 
-        toolbar_layout.title = job?.position
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         textViewName.text = job?.position
 
         val index = job?.description?.indexOf("<p style=\"text-align:center\">See more jobs") as Int
@@ -149,12 +149,13 @@ class DetailActivity : AppCompatActivity() {
         }
 
         textViewReleaseDate.text = job?.date
-        webiewViewDescription.loadData(data, "text/html", "UTF-8")
+        webiewViewDescription.loadData("<body bgcolor=\"#fafafa\">$data</body>", "text/html", "UTF-8")
         webiewViewDescription.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 showProgress(textViewName, progressBar, false)
             }
         }
+        webiewViewDescription.setOnTouchListener { _, _ -> true }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -171,7 +172,7 @@ class DetailActivity : AppCompatActivity() {
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    WRITE_EXTERNAL_STORAGE
+                        WRITE_EXTERNAL_STORAGE
                 )
             } else {
                 setShareIntent()

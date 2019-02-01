@@ -73,7 +73,7 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
                 .doOnError { loadCompaniesJobsFromDataBase(companiesUseCase.listCompaniesJobsFromBD(company)) }
                 .subscribe(
                         { response ->
-                            responseJobs.value = response.list
+                            responseJobs.value = response.response
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()

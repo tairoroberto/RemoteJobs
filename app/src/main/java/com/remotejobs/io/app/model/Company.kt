@@ -1,10 +1,10 @@
 package com.remotejobs.io.app.model
 
 import android.annotation.SuppressLint
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -16,22 +16,10 @@ data class Company(
         @ColumnInfo(name = "id")
         var id: Long = 0,
 
-        @ColumnInfo(name = "image")
-        @SerializedName("image")
-        var image: String = "",
+        @ColumnInfo(name = "logo")
+        @SerializedName("logo")
+        var logo: String = "",
 
-        @ColumnInfo(name = "rank")
-        @SerializedName("rank")
-        var rank: String = "",
-
-        @ColumnInfo(name = "company")
-        @SerializedName("company")
-        var company: String = "",
-
-        @ColumnInfo(name = "aggregateRating")
-        @SerializedName("aggregateRating")
-        var aggregateRating: String = "",
-
-        @ColumnInfo(name = "tags")
-        @SerializedName("tags")
-        var tags: List<String>? = ArrayList()) : Parcelable
+        @ColumnInfo(name = "name")
+        @SerializedName("name")
+        var name: String = "") : Parcelable

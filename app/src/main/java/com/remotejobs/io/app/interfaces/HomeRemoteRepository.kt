@@ -9,5 +9,5 @@ import io.reactivex.Single
 interface HomeRemoteRepository {
 
     fun listAll(): Single<JobsResponse>
-    fun search(query: String): Single<JobsResponse>
+    fun getJobs(lastItem: String?): Single<JobsResponse>
 }

@@ -26,12 +26,14 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
 
     val errorStatus = MutableLiveData<String>()
 
+    private var lastItem: String? = null
+
     fun getAllJobs() {
-        loadResponse(homeUseCase.listAllJobs())
+        loadResponse(homeUseCase.getJobs())
     }
 
-    fun search(query: String) {
-        loadResponse(homeUseCase.searchJobs(query.toLowerCase()))
+    fun getJobs() {
+        loadResponse(homeUseCase.getJobs(lastItem))
     }
 
     private fun loadResponse(jobsResponse: Single<JobsResponse>) {
@@ -43,7 +45,8 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
                 .doOnError { loadResponseFromDataBase(homeUseCase.listJobsFromBD()) }
                 .subscribe(
                         { jobs ->
-                            response.value = jobs.list
+                            response.value = jobs.response
+                            lastItem = jobs.lastItem
                             doAsync {
                                 homeUseCase.deleteAllJobs()
                                 homeUseCase.addAllJobs(response.value)

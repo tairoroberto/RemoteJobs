@@ -59,7 +59,7 @@ class CompaniesSelectActivity : AppCompatActivity() {
             if (it?.isEmpty() == true) {
                 withoutData.visibility = VISIBLE
             } else {
-                adapter.update(it)
+                adapter.update(it.toMutableList())
             }
             swipeRefreshLayout?.isRefreshing = false
         })

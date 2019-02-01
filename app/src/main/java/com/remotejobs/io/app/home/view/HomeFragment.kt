@@ -12,6 +12,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.instantapps.InstantApps
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -36,7 +38,10 @@ import com.remotejobs.io.app.home.usecase.HomeUseCase
 import com.remotejobs.io.app.home.viewmodel.HomeViewModel
 import com.remotejobs.io.app.home.viewmodel.HomeViewModelFactory
 import com.remotejobs.io.app.model.Job
-import com.remotejobs.io.app.utils.extension.*
+import com.remotejobs.io.app.utils.extension.hideSoftKeyboard
+import com.remotejobs.io.app.utils.extension.launchPlayStore
+import com.remotejobs.io.app.utils.extension.showSnackBarError
+import com.remotejobs.io.app.utils.extension.showSoftKeyboard
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
@@ -72,7 +77,7 @@ class HomeFragment : Fragment() {
     private lateinit var tracker: FirebaseAnalytics
 
     companion object {
-        const val SEARCH_PARAM = "search"
+        const val SEARCH_PARAM = "getJobs"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,7 +113,7 @@ class HomeFragment : Fragment() {
 
 
         listSearch.setOnItemClickListener { _, _, position, _ ->
-            viewModel.search("remote-${filteredValues[position]}-jobs")
+            viewModel.getJobs(/*"remote-${filteredValues[position]}-jobs"*/)
             listSearch.visibility = GONE
             activity?.hideSoftKeyboard()
         }
@@ -118,7 +123,7 @@ class HomeFragment : Fragment() {
         }
 
         if (arguments?.get(SEARCH_PARAM) != null) {
-            viewModel.search("remote-${arguments?.get(SEARCH_PARAM)}-jobs")
+            viewModel.getJobs(/*"remote-${arguments?.get(SEARCH_PARAM)}-jobs"*/)
         } else {
             viewModel.getAllJobs()
         }
@@ -129,7 +134,25 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-        swipeRefreshLayout.setOnRefreshListener { viewModel.getAllJobs() }
+        swipeRefreshLayout.setOnRefreshListener {
+            adapter.clear()
+            viewModel.getAllJobs()
+        }
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val totalItemCount = layoutManager.itemCount
+                val lastVisible = layoutManager.findLastVisibleItemPosition()
+
+                val endHasBeenReached = lastVisible + 1 >= totalItemCount
+
+                if (viewModel.loadingStatus.value == false && totalItemCount > 0 && endHasBeenReached) {
+                    viewModel.getJobs()
+                }
+            }
+        })
     }
 
 
@@ -142,7 +165,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeResponse() {
-        viewModel.response.observe(this, Observer { response -> showJobsList(response) })
+        viewModel.response.observe(this, Observer { response -> showJobsList(response.toMutableList()) })
     }
 
     private fun setAnimation() {
@@ -154,7 +177,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showProgress(b: Boolean?) {
-        activity?.showProgress(recyclerView, progress, b == true)
+        progress.visibility = if (b == true) VISIBLE else GONE
         swipeRefreshLayout?.isRefreshing = false
     }
 
@@ -163,10 +186,10 @@ class HomeFragment : Fragment() {
         swipeRefreshLayout?.isRefreshing = false
     }
 
-    private fun showJobsList(jobs: List<Job>?) {
+    private fun showJobsList(jobs: MutableList<Job>) {
 
         withoutData?.visibility = GONE
-        if (jobs == null || jobs.isEmpty()) {
+        if (jobs.isEmpty()) {
             withoutData?.visibility = VISIBLE
         }
 
@@ -176,7 +199,7 @@ class HomeFragment : Fragment() {
     private fun onItemClick(job: Job, imageView: ImageView) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-            .makeSceneTransitionAnimation(context as Activity, Pair.create(imageView, "image"))
+                .makeSceneTransitionAnimation(context as Activity, Pair.create(imageView, "image"))
 
         val intent = Intent(context, DetailActivity::class.java)
         intent.putExtra("job", job)
@@ -196,7 +219,7 @@ class HomeFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.search("remote-$query-jobs")
+                viewModel.getJobs(/*"remote-$query-jobs"*/)
                 activity?.hideSoftKeyboard()
                 return true
             }
@@ -228,18 +251,18 @@ class HomeFragment : Fragment() {
         })
 
         menu.findItem(R.id.search)?.setOnActionExpandListener(
-            object : MenuItem.OnActionExpandListener {
-                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                    searchView.requestFocus()
-                    activity?.showSoftKeyboard()
-                    return true
-                }
+                object : MenuItem.OnActionExpandListener {
+                    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                        searchView.requestFocus()
+                        activity?.showSoftKeyboard()
+                        return true
+                    }
 
-                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                    activity?.hideSoftKeyboard()
-                    return true
-                }
-            })
+                    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                        activity?.hideSoftKeyboard()
+                        return true
+                    }
+                })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

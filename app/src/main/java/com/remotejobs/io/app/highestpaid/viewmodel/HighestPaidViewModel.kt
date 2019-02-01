@@ -74,7 +74,7 @@ class HighestPaidViewModel(val highestPaidUseCase: HighestPaidUseCase) : ViewMod
                 .doOnError { loadHighestPaidJobsFromDataBase(highestPaidUseCase.listAllHighestPaidJobsFromBD(tag)) }
                 .subscribe(
                         { jobs ->
-                            responseJobs.value = jobs.list
+                            responseJobs.value = jobs.response
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()

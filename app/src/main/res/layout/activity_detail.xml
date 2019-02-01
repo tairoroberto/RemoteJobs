@@ -26,18 +26,10 @@
             <ImageView
                 android:id="@+id/imageViewLogo"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_300dp"
-                android:background="#000000"
+                android:layout_height="@dimen/dimen_250dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_logo"
                 android:transitionName="image" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="0dp"
-                app:srcCompat="@drawable/gradient_black" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

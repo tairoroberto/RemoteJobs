@@ -34,8 +34,8 @@ class CompaniesFragment : Fragment() {
 
     private val viewModel by lazy {
         val local = CompaniesLocalDataStore(
-            AppDatabase.getInstance(context).companiesDAO(),
-            AppDatabase.getInstance(context).jobsDAO()
+                AppDatabase.getInstance(context).companiesDAO(),
+                AppDatabase.getInstance(context).jobsDAO()
         )
         val remote = CompaniesRemoteDataStore()
         val useCase = CompaniesUseCase(local, remote)
@@ -67,13 +67,13 @@ class CompaniesFragment : Fragment() {
 
     private fun onItemClick(company: Company) {
         val intent = Intent(activity, CompaniesSelectActivity::class.java)
-        intent.putExtra("company", company.company)
+        intent.putExtra("company", company.name)
         startActivity(intent)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_companies, container, false)

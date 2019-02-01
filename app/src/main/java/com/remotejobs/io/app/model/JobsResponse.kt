@@ -11,8 +11,12 @@ import kotlinx.android.parcel.Parcelize
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class JobsResponse(
-        @SerializedName("date")
-        var date: String,
+        @SerializedName("success")
+        var success: Boolean = false,
 
-        @SerializedName("items")
-        var list: List<Job>? = ArrayList()) : Parcelable
+        @SerializedName("response")
+        var response: List<Job>? = ArrayList(),
+
+        @SerializedName("lastItem")
+        var lastItem: String? = ""
+) : Parcelable

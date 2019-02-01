@@ -147,11 +147,14 @@ dependencies {
     /*############################ Gson: Json Converter ##########################*/
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.retrofit}"
     implementation "com.google.code.gson:gson:${rootProject.gson}"
+    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
     /*############################################################################*/
 
     /*########################### Image libs #####################################*/
     implementation "com.squareup.picasso:picasso:${rootProject.picasso}"
     implementation 'com.github.sujithkanna:smileyrating:1.6.8'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     /*############################################################################*/
 
     /*########################### Animation #####################################*/

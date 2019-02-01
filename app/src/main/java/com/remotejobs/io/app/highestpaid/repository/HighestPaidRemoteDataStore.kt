@@ -15,6 +15,6 @@ class HighestPaidRemoteDataStore : HighestPaidRemoteRepository {
     }
 
     override fun getHighestPaidSalariesJobs(tag: String): Single<JobsResponse> {
-        return RemoteApiService.getInstance().getApiService().search(tag)
+        return RemoteApiService.getInstance().getApiService().getJobs(tag)
     }
 }
