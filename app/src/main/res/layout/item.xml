@@ -1,120 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/dimen_16dp"
-    android:layout_marginStart="@dimen/dimen_16dp"
+    android:layout_marginStart="@dimen/dimen_8dp"
     android:layout_marginTop="@dimen/dimen_8dp"
-    android:background="@drawable/background_card_border_white"
-    android:elevation="@dimen/dimen_4dp"
-    android:orientation="vertical">
+    android:layout_marginEnd="@dimen/dimen_8dp">
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:src="@drawable/ic_logo"
-        android:background="@drawable/background_card_border_black"
-        android:scaleType="centerInside"/>
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp">
+        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_web"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:round_radius="@dimen/dimen_8dp"
+            app:shape_mode="round_rect" />
+
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="0dp"
-            android:layout_weight="5"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_regular"
+            android:fontFamily="@font/sf_ui_text_light"
             android:maxLines="2"
             android:textColor="#252220"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Senior Full Stack Web Developer" />
 
         <TextView
             android:id="@+id/textViewDate"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:fontFamily="@font/sf_ui_text_regular"
-            android:maxLines="2"
+            android:textAlignment="textEnd"
             android:textColor="#252220"
-            android:layout_gravity="top|end"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewCompany"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
             tools:text="2d" />
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/sf_ui_text_light"
-        android:maxLines="4"
-        android:textAlignment="viewStart"
-        android:textColor="#605751"
-        android:textSize="@dimen/dimen_12sp"
-        tools:text="Tenth Avenue CommerceTenth Avenue CommerceTenth Avenue Commerce" />
 
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/buttonsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:flexDirection="row"
-        app:flexWrap="wrap"
-        app:justifyContent="flex_start">
-
-        <Button
-            android:id="@+id/tag1"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginEnd="@dimen/dimen_4dp"
-            android:background="@drawable/border_button"
+        <TextView
+            android:id="@+id/textViewCompany"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:fontFamily="@font/sf_ui_text_light"
-            android:textColor="@color/colorAccent"
-            app:layout_flexGrow="1"
-            tools:text="Dev" />
+            android:gravity="start"
+            android:maxLines="2"
+            android:textColor="@color/gray_ababab"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+            tools:text="TRMA Mobile Solutions" />
 
-        <Button
-            android:id="@+id/tag2"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginEnd="@dimen/dimen_4dp"
-            android:background="@drawable/border_button"
-            android:fontFamily="@font/sf_ui_text_light"
-            android:textColor="@color/colorAccent"
-            app:layout_flexGrow="1"
-            tools:text="marketing" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/buttonsContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:flexDirection="row"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo">
 
-        <Button
-            android:id="@+id/tag3"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:background="@drawable/border_button"
-            android:fontFamily="@font/sf_ui_text_light"
-            android:textColor="@color/colorAccent"
-            app:layout_flexGrow="1"
-            tools:text="full " />
-    </com.google.android.flexbox.FlexboxLayout>
+            <com.pchmn.materialchips.ChipView
+                android:id="@+id/tag1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                app:backgroundColor="@color/color_accent"
+                app:hasAvatarIcon="true"
+                app:label="Dev"
+                app:labelColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
-</LinearLayout>
+            <com.pchmn.materialchips.ChipView
+                android:id="@+id/tag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_4dp"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                app:backgroundColor="@color/color_accent"
+                app:deleteIconColor="@android:color/white"
+                app:hasAvatarIcon="true"
+                app:label="Java Script"
+                app:labelColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+
+            <com.pchmn.materialchips.ChipView
+                android:id="@+id/tag3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_4dp"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:backgroundColor="@color/color_accent"
+                app:deleteIconColor="@android:color/white"
+                app:hasAvatarIcon="true"
+                app:label="Java"
+                app:labelColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

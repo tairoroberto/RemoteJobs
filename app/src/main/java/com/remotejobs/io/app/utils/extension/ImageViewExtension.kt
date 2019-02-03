@@ -21,8 +21,8 @@ fun ImageView.loadImage(url: String?) {
 
     Picasso.get()
             .load(url)
-            .placeholder(R.drawable.ic_logo)
-            .error(R.drawable.ic_logo)
+            .placeholder(R.drawable.ic_launcher_web)
+            .error(R.drawable.ic_launcher_web)
             .into(this)
 }
 

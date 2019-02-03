@@ -1,21 +1,23 @@
 package com.remotejobs.io.app.splash.view
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import com.google.firebase.FirebaseApp
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import com.google.firebase.messaging.FirebaseMessaging
 import com.remotejobs.io.app.BuildConfig
 import com.remotejobs.io.app.R
-import com.remotejobs.io.app.utils.extension.ActivityLaunchHelper
+import com.remotejobs.io.app.home.view.HomeActivity
 import com.remotejobs.io.app.utils.extension.launchPlayStore
-import com.remotejobs.io.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 
+class SplashActivity : AppCompatActivity() {
 
-class SplashActivity : BaseActivity() {
+    val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +30,9 @@ class SplashActivity : BaseActivity() {
             finish()
         }
 
-        lottieAnimationView.setOnClickListener { jump() }
+        textView.setOnClickListener { jump() }
 
-        Timer().schedule(object : TimerTask() {
+        timer.schedule(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
                     jump()
@@ -40,15 +42,13 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun jump() {
-        if (isFinishing) {
-            return
-        }
+        timer.cancel()
+        val contenTransition: Pair<View, String> = Pair.create(content, "content")
+        val textJobsTransition: Pair<View, String> = Pair.create(textView, "textJobs")
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, contenTransition, textJobsTransition)
 
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("${ActivityLaunchHelper.URL_BASE}/home"))
-                .addCategory(Intent.CATEGORY_DEFAULT)
-                .addCategory(Intent.CATEGORY_BROWSABLE)
-        intent.`package` = packageName
-        startActivity(intent)
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent, options.toBundle())
         finish()
     }
 }

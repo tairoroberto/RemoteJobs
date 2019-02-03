@@ -6,11 +6,12 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.transition.ChangeBounds
 import android.view.Menu
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,6 @@ import com.remotejobs.io.app.BuildConfig
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
-import com.remotejobs.io.app.utils.extension.showProgress
 import com.remotejobs.io.app.viewmodel.detail.DetailViewModel
 import com.remotejobs.io.app.viewmodel.detail.DetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -60,7 +60,6 @@ class DetailActivity : AppCompatActivity() {
 
         tracker = FirebaseAnalytics.getInstance(this@DetailActivity)
 
-        showProgress(textViewName, progressBar, true)
         job = intent?.getParcelableExtra("job")
 
         showJob()
@@ -78,11 +77,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setAnimation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val changeBounds = ChangeBounds()
-            changeBounds.duration = 2000
-            window.sharedElementExitTransition = changeBounds
-        }
+        val changeBounds = ChangeBounds()
+        changeBounds.duration = 2000
+        window.sharedElementExitTransition = changeBounds
     }
 
     private fun showAlertDialog() {
@@ -149,10 +146,12 @@ class DetailActivity : AppCompatActivity() {
         }
 
         textViewReleaseDate.text = job?.date
+        textViewCompany.text = job?.company
         webiewViewDescription.loadData("<body bgcolor=\"#fafafa\">$data</body>", "text/html", "UTF-8")
         webiewViewDescription.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
-                showProgress(textViewName, progressBar, false)
+                progressBar.visibility = GONE
+                fab.visibility = VISIBLE
             }
         }
         webiewViewDescription.setOnTouchListener { _, _ -> true }
@@ -229,6 +228,12 @@ class DetailActivity : AppCompatActivity() {
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
         shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job?.description)}")
         shareActionProvider?.setShareIntent(shareIntent)
+    }
+
+    override fun onBackPressed() {
+        fab.visibility = GONE
+        webiewViewDescription.visibility = GONE
+        super.onBackPressed()
     }
 
     override fun onDestroy() {

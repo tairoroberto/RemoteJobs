@@ -1,33 +1,40 @@
 package com.remotejobs.io.app.home.view
 
 import android.os.Bundle
-import android.view.View.GONE
-import com.google.android.instantapps.InstantApps
-import com.remotejobs.io.app.base.BaseActivity
-import com.remotejobs.io.app.home.view.HomeFragment.Companion.SEARCH_PARAM
+import android.transition.ChangeBounds
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
+import com.remotejobs.io.app.R
+import com.remotejobs.io.app.companies.view.CompaniesFragment
+import com.remotejobs.io.app.highestpaid.view.HighestPaidFragment
+import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : BaseActivity() {
+
+class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setAnimation()
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
 
-        if (intent?.extras?.getString(SEARCH_PARAM) != null) {
-            val fragment = HomeFragment()
-            val bundle = Bundle()
-            bundle.putString(SEARCH_PARAM, intent?.extras?.getString(SEARCH_PARAM))
-            fragment.arguments = bundle
+        toolbar.transitionName = "textJobs"
 
-            replaceFragment(fragment, HOME_SEARCH)
-        } else {
+        val fragments = ArrayList<Fragment>()
+        fragments.add(HomeFragment())
+        fragments.add(HighestPaidFragment())
+        fragments.add(CompaniesFragment())
 
-            if (savedInstanceState == null) {
-                replaceFragment(HomeFragment(), HOME)
-            }
+        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        tabLayout.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(viewPager))
+        val adapter = HomePageAdapter(fragments, supportFragmentManager)
+        viewPager.adapter = adapter
+        viewPager.offscreenPageLimit = fragments.size
+    }
 
-            if (InstantApps.isInstantApp(this)) {
-                replaceFragment(HomeFragment(), HOME)
-                setNavigationVisibility(GONE)
-            }
-        }
+    private fun setAnimation() {
+        val changeBounds = ChangeBounds()
+        changeBounds.duration = 2000
+        window.sharedElementExitTransition = changeBounds
     }
 }

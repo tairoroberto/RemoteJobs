@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorPrimary"
+            app:contentScrim="@color/white_f2feff"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -27,9 +27,10 @@
                 android:id="@+id/imageViewLogo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_250dp"
+                android:background="@color/white_f2feff"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_logo"
-                android:transitionName="image" />
+                android:src="@drawable/ic_launcher_web"
+                android:transitionName="logo" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -54,8 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
+        android:transitionName="tag"
         android:src="@drawable/ic_send"
         app:layout_anchor="@+id/app_bar"
+        android:visibility="gone"
         app:layout_anchorGravity="right|bottom" />
 
     <include layout="@layout/content_detail" />

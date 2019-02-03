@@ -3,8 +3,8 @@ package com.remotejobs.io.app.home.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.VISIBLE
+import androidx.appcompat.app.AppCompatActivity
 import com.remotejobs.io.app.R
-import com.remotejobs.io.app.base.BaseActivity
 import com.remotejobs.io.app.data.database.AppDatabase
 import com.remotejobs.io.app.data.database.dao.FavoritesDao
 import com.remotejobs.io.app.home.view.HomeFragment.Companion.SEARCH_PARAM
@@ -13,7 +13,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
 
-class FavoritesActivity : BaseActivity() {
+class FavoritesActivity : AppCompatActivity() {
 
     private val favoritesDao: FavoritesDao by lazy {
         AppDatabase.getInstance(this).favoritesDaoDao()

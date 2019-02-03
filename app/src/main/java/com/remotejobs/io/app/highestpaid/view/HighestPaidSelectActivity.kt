@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
@@ -33,8 +34,8 @@ class HighestPaidSelectActivity : AppCompatActivity() {
 
     private val viewModel by lazy {
         val local = HighestPaidLocalDataStore(
-            AppDatabase.getInstance(this).highestPaidDao(),
-            AppDatabase.getInstance(this).jobsDAO()
+                AppDatabase.getInstance(this).highestPaidDao(),
+                AppDatabase.getInstance(this).jobsDAO()
         )
         val remote = HighestPaidRemoteDataStore()
         val useCase = HighestPaidUseCase(local, remote)
@@ -66,8 +67,8 @@ class HighestPaidSelectActivity : AppCompatActivity() {
         })
 
         viewModel.loadingStatus.observe(
-            this,
-            Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
+                this,
+                Observer { isLoading -> showProgress(recyclerView, progress, isLoading == true) })
         FirebaseAnalytics.getInstance(this).logEvent("highestpaid_jobs", null)
     }
 
@@ -80,10 +81,10 @@ class HighestPaidSelectActivity : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener { viewModel.loadHighestPaidJobs(tag as String) }
     }
 
-    private fun onItemClick(job: Job, imageView: ImageView) {
+    private fun onItemClick(job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-            .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
+                .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
 
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("job", job)

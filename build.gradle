@@ -63,6 +63,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://dl.bintray.com/android/android-tools' }
         maven { url 'https://google.bintray.com/flexbox-layout' }
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
@@ -79,6 +80,7 @@ allprojects {
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://dl.bintray.com/android/android-tools' }
         maven { url 'https://google.bintray.com/flexbox-layout' }
+        maven { url "https://jitpack.io" }
     }
 }
 

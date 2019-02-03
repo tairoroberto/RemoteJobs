@@ -3,11 +3,10 @@ package com.remotejobs.io.app.home.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pchmn.materialchips.ChipView
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.loadImage
@@ -18,17 +17,15 @@ import com.remotejobs.io.app.utils.extension.textHtml
  * Created by tairo on 12/12/17.
  */
 class JobsRecyclerAdapter(
-    private var list: MutableList<Job>,
-    private val onClick: (job: Job, imageView: ImageView) -> Unit
+        private var list: MutableList<Job>,
+        private val onClick: (job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) -> Unit
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<JobsRecyclerAdapter.ViewHolder>() {
-
-    private var lastPosition = -1
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
-        holder.bind(item)
+        holder.bind(item, onClick)
         holder.itemView.setOnClickListener {
-            onClick(item, holder.imageView)
+            onClick(item, holder.imageView, holder.textViewTitle, holder.textViewDate)
         }
     }
 
@@ -37,39 +34,25 @@ class JobsRecyclerAdapter(
         return ViewHolder(layoutInflater.inflate(R.layout.item, parent, false))
     }
 
-    private fun setAnimation(viewToAnimate: View, position: Int) {
-        if (position > 0) {
-            val animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
-            viewToAnimate.startAnimation(animation)
-            lastPosition = position
-        }
-    }
-
     override fun getItemCount(): Int = list.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
-        private val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
-        private val textViewDate: TextView = view.findViewById(R.id.textViewDate)
-        private val textViewOverview: TextView = view.findViewById(R.id.textViewDescription)
-        private val tag1: Button = view.findViewById(R.id.tag1)
-        private val tag2: Button = view.findViewById(R.id.tag2)
-        private val tag3: Button = view.findViewById(R.id.tag3)
+        val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
+        val textViewDate: TextView = view.findViewById(R.id.textViewDate)
+        private val textViewCompany: TextView = view.findViewById(R.id.textViewCompany)
+        private val tag1: ChipView = view.findViewById(R.id.tag1)
+        private val tag2: ChipView = view.findViewById(R.id.tag2)
+        private val tag3: ChipView = view.findViewById(R.id.tag3)
 
-        fun bind(job: Job) {
+        fun bind(job: Job, onClick: (job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) -> Unit) {
             if (!job.logo.isBlank()) {
                 imageView.loadImage(job.logo)
             }
 
-            /*val textTitle = StringEscapeUtils.escapeJava(job.position)
-            job.position = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textTitle))
-
-            val textDescription = StringEscapeUtils.escapeJava(job.description)
-            job.description = StringEscapeUtils.unescapeJava(textViewTitle.context.removeUnicodeCharacters(textDescription))*/
-
             textViewDate.text = job.date
             textViewTitle.textHtml(job.position)
-            textViewOverview.textHtml(job.description)
+            textViewCompany.textHtml(job.company)
 
             tag1.visibility = View.GONE
             tag2.visibility = View.GONE
@@ -77,18 +60,27 @@ class JobsRecyclerAdapter(
 
             job.tags?.forEachIndexed { index, s ->
                 if (index == 0) {
-                    tag1.text = s
+                    tag1.label = s
                     tag1.visibility = View.VISIBLE
+                    tag1.setOnChipClicked {
+                        onClick(job, imageView, textViewTitle, textViewDate)
+                    }
                 }
 
                 if (index == 1) {
-                    tag2.text = s
+                    tag2.label = s
                     tag2.visibility = View.VISIBLE
+                    tag2.setOnChipClicked {
+                        onClick(job, imageView, textViewTitle, textViewDate)
+                    }
                 }
 
                 if (index == 2) {
-                    tag3.text = s
+                    tag3.label = s
                     tag3.visibility = View.VISIBLE
+                    tag3.setOnChipClicked {
+                        onClick(job, imageView, textViewTitle, textViewDate)
+                    }
                 }
             }
         }
@@ -97,7 +89,7 @@ class JobsRecyclerAdapter(
     fun update(items: MutableList<Job>) {
         if (this.list.size == 0) {
             this.list = items
-        }else{
+        } else {
             this.list.addAll(items)
         }
 

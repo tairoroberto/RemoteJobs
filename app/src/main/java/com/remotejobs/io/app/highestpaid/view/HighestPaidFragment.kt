@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.R
@@ -55,7 +56,7 @@ class HighestPaidFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = HighestPaidRecyclerAdapter(activity, list, this::onItemClick)
-        val layoutManager = LinearLayoutManager(activity)
+        val layoutManager = GridLayoutManager(activity, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter

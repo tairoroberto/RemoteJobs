@@ -8,7 +8,7 @@
     <string name="title_highestpaid">Highest Paid</string>
     <string name="title_companies">Companies</string>
     <string name="title_statistics">Statistics</string>
-    <string name="remote_jobs">remote Jobs</string>
+    <string name="remote_jobs">Remote Jobs</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -261,5 +261,6 @@
     <string name="highest_salary">Salary: <b>%s</b></string>
     <string name="highest_deviation">Range: <b>%s</b></string>
     <string name="highest_amout">Remote jobs: <b>%s</b></string>
+    <string name="jobs_not_found">Jobs not found</string>
 
 </resources>

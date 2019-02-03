@@ -20,13 +20,32 @@
             android:layout_marginStart="@dimen/dimen_16dp"
             android:layout_marginTop="@dimen/dimen_24dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
-            android:fontFamily="@font/sf_ui_text_light"
+            android:fontFamily="@font/sf_ui_text_regular"
             android:textColor="#252220"
             android:textSize="@dimen/dimen_24sp"
+            android:transitionName="title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Title" />
+            tools:text="Android Developer" />
+
+
+        <TextView
+            android:id="@+id/textViewCompany"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:fontFamily="@font/sf_ui_text_light"
+            android:textColor="@color/gray_ababab"
+            android:textSize="@dimen/dimen_18sp"
+            android:transitionName="company"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            tools:text="Trma Mobile Solutions" />
 
 
         <WebView
@@ -34,18 +53,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_8dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/dimen_8dp"
             android:layout_marginBottom="@dimen/dimen_8dp"
             android:fontFamily="@font/sf_ui_text_light"
             android:textSize="@dimen/dimen_16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewReleaseDate"
             app:layout_constraintVertical_bias="0.0"
             tools:text="Description" />
-
 
         <ImageView
             android:id="@+id/imageViewPhone"
@@ -54,7 +73,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCompany"
             app:srcCompat="@drawable/ic_event" />
 
         <TextView
@@ -62,17 +81,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
-            android:layout_marginBottom="8dp"
-            android:autoLink="phone"
             android:fontFamily="@font/sf_ui_text_regular"
-            android:textColorLink="#605751"
+            android:transitionName="date"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewPhone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.018"
             app:layout_constraintStart_toEndOf="@+id/imageViewPhone"
-            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPhone"
             tools:text="2017-10-25" />
 
         <ProgressBar
@@ -84,7 +100,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:indeterminate="true"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

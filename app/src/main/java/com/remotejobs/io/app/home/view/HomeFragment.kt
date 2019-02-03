@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.transition.ChangeBounds
 import android.view.*
@@ -12,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -43,6 +43,7 @@ import com.remotejobs.io.app.utils.extension.launchPlayStore
 import com.remotejobs.io.app.utils.extension.showSnackBarError
 import com.remotejobs.io.app.utils.extension.showSoftKeyboard
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
@@ -88,7 +89,6 @@ class HomeFragment : Fragment() {
         retainInstance = true
 
         observeLoadingStatus()
-        //observeErrorStatus()
         observeResponse()
         tracker = FirebaseAnalytics.getInstance(context as Context)
 
@@ -100,7 +100,6 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setAnimation()
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -116,10 +115,6 @@ class HomeFragment : Fragment() {
             viewModel.getJobs(/*"remote-${filteredValues[position]}-jobs"*/)
             listSearch.visibility = GONE
             activity?.hideSoftKeyboard()
-        }
-
-        if (!InstantApps.isInstantApp(context as Context)) {
-            showAlertDialogHateUs()
         }
 
         if (arguments?.get(SEARCH_PARAM) != null) {
@@ -168,14 +163,6 @@ class HomeFragment : Fragment() {
         viewModel.response.observe(this, Observer { response -> showJobsList(response.toMutableList()) })
     }
 
-    private fun setAnimation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val changeBounds = ChangeBounds()
-            changeBounds.duration = 2000
-            activity?.window?.sharedElementExitTransition = changeBounds
-        }
-    }
-
     private fun showProgress(b: Boolean?) {
         progress.visibility = if (b == true) VISIBLE else GONE
         swipeRefreshLayout?.isRefreshing = false
@@ -196,10 +183,13 @@ class HomeFragment : Fragment() {
         adapter.update(jobs)
     }
 
-    private fun onItemClick(job: Job, imageView: ImageView) {
+    private fun onItemClick(job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {
 
+        val logoTransition: Pair<View, String> = Pair.create(imageView, "logo")
+        val titleTransition: Pair<View, String> = Pair.create(textViewTitle, "title")
+        val dateTransition: Pair<View, String> = Pair.create(textViewDate, "date")
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(context as Activity, Pair.create(imageView, "image"))
+                .makeSceneTransitionAnimation(context as Activity, logoTransition, titleTransition, dateTransition)
 
         val intent = Intent(context, DetailActivity::class.java)
         intent.putExtra("job", job)

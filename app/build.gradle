@@ -154,7 +154,8 @@ dependencies {
     /*########################### Image libs #####################################*/
     implementation "com.squareup.picasso:picasso:${rootProject.picasso}"
     implementation 'com.github.sujithkanna:smileyrating:1.6.8'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'cn.gavinliu:ShapedImageView:0.8.6'
+    implementation 'com.github.pchmn:MaterialChipsInput:1.0.8'
     /*############################################################################*/
 
     /*########################### Animation #####################################*/
