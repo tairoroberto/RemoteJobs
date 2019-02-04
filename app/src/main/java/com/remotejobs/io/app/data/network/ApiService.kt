@@ -15,21 +15,21 @@ interface ApiService {
     fun getJobs(
             @Query("path") path: String = "jobs",
             @Query("lastItem") lastItem: String? = null,
-            @Query("total") total: Int? = 15): Single<JobsResponse>
+            @Query("total") total: Int? = 30): Single<JobsResponse>
 
-    @GET("getJobsPaginatedByCategory/")
+    @GET("getJobsPaginated/")
     fun getJobsByCategory(
-            @Query("path") path: String = "jobs-category",
+            @Query("path") path: String? = "jobs-category",
             @Query("query") query: String,
             @Query("lastItem") lastItem: String?,
-            @Query("total") total: Int? = 15): Single<JobsResponse>
+            @Query("total") total: Int? = 30): Single<JobsResponse>
 
-    @GET("getJobsPaginatedByCompany/")
+    @GET("getJobsPaginated/")
     fun getJobsByCompany(
             @Query("path") path: String = "jobs-company",
             @Query("query") query: String,
             @Query("lastItem") lastItem: String?,
-            @Query("total") total: Int? = 15): Single<JobsResponse>
+            @Query("total") total: Int? = 30): Single<JobsResponse>
 
     @GET("getCompanies/")
     fun getCompanies(): Single<CompaniesResponse>

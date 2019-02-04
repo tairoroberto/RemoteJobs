@@ -17,6 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:transitionName="textJobs"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="@string/app_name"
@@ -25,7 +26,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/white_f2feff"
             android:transitionName="content"
@@ -41,21 +42,18 @@
                 android:id="@+id/tabItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_briefcase"
                 android:text="@string/title_jobs" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_money"
                 android:text="Categories" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_space_rocket"
                 android:text="@string/title_companies" />
 
         </com.google.android.material.tabs.TabLayout>

@@ -1,4 +1,4 @@
-package com.remotejobs.io.app.highestpaid.view
+package com.remotejobs.io.app.categories.view
 
 import android.content.Context
 import android.content.Intent
@@ -10,38 +10,30 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.R
-import com.remotejobs.io.app.data.database.AppDatabase
-import com.remotejobs.io.app.highestpaid.repository.HighestPaidLocalDataStore
-import com.remotejobs.io.app.highestpaid.repository.HighestPaidRemoteDataStore
-import com.remotejobs.io.app.highestpaid.usecase.HighestPaidUseCase
-import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModel
-import com.remotejobs.io.app.highestpaid.viewmodel.HighestPaidViewModelFactory
-import com.remotejobs.io.app.model.HighestPaid
+import com.remotejobs.io.app.categories.repository.CategoriesRemoteDataStore
+import com.remotejobs.io.app.categories.usecase.CategoriesUseCase
+import com.remotejobs.io.app.categories.viewmodel.CategoriesViewModel
+import com.remotejobs.io.app.categories.viewmodel.CategoriesViewModelFactory
 import com.remotejobs.io.app.utils.extension.showProgress
-import kotlinx.android.synthetic.main.fragment_highest_paid.*
+import kotlinx.android.synthetic.main.fragment_categories.*
 
-class HighestPaidFragment : Fragment() {
+class CategoriesFragment : Fragment() {
 
-    private lateinit var adapter: HighestPaidRecyclerAdapter
+    private lateinit var adapter: CategoriesRecyclerAdapter
 
-    private val list: MutableList<HighestPaid> = ArrayList()
+    private val list: MutableList<String> = ArrayList()
 
     private val viewModel by lazy {
-        val local = HighestPaidLocalDataStore(
-            AppDatabase.getInstance(context).highestPaidDao(),
-            AppDatabase.getInstance(context).jobsDAO()
-        )
-        val remote = HighestPaidRemoteDataStore()
-        val useCase = HighestPaidUseCase(local, remote)
-        ViewModelProviders.of(this, HighestPaidViewModelFactory(useCase)).get(HighestPaidViewModel::class.java)
+        val remote = CategoriesRemoteDataStore()
+        val useCase = CategoriesUseCase(remote)
+        ViewModelProviders.of(this, CategoriesViewModelFactory(useCase)).get(CategoriesViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getAllHighestPaidSalaries()
+        viewModel.getCategories()
         viewModel.response.observe(this, Observer {
             adapter.update(it)
         })
@@ -55,7 +47,7 @@ class HighestPaidFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = HighestPaidRecyclerAdapter(activity, list, this::onItemClick)
+        adapter = CategoriesRecyclerAdapter(activity, list, this::onItemClick)
         val layoutManager = GridLayoutManager(activity, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
@@ -63,17 +55,17 @@ class HighestPaidFragment : Fragment() {
     }
 
     private fun onItemClick(tag: String) {
-        val intent = Intent(activity, HighestPaidSelectActivity::class.java)
+        val intent = Intent(activity, CategoriesSelectActivity::class.java)
         intent.putExtra("tag", tag)
         startActivity(intent)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_highest_paid, container, false)
+        return inflater.inflate(R.layout.fragment_categories, container, false)
     }
 
     private fun showProgress(b: Boolean?) {

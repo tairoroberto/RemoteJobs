@@ -25,6 +25,8 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
 
     val errorStatus = MutableLiveData<String>()
 
+    var lastItem: String? = null
+
     fun listAllCompanies() {
         disposables.add(companiesUseCase.listAllCompanies()
                 .subscribeOn(Schedulers.io())
@@ -65,7 +67,7 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
     }
 
     fun listCompaniesJobs(company: String) {
-        disposables.add(companiesUseCase.listCompaniesJobs(company)
+        disposables.add(companiesUseCase.listCompaniesJobs(company, lastItem)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { loadingStatus.setValue(true) }
@@ -74,6 +76,7 @@ class CompaniesViewModel(val companiesUseCase: CompaniesUseCase) : ViewModel() {
                 .subscribe(
                         { response ->
                             responseJobs.value = response.response
+                            lastItem = response.lastItem
                         },
                         { throwable ->
                             errorStatus.value = throwable.message.toString()

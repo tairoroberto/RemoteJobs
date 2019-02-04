@@ -1,12 +1,10 @@
 package com.remotejobs.io.app.utils.extension
 
 import android.graphics.Bitmap
-import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
 import com.remotejobs.io.app.R
-import com.squareup.picasso.*
-import java.lang.Exception
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 
 
 /**

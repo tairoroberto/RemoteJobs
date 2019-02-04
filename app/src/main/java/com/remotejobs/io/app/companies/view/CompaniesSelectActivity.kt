@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.companies.repository.CompaniesLocalDataStore
@@ -56,13 +58,12 @@ class CompaniesSelectActivity : AppCompatActivity() {
 
         setListAdapter()
         viewModel.responseJobs.observe(this, Observer {
-
-            if (it?.isEmpty() == true) {
-                withoutData.visibility = VISIBLE
-            } else {
-                adapter.update(it.toMutableList())
-            }
+            adapter.update(it.toMutableList())
             swipeRefreshLayout?.isRefreshing = false
+        })
+
+        viewModel.errorStatus.observe(this, Observer {
+            withoutData.visibility = VISIBLE
         })
 
         viewModel.loadingStatus.observe(
@@ -77,7 +78,27 @@ class CompaniesSelectActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-        swipeRefreshLayout.setOnRefreshListener { viewModel.listCompaniesJobs(company as String) }
+        swipeRefreshLayout.setOnRefreshListener {
+            adapter.clear()
+            viewModel.lastItem = null
+            viewModel.listCompaniesJobs(company as String)
+        }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val totalItemCount = layoutManager.itemCount
+                val lastVisible = layoutManager.findLastVisibleItemPosition()
+
+                val endHasBeenReached = lastVisible + 1 >= totalItemCount
+
+                if (viewModel.loadingStatus.value == false && totalItemCount > 0 && endHasBeenReached) {
+                    viewModel.listCompaniesJobs(company as String)
+                }
+            }
+        })
     }
 
     private fun onItemClick(job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {

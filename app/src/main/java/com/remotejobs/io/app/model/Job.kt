@@ -18,6 +18,10 @@ data class Job(
         @SerializedName("id")
         var id: String = "",
 
+        @ColumnInfo(name = "jobId")
+        @SerializedName("jobId")
+        var jobId: Int = 0,
+
         @ColumnInfo(name = "categoryKey")
         @SerializedName("categoryKey")
         var categoryKey: String = "",
@@ -45,6 +49,10 @@ data class Job(
         @ColumnInfo(name = "company")
         @SerializedName("company")
         var company: String = "",
+
+        @ColumnInfo(name = "font")
+        @SerializedName("font")
+        var font: String = "",
 
         @ColumnInfo(name = "position")
         @SerializedName("position")

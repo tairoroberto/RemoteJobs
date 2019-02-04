@@ -34,18 +34,36 @@
             android:id="@+id/textViewCompany"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
             android:fontFamily="@font/sf_ui_text_light"
             android:textColor="@color/gray_ababab"
             android:textSize="@dimen/dimen_18sp"
             android:transitionName="company"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhone2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="Trma Mobile Solutions" />
+
+        <TextView
+            android:id="@+id/textViewFont"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:fontFamily="@font/sf_ui_text_light"
+            android:gravity="start"
+            android:textColor="@color/gray_ababab"
+            android:textSize="@dimen/dimen_14sp"
+            android:transitionName="company"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhone2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPhone2"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPhone2"
+            tools:text="Remoteok" />
 
 
         <WebView
@@ -73,17 +91,28 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCompany"
+            app:layout_constraintTop_toBottomOf="@+id/textViewFont"
             app:srcCompat="@drawable/ic_event" />
+
+        <ImageView
+            android:id="@+id/imageViewPhone2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCompany"
+            app:srcCompat="@drawable/ic_browser" />
 
         <TextView
             android:id="@+id/textViewReleaseDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
             android:fontFamily="@font/sf_ui_text_regular"
             android:transitionName="date"
+            android:textColor="@color/gray_ababab"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewPhone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.018"
@@ -100,7 +129,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:indeterminate="true"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

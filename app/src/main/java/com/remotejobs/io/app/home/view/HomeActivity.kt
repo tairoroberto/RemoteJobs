@@ -1,13 +1,13 @@
 package com.remotejobs.io.app.home.view
 
 import android.os.Bundle
-import android.transition.ChangeBounds
+import android.transition.ChangeClipBounds
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.companies.view.CompaniesFragment
-import com.remotejobs.io.app.highestpaid.view.HighestPaidFragment
+import com.remotejobs.io.app.categories.view.CategoriesFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -18,11 +18,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        toolbar.transitionName = "textJobs"
-
         val fragments = ArrayList<Fragment>()
         fragments.add(HomeFragment())
-        fragments.add(HighestPaidFragment())
+        fragments.add(CategoriesFragment())
         fragments.add(CompaniesFragment())
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
@@ -33,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setAnimation() {
-        val changeBounds = ChangeBounds()
+        val changeBounds = ChangeClipBounds()
         changeBounds.duration = 2000
         window.sharedElementExitTransition = changeBounds
     }

@@ -62,6 +62,7 @@ class JobsRecyclerAdapter(
                 if (index == 0) {
                     tag1.label = s
                     tag1.visibility = View.VISIBLE
+                    tag1.setHasAvatarIcon(true)
                     tag1.setOnChipClicked {
                         onClick(job, imageView, textViewTitle, textViewDate)
                     }
@@ -70,6 +71,7 @@ class JobsRecyclerAdapter(
                 if (index == 1) {
                     tag2.label = s
                     tag2.visibility = View.VISIBLE
+                    tag2.setHasAvatarIcon(true)
                     tag2.setOnChipClicked {
                         onClick(job, imageView, textViewTitle, textViewDate)
                     }
@@ -78,6 +80,7 @@ class JobsRecyclerAdapter(
                 if (index == 2) {
                     tag3.label = s
                     tag3.visibility = View.VISIBLE
+                    tag3.setHasAvatarIcon(true)
                     tag3.setOnChipClicked {
                         onClick(job, imageView, textViewTitle, textViewDate)
                     }

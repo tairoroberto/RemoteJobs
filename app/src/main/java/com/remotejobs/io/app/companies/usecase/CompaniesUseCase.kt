@@ -20,8 +20,8 @@ class CompaniesUseCase(private val companiesLocalRepository: CompaniesLocalRepos
         return companiesRemoteRepository.getCompanies()
     }
 
-    fun listCompaniesJobs(company: String): Single<JobsResponse> {
-        return companiesRemoteRepository.getCompaniesJobs(company)
+    fun listCompaniesJobs(company: String, lastItem: String?): Single<JobsResponse> {
+        return companiesRemoteRepository.getCompaniesJobs(company, lastItem)
     }
 
     fun listCompaniesFromBD(): Flowable<List<Company>> {

@@ -20,18 +20,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.MenuItemCompat
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.instantapps.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.remotejobs.io.app.BuildConfig
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
-import com.remotejobs.io.app.utils.extension.loadImage
-import com.remotejobs.io.app.viewmodel.detail.DetailViewModel
-import com.remotejobs.io.app.viewmodel.detail.DetailViewModelFactory
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.okButton
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -47,15 +48,10 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var tracker: FirebaseAnalytics
 
-    private val viewModel by lazy {
-        ViewModelProviders.of(this, DetailViewModelFactory()).get(DetailViewModel::class.java)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        setAnimation()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+        supportPostponeEnterTransition()
         setSupportActionBar(toolbar)
 
         tracker = FirebaseAnalytics.getInstance(this@DetailActivity)
@@ -90,7 +86,7 @@ class DetailActivity : AppCompatActivity() {
                     "Created at: ${job?.date}"
 
             noButton {}
-            yesButton {
+            positiveButton("Apply") {
                 applyJob()
             }
 
@@ -132,8 +128,21 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showJob() {
-        imageViewLogo.loadImage(job?.logo)
 
+        Picasso.get()
+                .load(if (job?.logo == "") "http://" else job?.logo)
+                .noFade()
+                .placeholder(R.drawable.ic_launcher_web)
+                .error(R.drawable.ic_launcher_web)
+                .into(imageViewLogo, object : Callback {
+                    override fun onSuccess() {
+                        supportStartPostponedEnterTransition()
+                    }
+
+                    override fun onError(e: Exception?) {
+                        supportStartPostponedEnterTransition()
+                    }
+                })
         supportActionBar?.setDisplayShowTitleEnabled(false)
         textViewName.text = job?.position
 
@@ -147,9 +156,17 @@ class DetailActivity : AppCompatActivity() {
 
         textViewReleaseDate.text = job?.date
         textViewCompany.text = job?.company
+        textViewFont.text = job?.font
         webiewViewDescription.loadData("<body bgcolor=\"#fafafa\">$data</body>", "text/html", "UTF-8")
         webiewViewDescription.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView, url: String) {
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                progressBar.visibility = VISIBLE
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
                 progressBar.visibility = GONE
                 fab.visibility = VISIBLE
             }

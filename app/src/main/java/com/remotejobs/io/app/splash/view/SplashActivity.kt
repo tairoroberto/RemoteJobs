@@ -17,7 +17,7 @@ import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
-    val timer = Timer()
+    private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +43,13 @@ class SplashActivity : AppCompatActivity() {
 
     private fun jump() {
         timer.cancel()
-        val contenTransition: Pair<View, String> = Pair.create(content, "content")
+        val contentTransition: Pair<View, String> = Pair.create(content, "content")
         val textJobsTransition: Pair<View, String> = Pair.create(textView, "textJobs")
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, contenTransition, textJobsTransition)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, contentTransition, textJobsTransition)
 
         val intent = Intent(this, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent, options.toBundle())
         finish()
     }

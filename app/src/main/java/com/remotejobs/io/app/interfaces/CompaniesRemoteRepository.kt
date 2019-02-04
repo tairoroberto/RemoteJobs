@@ -9,5 +9,5 @@ import io.reactivex.Single
  */
 interface CompaniesRemoteRepository {
     fun getCompanies(): Single<CompaniesResponse>
-    fun getCompaniesJobs(company: String): Single<JobsResponse>
+    fun getCompaniesJobs(company: String, lastItem: String?): Single<JobsResponse>
 }

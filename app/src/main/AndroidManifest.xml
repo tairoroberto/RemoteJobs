@@ -71,7 +71,7 @@
             android:label="Favorites"
             android:parentActivityName=".home.view.HomeActivity" />
 
-        <activity android:name=".highestpaid.view.HighestActivity">
+        <activity android:name=".categories.view.HighestActivity">
             <intent-filter
                 android:autoVerify="true"
                 android:order="2">
@@ -100,7 +100,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".highestpaid.view.HighestPaidSelectActivity" />
+        <activity android:name=".categories.view.CategoriesSelectActivity" />
 
         <activity android:name=".companies.view.CompaniesActivity">
             <intent-filter

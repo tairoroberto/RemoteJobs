@@ -14,7 +14,7 @@ class CompaniesRemoteDataStore : CompaniesRemoteRepository {
         return RemoteApiService.getInstance().getApiService().getCompanies()
     }
 
-    override fun getCompaniesJobs(company: String): Single<JobsResponse> {
-        return RemoteApiService.getInstance().getApiService().getCompanyJobs(company)
+    override fun getCompaniesJobs(company: String, lastItem: String?): Single<JobsResponse> {
+        return RemoteApiService.getInstance().getApiService().getJobsByCompany(query = company,lastItem = lastItem)
     }
 }
