@@ -86,13 +86,15 @@ class CategoriesSelectActivity : AppCompatActivity() {
             override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val totalItemCount = layoutManager.itemCount
-                val lastVisible = layoutManager.findLastVisibleItemPosition()
+                if (dy > 0) {
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisible = layoutManager.findLastVisibleItemPosition()
 
-                val endHasBeenReached = lastVisible + 1 >= totalItemCount
+                    val endHasBeenReached = lastVisible + 1 >= totalItemCount
 
-                if (viewModel.loadingStatus.value == false && totalItemCount > 0 && endHasBeenReached) {
-                    viewModel.getJobsByCategory(tag as String)
+                    if (viewModel.loadingStatus.value == false && totalItemCount > 0 && endHasBeenReached) {
+                        viewModel.getJobsByCategory(tag as String)
+                    }
                 }
             }
         })

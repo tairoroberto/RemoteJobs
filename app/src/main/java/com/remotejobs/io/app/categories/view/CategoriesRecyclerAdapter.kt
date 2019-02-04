@@ -38,21 +38,11 @@ class CategoriesRecyclerAdapter(
 
         val tag: ChipView = view.findViewById(R.id.tag)
         private val textViewSalary: TextView = view.findViewById(R.id.textViewSalary)
-        private val textViewDeviation: TextView = view.findViewById(R.id.textViewDeviation)
 
         fun bind(category: String) {
-
-            val deviation = "± " + ThreadLocalRandom.current().nextInt(40, 110)
-            val salary = "$" + ThreadLocalRandom.current().nextInt(52, 120) + "K/year"
-
+            val salary = "± $" + ThreadLocalRandom.current().nextInt(52, 120) + "K/year"
             tag.label = category
             textViewSalary.textHtml(textViewSalary.context.getString(R.string.highest_salary, salary))
-            textViewDeviation.textHtml(
-                    textViewDeviation.context.getString(
-                            R.string.highest_deviation,
-                            deviation
-                    )
-            )
         }
     }
 

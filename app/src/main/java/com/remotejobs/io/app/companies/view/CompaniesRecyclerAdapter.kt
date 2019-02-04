@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -20,26 +19,15 @@ class CompaniesRecyclerAdapter(private val context: Context?,
                                private var list: MutableList<Company>,
                                private val onClick: (company: Company) -> Unit) : RecyclerView.Adapter<CompaniesRecyclerAdapter.ViewHolder>() {
 
-    private var lastPosition = -1
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { onClick(item) }
-        setAnimation(holder.itemView, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ViewHolder(layoutInflater.inflate(R.layout.item_companies, parent, false))
-    }
-
-    private fun setAnimation(viewToAnimate: View, position: Int) {
-        if (position > 0) {
-            val animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left)
-            viewToAnimate.startAnimation(animation)
-            lastPosition = position
-        }
     }
 
     override fun getItemCount(): Int = list.size

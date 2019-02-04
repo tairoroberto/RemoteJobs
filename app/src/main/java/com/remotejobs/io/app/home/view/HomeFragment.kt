@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
-import android.transition.ChangeBounds
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -43,7 +42,6 @@ import com.remotejobs.io.app.utils.extension.launchPlayStore
 import com.remotejobs.io.app.utils.extension.showSnackBarError
 import com.remotejobs.io.app.utils.extension.showSoftKeyboard
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
@@ -90,6 +88,7 @@ class HomeFragment : Fragment() {
 
         observeLoadingStatus()
         observeResponse()
+        showAlertDialogHateUs()
         tracker = FirebaseAnalytics.getInstance(context as Context)
 
         if (InstantApps.isInstantApp(context as Context)) {
@@ -138,13 +137,15 @@ class HomeFragment : Fragment() {
             override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val totalItemCount = layoutManager.itemCount
-                val lastVisible = layoutManager.findLastVisibleItemPosition()
+                if (dy > 0) {
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisible = layoutManager.findLastVisibleItemPosition()
 
-                val endHasBeenReached = lastVisible + 1 >= totalItemCount
+                    val endHasBeenReached = lastVisible + 1 >= totalItemCount
 
-                if (viewModel.loadingStatus.value == false && totalItemCount > 0 && endHasBeenReached) {
-                    viewModel.getJobs()
+                    if (viewModel.loadingStatus.value == false && totalItemCount > 0 && endHasBeenReached) {
+                        viewModel.getJobs()
+                    }
                 }
             }
         })
@@ -269,10 +270,11 @@ class HomeFragment : Fragment() {
 
     private fun showAlertDialogHateUs() {
 
-        val rated = activity?.getSharedPreferences("Home", MODE_PRIVATE)?.getBoolean("rated", false)
         val ratedCount: Int = activity?.getSharedPreferences("Home", MODE_PRIVATE)?.getInt("ratedCount", 0) as Int
 
-        if (rated != true || ratedCount % 10 == 0) {
+        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putInt("ratedCount", ratedCount.plus(1))?.apply()
+
+        if (ratedCount > 5 && ratedCount % 5 == 0) {
 
             val alertBuilder = AlertDialog.Builder(context as Context)
             var alertDialog: AlertDialog? = null
@@ -298,26 +300,22 @@ class HomeFragment : Fragment() {
             }
 
             smileRating.selectedSmile = BaseRating.GREAT
+            textInputTellUs.visibility = VISIBLE
             smileRating.setOnSmileySelectionListener { smiley, reselected ->
                 when (smiley) {
                     SmileRating.TERRIBLE -> {
-                        textInputTellUs.visibility = VISIBLE
                         feeling = "TERRIBLE"
                     }
                     SmileRating.BAD -> {
-                        textInputTellUs.visibility = VISIBLE
                         feeling = "BAD"
                     }
                     SmileRating.OKAY -> {
-                        textInputTellUs.visibility = VISIBLE
                         feeling = "OKAY"
                     }
                     SmileRating.GOOD -> {
-                        textInputTellUs.visibility = GONE
                         feeling = "GOOD"
                     }
                     SmileRating.GREAT -> {
-                        textInputTellUs.visibility = GONE
                         feeling = "GREAT"
                     }
                 }
@@ -326,9 +324,9 @@ class HomeFragment : Fragment() {
             alertBuilder.setView(view)
             alertDialog = alertBuilder.create()
             alertDialog.show()
-        }
 
-        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putInt("ratedCount", ratedCount.plus(1))?.apply()
+            activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putInt("ratedCount", 0)?.apply()
+        }
     }
 
     private fun showAlert() {
