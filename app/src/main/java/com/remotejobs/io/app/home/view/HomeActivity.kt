@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.remotejobs.io.app.R
-import com.remotejobs.io.app.companies.view.CompaniesFragment
 import com.remotejobs.io.app.categories.view.CategoriesFragment
+import com.remotejobs.io.app.companies.view.CompaniesFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -17,6 +17,8 @@ class HomeActivity : AppCompatActivity() {
         setAnimation()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
 
         val fragments = ArrayList<Fragment>()
         fragments.add(HomeFragment())

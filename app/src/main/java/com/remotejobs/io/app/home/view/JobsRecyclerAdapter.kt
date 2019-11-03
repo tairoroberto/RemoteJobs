@@ -43,7 +43,6 @@ class JobsRecyclerAdapter(
         private val textViewCompany: TextView = view.findViewById(R.id.textViewCompany)
         private val tag1: ChipView = view.findViewById(R.id.tag1)
         private val tag2: ChipView = view.findViewById(R.id.tag2)
-        private val tag3: ChipView = view.findViewById(R.id.tag3)
 
         fun bind(job: Job, onClick: (job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) -> Unit) {
             if (!job.logo.isBlank()) {
@@ -56,7 +55,6 @@ class JobsRecyclerAdapter(
 
             tag1.visibility = View.GONE
             tag2.visibility = View.GONE
-            tag3.visibility = View.GONE
 
             job.tags?.forEachIndexed { index, s ->
                 if (index == 0) {
@@ -73,15 +71,6 @@ class JobsRecyclerAdapter(
                     tag2.visibility = View.VISIBLE
                     tag2.setHasAvatarIcon(true)
                     tag2.setOnChipClicked {
-                        onClick(job, imageView, textViewTitle, textViewDate)
-                    }
-                }
-
-                if (index == 2) {
-                    tag3.label = s
-                    tag3.visibility = View.VISIBLE
-                    tag3.setHasAvatarIcon(true)
-                    tag3.setOnChipClicked {
                         onClick(job, imageView, textViewTitle, textViewDate)
                     }
                 }

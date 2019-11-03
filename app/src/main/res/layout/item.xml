@@ -5,18 +5,18 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen_8dp"
+    android:layout_marginStart="@dimen/dimen_16dp"
     android:layout_marginTop="@dimen/dimen_8dp"
-    android:layout_marginEnd="@dimen/dimen_8dp">
+    android:layout_marginEnd="@dimen/dimen_16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewLogo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -28,42 +28,42 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
             app:layout_constraintVertical_bias="0.0"
             app:round_radius="@dimen/dimen_8dp"
-            app:shape_mode="round_rect" />
+            app:shape_mode="circle" />
 
         <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_light"
-            android:maxLines="2"
-            android:textColor="#252220"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Senior Full Stack Web Developer" />
+                android:id="@+id/textViewTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:maxLines="2"
+                android:textColor="#252220"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Senior Full Stack Web Developer" />
 
         <TextView
-            android:id="@+id/textViewDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:textAlignment="textEnd"
-            android:textColor="#252220"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-            tools:text="2d" />
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:textAlignment="textEnd"
+                android:textColor="#252220"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                tools:text="2d" />
 
 
         <TextView
@@ -78,7 +78,7 @@
             android:fontFamily="@font/sf_ui_text_light"
             android:gravity="start"
             android:maxLines="2"
-            android:textColor="@color/gray_ababab"
+            android:textColor="@color/gray_757575"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/textViewDate"
@@ -88,63 +88,61 @@
             tools:text="TRMA Mobile Solutions" />
 
         <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/buttonsContainer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:flexDirection="row"
-            app:flexWrap="wrap"
-            app:justifyContent="flex_start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDate"
-            app:layout_constraintVertical_bias="0.0">
+                android:id="@+id/buttonsContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:flexDirection="row"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCompany"
+                app:layout_constraintVertical_bias="0.0">
 
             <com.pchmn.materialchips.ChipView
-                android:id="@+id/tag1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:layout_marginEnd="@dimen/dimen_4dp"
-                app:backgroundColor="@color/color_accent"
-                app:labelColor="@android:color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+                    android:id="@+id/tag1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4dp"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    app:backgroundColor="@color/colorAccent"
+                    app:labelColor="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
             <com.pchmn.materialchips.ChipView
-                android:id="@+id/tag2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:layout_marginEnd="@dimen/dimen_4dp"
-                app:backgroundColor="@color/color_accent"
-                app:deleteIconColor="@android:color/white"
-                app:labelColor="@android:color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
-
-            <com.pchmn.materialchips.ChipView
-                android:id="@+id/tag3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:layout_marginEnd="@dimen/dimen_4dp"
-                app:backgroundColor="@color/color_accent"
-                app:deleteIconColor="@android:color/white"
-                app:labelColor="@android:color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+                    android:id="@+id/tag2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4dp"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    app:backgroundColor="@color/colorPrimaryDark"
+                    app:deleteIconColor="@android:color/white"
+                    app:labelColor="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
         </com.google.android.flexbox.FlexboxLayout>
+
+        <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_bookmark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

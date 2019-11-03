@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         resources.getStringArray(R.array.suggestions).forEach { suggestions.add(it) }
         adapter = JobsRecyclerAdapter(list, this::onItemClick)
-        setHasOptionsMenu(true)
+       // setHasOptionsMenu(true)
         retainInstance = true
 
         observeLoadingStatus()
@@ -161,7 +161,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeResponse() {
-        viewModel.response.observe(this, Observer { response -> showJobsList(response.toMutableList()) })
+        viewModel.response.observe(this, Observer { response -> adapter.update(response.toMutableList()) })
     }
 
     private fun showProgress(b: Boolean?) {
@@ -172,16 +172,6 @@ class HomeFragment : Fragment() {
     private fun showSnackBarError(str: String) {
         activity?.showSnackBarError(recyclerView, str)
         swipeRefreshLayout?.isRefreshing = false
-    }
-
-    private fun showJobsList(jobs: MutableList<Job>) {
-
-        withoutData?.visibility = GONE
-        if (jobs.isEmpty()) {
-            withoutData?.visibility = VISIBLE
-        }
-
-        adapter.update(jobs)
     }
 
     private fun onItemClick(job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {
@@ -197,8 +187,8 @@ class HomeFragment : Fragment() {
         activity?.startActivity(intent, options.toBundle())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_main, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
         setUpSearchView(menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
