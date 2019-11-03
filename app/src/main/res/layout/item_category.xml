@@ -37,7 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:backgroundColor="@color/colorAccent"
+        app:backgroundColor="@color/colorPrimaryDark"
         app:deleteIconColor="@android:color/white"
         app:hasAvatarIcon="true"
         app:label="Java Script"

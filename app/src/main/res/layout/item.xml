@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_4dp"
                     android:layout_marginEnd="@dimen/dimen_4dp"
-                    app:backgroundColor="@color/colorAccent"
+                    app:backgroundColor="@color/colorPrimaryDark"
                     app:labelColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
