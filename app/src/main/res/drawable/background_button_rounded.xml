@@ -3,29 +3,25 @@
     <item android:state_pressed="false" android:state_selected="true">
         <shape android:shape="rectangle">
             <corners android:radius="150dp" />
-            <solid android:color="@color/colorAccent" />
-            <padding android:left="8dp" android:right="8dp" />
+            <solid android:color="@color/colorPrimaryDark" />
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="100dp" />
             <solid android:color="@color/colorPrimaryDark" />
-            <padding android:left="8dp" android:right="8dp" />
         </shape>
     </item>
     <item android:state_enabled="true">
         <shape android:shape="rectangle">
             <corners android:radius="150dp" />
-            <solid android:color="@color/colorAccent" />
-            <padding android:left="8dp" android:right="8dp" />
+            <solid android:color="@color/colorPrimaryDark" />
         </shape>
     </item>
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
             <corners android:radius="150dp" />
             <solid android:color="@color/gray_ababab" />
-            <padding android:left="8dp" android:right="8dp" />
         </shape>
     </item>
 </selector>

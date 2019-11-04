@@ -16,4 +16,8 @@ class HomeRemoteDataStore : HomeRemoteRepository {
     override fun getJobs(lastItem: String?): Single<JobsResponse> {
         return RemoteApiService.getInstance().getApiService().getJobs(lastItem = lastItem)
     }
+
+    override fun searchJob(search: String): Single<JobsResponse> {
+        return RemoteApiService.getInstance().getApiService().searchJobs(search = search)
+    }
 }

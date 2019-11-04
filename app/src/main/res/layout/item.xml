@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen_16dp"
-    android:layout_marginTop="@dimen/dimen_8dp"
-    android:layout_marginEnd="@dimen/dimen_16dp">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:transitionName="content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageViewLogo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:cropToPadding="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_web"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-            app:layout_constraintVertical_bias="0.0"
-            app:round_radius="@dimen/dimen_8dp"
-            app:shape_mode="circle" />
+                android:id="@+id/imageViewLogo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_web"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+                app:layout_constraintVertical_bias="0.0"
+                app:round_radius="@dimen/dimen_8dp"
+                app:shape_mode="circle" />
 
         <TextView
                 android:id="@+id/textViewTitle"
@@ -38,7 +39,7 @@
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_ui_text_regular"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:textColor="#252220"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -67,25 +68,25 @@
 
 
         <TextView
-            android:id="@+id/textViewCompany"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_light"
-            android:gravity="start"
-            android:maxLines="2"
-            android:textColor="@color/gray_757575"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDate"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-            tools:text="TRMA Mobile Solutions" />
+                android:id="@+id/textViewCompany"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_ui_text_light"
+                android:gravity="start"
+                android:maxLines="2"
+                android:textColor="@color/gray_757575"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDate"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+                tools:text="TRMA Mobile Solutions" />
 
         <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/buttonsContainer"

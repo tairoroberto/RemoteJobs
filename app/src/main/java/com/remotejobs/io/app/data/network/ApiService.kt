@@ -13,23 +13,33 @@ interface ApiService {
 
     @GET("getJobsPaginated/")
     fun getJobs(
-            @Query("path") path: String = "jobs",
-            @Query("lastItem") lastItem: String? = null,
-            @Query("total") total: Int? = 30): Single<JobsResponse>
+        @Query("path") path: String = "jobs",
+        @Query("lastItem") lastItem: String? = null,
+        @Query("total") total: Int? = 30
+    ): Single<JobsResponse>
+
+    @GET("getJobsPaginated/search")
+    fun searchJobs(
+        @Query("path") path: String = "jobs",
+        @Query("search") search: String,
+        @Query("total") total: Int? = 100
+    ): Single<JobsResponse>
 
     @GET("getJobsPaginated/")
     fun getJobsByCategory(
-            @Query("path") path: String? = "jobs-category",
-            @Query("query") query: String,
-            @Query("lastItem") lastItem: String?,
-            @Query("total") total: Int? = 30): Single<JobsResponse>
+        @Query("path") path: String? = "jobs-category",
+        @Query("query") query: String,
+        @Query("lastItem") lastItem: String?,
+        @Query("total") total: Int? = 30
+    ): Single<JobsResponse>
 
     @GET("getJobsPaginated/")
     fun getJobsByCompany(
-            @Query("path") path: String = "jobs-company",
-            @Query("query") query: String,
-            @Query("lastItem") lastItem: String?,
-            @Query("total") total: Int? = 30): Single<JobsResponse>
+        @Query("path") path: String = "jobs-company",
+        @Query("query") query: String,
+        @Query("lastItem") lastItem: String?,
+        @Query("total") total: Int? = 30
+    ): Single<JobsResponse>
 
     @GET("getCompanies/")
     fun getCompanies(): Single<CompaniesResponse>

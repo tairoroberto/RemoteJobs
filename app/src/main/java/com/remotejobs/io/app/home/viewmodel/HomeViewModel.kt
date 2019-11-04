@@ -4,9 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.remotejobs.io.app.home.usecase.HomeUseCase
 import com.remotejobs.io.app.model.Job
-import com.remotejobs.io.app.model.JobsResponse
 import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -29,50 +27,61 @@ class HomeViewModel(private val homeUseCase: HomeUseCase) : ViewModel() {
     private var lastItem: String? = null
 
     fun getAllJobs() {
-        loadResponse(homeUseCase.getJobs())
+        disposables.add(homeUseCase.getJobs()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loadingStatus.setValue(true) }
+            .doAfterTerminate { loadingStatus.setValue(false) }
+            .doOnError { loadResponseFromDataBase(homeUseCase.listJobsFromBD()) }
+            .subscribe(
+                { jobs ->
+                    response.value = jobs.response//?.sortedBy { it.epoch }
+                    lastItem = jobs.lastItem
+                    doAsync {
+                        homeUseCase.deleteAllJobs()
+                        homeUseCase.addAllJobs(response.value)
+                    }
+                },
+                { throwable ->
+                    errorStatus.value = throwable.message.toString()
+                    loadResponseFromDataBase(homeUseCase.listJobsFromBD())
+                }
+            )
+        )
     }
 
-    fun getJobs() {
-        loadResponse(homeUseCase.getJobs(lastItem))
-    }
-
-    private fun loadResponse(jobsResponse: Single<JobsResponse>) {
-        disposables.add(jobsResponse
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingStatus.setValue(true) }
-                .doAfterTerminate { loadingStatus.setValue(false) }
-                .doOnError { loadResponseFromDataBase(homeUseCase.listJobsFromBD()) }
-                .subscribe(
-                        { jobs ->
-                            response.value = jobs.response
-                            lastItem = jobs.lastItem
-                            doAsync {
-                                homeUseCase.deleteAllJobs()
-                                homeUseCase.addAllJobs(response.value)
-                            }
-                        },
-                        { throwable ->
-                            errorStatus.value = throwable.message.toString()
-                            loadResponseFromDataBase(homeUseCase.listJobsFromBD())
-                        }
-                )
+    fun searchJobs(search: String) {
+        disposables.add(homeUseCase.searchJobs(search)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loadingStatus.setValue(true) }
+            .doAfterTerminate { loadingStatus.setValue(false) }
+            .doOnError { loadResponseFromDataBase(homeUseCase.listJobsFromBD()) }
+            .subscribe(
+                { jobs ->
+                    response.value = jobs.response?.sortedBy { it.epoch }
+                },
+                { throwable ->
+                    errorStatus.value = throwable.message.toString()
+                    loadResponseFromDataBase(homeUseCase.listJobsFromBD())
+                }
+            )
         )
     }
 
     private fun loadResponseFromDataBase(jobsResponse: Flowable<List<Job>>) {
         disposables.add(jobsResponse
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingStatus.setValue(true) }
-                .doAfterTerminate { loadingStatus.setValue(false) }
-                .subscribe(
-                        { jobs ->
-                            response.value = jobs
-                        },
-                        { throwable ->
-                            errorStatus.value = throwable.message.toString()
-                        }
-                ))
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loadingStatus.setValue(true) }
+            .doAfterTerminate { loadingStatus.setValue(false) }
+            .subscribe(
+                { jobs ->
+                    response.value = jobs
+                },
+                { throwable ->
+                    errorStatus.value = throwable.message.toString()
+                }
+            ))
     }
 }

@@ -24,6 +24,10 @@ class HomeUseCase(private val homeLocalRepository: HomeLocalRepository,
         return homeRemoteRepository.getJobs(lastItem)
     }
 
+    fun searchJobs(search: String): Single<JobsResponse> {
+        return homeRemoteRepository.searchJob(search)
+    }
+
     fun listJobsFromBD(): Flowable<List<Job>> {
         return homeLocalRepository.getAll()
     }

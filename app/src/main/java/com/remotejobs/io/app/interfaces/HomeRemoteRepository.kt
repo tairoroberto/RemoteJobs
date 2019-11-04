@@ -10,4 +10,5 @@ interface HomeRemoteRepository {
 
     fun listAll(): Single<JobsResponse>
     fun getJobs(lastItem: String?): Single<JobsResponse>
+    fun searchJob(search: String): Single<JobsResponse>
 }

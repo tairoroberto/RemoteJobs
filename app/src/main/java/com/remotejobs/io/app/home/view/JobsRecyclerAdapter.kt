@@ -5,27 +5,38 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.pchmn.materialchips.ChipView
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
+import com.remotejobs.io.app.utils.extension.getDateDiff
 import com.remotejobs.io.app.utils.extension.loadImage
 import com.remotejobs.io.app.utils.extension.textHtml
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 /**
  * Created by tairo on 12/12/17.
  */
 class JobsRecyclerAdapter(
-        private var list: MutableList<Job>,
-        private val onClick: (job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) -> Unit
-) : androidx.recyclerview.widget.RecyclerView.Adapter<JobsRecyclerAdapter.ViewHolder>() {
+    private var list: MutableList<Job>,
+    private val onClick: (job: Job, content: ViewGroup, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) -> Unit
+) : RecyclerView.Adapter<JobsRecyclerAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item, onClick)
         holder.itemView.setOnClickListener {
-            onClick(item, holder.imageView, holder.textViewTitle, holder.textViewDate)
+            onClick(
+                item,
+                holder.content,
+                holder.imageView,
+                holder.textViewTitle,
+                holder.textViewDate
+            )
         }
     }
 
@@ -37,6 +48,7 @@ class JobsRecyclerAdapter(
     override fun getItemCount(): Int = list.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val content: CardView = view.findViewById(R.id.cardView)
         val imageView: ImageView = view.findViewById(R.id.imageViewLogo)
         val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         val textViewDate: TextView = view.findViewById(R.id.textViewDate)
@@ -44,9 +56,24 @@ class JobsRecyclerAdapter(
         private val tag1: ChipView = view.findViewById(R.id.tag1)
         private val tag2: ChipView = view.findViewById(R.id.tag2)
 
-        fun bind(job: Job, onClick: (job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) -> Unit) {
+        fun bind(
+            job: Job,
+            onClick: (job: Job, content: ViewGroup, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) -> Unit
+        ) {
             if (!job.logo.isBlank()) {
                 imageView.loadImage(job.logo)
+            }
+
+            val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+
+            val date = textViewDate
+                .context
+                .getDateDiff(format.parse(job.epoch), Date(), TimeUnit.DAYS)
+
+            job.date = when (date) {
+                0L -> "today"
+                1L -> "yesterday"
+                else -> "$date days"
             }
 
             textViewDate.text = job.date
@@ -62,7 +89,7 @@ class JobsRecyclerAdapter(
                     tag1.visibility = View.VISIBLE
                     tag1.setHasAvatarIcon(true)
                     tag1.setOnChipClicked {
-                        onClick(job, imageView, textViewTitle, textViewDate)
+                        onClick(job, content, imageView, textViewTitle, textViewDate)
                     }
                 }
 
@@ -71,7 +98,7 @@ class JobsRecyclerAdapter(
                     tag2.visibility = View.VISIBLE
                     tag2.setHasAvatarIcon(true)
                     tag2.setOnChipClicked {
-                        onClick(job, imageView, textViewTitle, textViewDate)
+                        onClick(job, content, imageView, textViewTitle, textViewDate)
                     }
                 }
             }

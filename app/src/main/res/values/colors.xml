@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D81B60</color>
+    <color name="colorPrimary">#4C62FE</color>
     <color name="colorPrimaryDark">#4C62FE</color>
-    <color name="colorAccent">#4CA0FF</color>
+    <color name="colorAccent">#4C62FE</color>
     <color name="colorPrimaryText">#1C1C1C</color>
     <color name="green_175258">#175258</color>
     <color name="green_2bbc9b">#2BBC9B</color>
@@ -16,4 +16,6 @@
     <color name="black">#000000</color>
     <color name="gray_ababab">#ababab</color>
     <color name="gray_757575">#757575</color>
+    <color name="gray_4E4B70">#CC4E4B70</color>
+    <color name="gray_252220">#252220</color>
 </resources>

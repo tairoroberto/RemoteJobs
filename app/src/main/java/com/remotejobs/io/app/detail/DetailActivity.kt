@@ -28,7 +28,6 @@ import com.remotejobs.io.app.model.Job
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.content_detail.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.noButton
@@ -52,7 +51,6 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         supportPostponeEnterTransition()
-        setSupportActionBar(toolbar)
 
         tracker = FirebaseAnalytics.getInstance(this@DetailActivity)
 
@@ -60,11 +58,10 @@ class DetailActivity : AppCompatActivity() {
 
         showJob()
 
-        fab.setOnClickListener { showAlertDialog() }
-        imageBack.setOnClickListener {
-            setAnimation()
-            onBackPressed()
-        }
+        btnApply.setOnClickListener { showAlertDialog() }
+        close.setOnClickListener { onBackPressed() }
+
+        content.setOnClickListener { onBackPressed() }
 
         contentUri = Uri.EMPTY
         val params = Bundle()
@@ -109,7 +106,8 @@ class DetailActivity : AppCompatActivity() {
             job?.urlApply?.contains("javascript:") == true ->
                 alert {
                     title = "Alert"
-                    message = "'This job post is older than 90 days and the position is probably filled. Try applying to jobs posted recently instead."
+                    message =
+                        "'This job post is older than 90 days and the position is probably filled. Try applying to jobs posted recently instead."
                     okButton { }
                 }.show()
 
@@ -130,20 +128,20 @@ class DetailActivity : AppCompatActivity() {
     private fun showJob() {
 
         Picasso.get()
-                .load(if (job?.logo == "") "http://" else job?.logo)
-                .noFade()
-                .placeholder(R.drawable.ic_launcher_web)
-                .error(R.drawable.ic_launcher_web)
-                .into(imageViewLogo, object : Callback {
-                    override fun onSuccess() {
-                        supportStartPostponedEnterTransition()
-                    }
+            .load(if (job?.logo == "") "http://" else job?.logo)
+            .noFade()
+            .placeholder(R.drawable.ic_launcher_web)
+            .error(R.drawable.ic_launcher_web)
+            .into(imageViewLogo, object : Callback {
+                override fun onSuccess() {
+                    supportStartPostponedEnterTransition()
+                }
 
-                    override fun onError(e: Exception?) {
-                        supportStartPostponedEnterTransition()
-                    }
-                })
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+                override fun onError(e: Exception?) {
+                    supportStartPostponedEnterTransition()
+                }
+            })
+
         textViewName.text = job?.position
 
         val index = job?.description?.indexOf("<p style=\"text-align:center\">See more jobs") as Int
@@ -156,8 +154,11 @@ class DetailActivity : AppCompatActivity() {
 
         textViewReleaseDate.text = job?.date
         textViewCompany.text = job?.company
-        textViewFont.text = job?.font
-        webiewViewDescription.loadData("<body bgcolor=\"#fafafa\">$data</body>", "text/html", "UTF-8")
+        webiewViewDescription.loadData(
+            "<body bgcolor=\"#fafafa\">$data</body>",
+            "text/html",
+            "UTF-8"
+        )
         webiewViewDescription.webViewClient = object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -168,9 +169,10 @@ class DetailActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 progressBar.visibility = GONE
-                fab.visibility = VISIBLE
+                // fab.visibility = VISIBLE
             }
         }
+        webiewViewDescription.isHorizontalScrollBarEnabled = true
         webiewViewDescription.setOnTouchListener { _, _ -> true }
     }
 
@@ -181,14 +183,17 @@ class DetailActivity : AppCompatActivity() {
         if (!InstantApps.isInstantApp(this)) {
             val shareItem = menu.findItem(R.id.menu_share)
 
-            shareActionProvider = MenuItemCompat.getActionProvider(shareItem) as ShareActionProvider?
+            shareActionProvider =
+                MenuItemCompat.getActionProvider(shareItem) as ShareActionProvider?
 
             trackSharedJob()
 
-            val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val permissionCheck =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        WRITE_EXTERNAL_STORAGE
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    WRITE_EXTERNAL_STORAGE
                 )
             } else {
                 setShareIntent()
@@ -199,7 +204,11 @@ class DetailActivity : AppCompatActivity() {
         return false
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -225,7 +234,8 @@ class DetailActivity : AppCompatActivity() {
         try {
             val cachePath = File(this.cacheDir, "/images")
             cachePath.mkdirs()
-            val stream = FileOutputStream("$cachePath/image.png") // overwrites this image every time
+            val stream =
+                FileOutputStream("$cachePath/image.png") // overwrites this image every time
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
             stream.close()
 
@@ -235,7 +245,8 @@ class DetailActivity : AppCompatActivity() {
 
         val imagePath = File(this.cacheDir, "images")
         val newFile = File(imagePath, "image.png")
-        contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", newFile)
+        contentUri =
+            FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", newFile)
 
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "image/*"
@@ -243,12 +254,14 @@ class DetailActivity : AppCompatActivity() {
         shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
 
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "${textViewName.text} \n\n ${Html.fromHtml(job?.description)}")
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            "${textViewName.text} \n\n ${Html.fromHtml(job?.description)}"
+        )
         shareActionProvider?.setShareIntent(shareIntent)
     }
 
     override fun onBackPressed() {
-        fab.visibility = GONE
         webiewViewDescription.visibility = GONE
         super.onBackPressed()
     }

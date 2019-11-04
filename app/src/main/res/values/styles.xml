@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="actionBarStyle">@style/Custom.ActionBar</item>
     </style>
 
     <style name="CustomSearchView">
@@ -26,6 +27,21 @@
     <style name="AppTheme.NoActionBar.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="Custom.ActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@color/colorPrimaryDark</item>
+        <item name="titleTextStyle">@style/Custom.ActionBar.Title</item>
+    </style>
+
+    <style name="Custom.ActionBar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/pacifico</item>
+        <item name="android:textSize">@dimen/dimen_22sp</item>
     </style>
 
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

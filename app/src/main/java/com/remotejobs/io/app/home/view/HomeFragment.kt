@@ -13,7 +13,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
@@ -37,10 +36,8 @@ import com.remotejobs.io.app.home.usecase.HomeUseCase
 import com.remotejobs.io.app.home.viewmodel.HomeViewModel
 import com.remotejobs.io.app.home.viewmodel.HomeViewModelFactory
 import com.remotejobs.io.app.model.Job
-import com.remotejobs.io.app.utils.extension.hideSoftKeyboard
 import com.remotejobs.io.app.utils.extension.launchPlayStore
 import com.remotejobs.io.app.utils.extension.showSnackBarError
-import com.remotejobs.io.app.utils.extension.showSoftKeyboard
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
@@ -77,13 +74,22 @@ class HomeFragment : Fragment() {
 
     companion object {
         const val SEARCH_PARAM = "getJobs"
+
+        fun newInstance(searcJob: String): HomeFragment {
+            val fragment = HomeFragment()
+            val bundle = Bundle().apply {
+                putString(SEARCH_PARAM, searcJob)
+            }
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resources.getStringArray(R.array.suggestions).forEach { suggestions.add(it) }
         adapter = JobsRecyclerAdapter(list, this::onItemClick)
-       // setHasOptionsMenu(true)
         retainInstance = true
 
         observeLoadingStatus()
@@ -98,7 +104,11 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -109,15 +119,10 @@ class HomeFragment : Fragment() {
 
         setRecyclerViewListJobs()
 
+        val searchJob = arguments?.getString(SEARCH_PARAM)
 
-        listSearch.setOnItemClickListener { _, _, position, _ ->
-            viewModel.getJobs(/*"remote-${filteredValues[position]}-jobs"*/)
-            listSearch.visibility = GONE
-            activity?.hideSoftKeyboard()
-        }
-
-        if (arguments?.get(SEARCH_PARAM) != null) {
-            viewModel.getJobs(/*"remote-${arguments?.get(SEARCH_PARAM)}-jobs"*/)
+        if (searchJob != null) {
+            viewModel.searchJobs(searchJob)
         } else {
             viewModel.getAllJobs()
         }
@@ -144,13 +149,12 @@ class HomeFragment : Fragment() {
                     val endHasBeenReached = lastVisible + 1 >= totalItemCount
 
                     if (viewModel.loadingStatus.value == false && totalItemCount > 0 && endHasBeenReached) {
-                        viewModel.getJobs()
+                        viewModel.getAllJobs()
                     }
                 }
             }
         })
     }
-
 
     private fun observeLoadingStatus() {
         viewModel.loadingStatus.observe(this, Observer { isLoading -> showProgress(isLoading) })
@@ -161,7 +165,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeResponse() {
-        viewModel.response.observe(this, Observer { response -> adapter.update(response.toMutableList()) })
+        viewModel.response.observe(
+            this,
+            Observer { response -> adapter.update(response.toMutableList()) })
     }
 
     private fun showProgress(b: Boolean?) {
@@ -174,95 +180,39 @@ class HomeFragment : Fragment() {
         swipeRefreshLayout?.isRefreshing = false
     }
 
-    private fun onItemClick(job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {
+    private fun onItemClick(
+        job: Job,
+        content: ViewGroup,
+        imageView: ImageView,
+        textViewTitle: TextView,
+        textViewDate: TextView
+    ) {
 
+        val cardTransition: Pair<View, String> = Pair.create(content, "content")
         val logoTransition: Pair<View, String> = Pair.create(imageView, "logo")
         val titleTransition: Pair<View, String> = Pair.create(textViewTitle, "title")
         val dateTransition: Pair<View, String> = Pair.create(textViewDate, "date")
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(context as Activity, logoTransition, titleTransition, dateTransition)
+            .makeSceneTransitionAnimation(
+                context as Activity,
+                cardTransition,
+                logoTransition,
+                titleTransition,
+                dateTransition
+            )
 
         val intent = Intent(context, DetailActivity::class.java)
         intent.putExtra("job", job)
         activity?.startActivity(intent, options.toBundle())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
-        setUpSearchView(menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun setUpSearchView(menu: Menu?) {
-
-        val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
-        searchView.setIconifiedByDefault(false)
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.getJobs(/*"remote-$query-jobs"*/)
-                activity?.hideSoftKeyboard()
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-
-                if (newText.isBlank() || newText.length < 2) {
-                    listSearch?.visibility = GONE
-                    return false
-                }
-
-                filteredValues.clear()
-                resources.getStringArray(R.array.suggestions).forEach {
-                    if (it.toLowerCase().startsWith(newText.toLowerCase())) {
-                        filteredValues.add(it)
-                    }
-                }
-
-                if (filteredValues.size == 0) {
-                    listSearch?.visibility = GONE
-                }
-
-                adapterSearch.updateItems(filteredValues)
-                listSearch?.visibility = VISIBLE
-                listSearch?.adapter = adapterSearch
-
-                return true
-            }
-        })
-
-        menu.findItem(R.id.search)?.setOnActionExpandListener(
-                object : MenuItem.OnActionExpandListener {
-                    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                        searchView.requestFocus()
-                        activity?.showSoftKeyboard()
-                        return true
-                    }
-
-                    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                        activity?.hideSoftKeyboard()
-                        return true
-                    }
-                })
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.search) {
-            return super.onOptionsItemSelected(item)
-        }
-
-        if (item.itemId == R.id.favorites) {
-            startActivity(Intent(context, FavoritesActivity::class.java))
-        }
-
-        return true
-    }
-
     private fun showAlertDialogHateUs() {
 
-        val ratedCount: Int = activity?.getSharedPreferences("Home", MODE_PRIVATE)?.getInt("ratedCount", 0) as Int
+        val ratedCount: Int =
+            activity?.getSharedPreferences("Home", MODE_PRIVATE)?.getInt("ratedCount", 0) as Int
 
-        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putInt("ratedCount", ratedCount.plus(1))?.apply()
+        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()
+            ?.putInt("ratedCount", ratedCount.plus(1))?.apply()
 
         if (ratedCount > 5 && ratedCount % 5 == 0) {
 
@@ -315,7 +265,8 @@ class HomeFragment : Fragment() {
             alertDialog = alertBuilder.create()
             alertDialog.show()
 
-            activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putInt("ratedCount", 0)?.apply()
+            activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putInt("ratedCount", 0)
+                ?.apply()
         }
     }
 
@@ -324,12 +275,13 @@ class HomeFragment : Fragment() {
 
             title = "Rate us on PlayStore"
             message =
-                    "Rate us and help us improve with new features for the community, give us 5 stars to help in the disclosure, but leave a comment to improve the app :)"
+                "Rate us and help us improve with new features for the community, give us 5 stars to help in the disclosure, but leave a comment to improve the app :)"
 
             noButton {}
             yesButton {
                 activity?.launchPlayStore()
-                activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)?.apply()
+                activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()
+                    ?.putBoolean("rated", true)?.apply()
             }
 
         }?.show()
@@ -339,6 +291,7 @@ class HomeFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString(feeling, value)
         tracker.logEvent("rate_us", bundle)
-        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)?.apply()
+        activity?.getSharedPreferences("Home", MODE_PRIVATE)?.edit()?.putBoolean("rated", true)
+            ?.apply()
     }
 }

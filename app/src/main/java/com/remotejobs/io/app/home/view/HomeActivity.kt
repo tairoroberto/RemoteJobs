@@ -1,6 +1,8 @@
 package com.remotejobs.io.app.home.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.transition.ChangeClipBounds
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -27,9 +29,35 @@ class HomeActivity : AppCompatActivity() {
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(viewPager))
-        val adapter = HomePageAdapter(fragments, supportFragmentManager)
+        var adapter = HomePageAdapter(fragments, supportFragmentManager)
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = fragments.size
+
+        editSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+                viewPager.setCurrentItem(0, true)
+                val newText = editable.toString()
+
+                if (newText.length >= 3) {
+                    fragments[0] = HomeFragment.newInstance(newText)
+                    adapter = HomePageAdapter(fragments, supportFragmentManager)
+                    viewPager.adapter = adapter
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        })
+    }
+
+    override fun onBackPressed() {
+        if (viewPager.currentItem == 0) {
+            super.onBackPressed()
+        } else {
+            viewPager.currentItem = 0
+        }
     }
 
     private fun setAnimation() {

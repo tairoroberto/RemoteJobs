@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -25,6 +26,7 @@ import com.remotejobs.io.app.home.view.JobsRecyclerAdapter
 import com.remotejobs.io.app.model.Job
 import kotlinx.android.synthetic.main.fragment_jobs_category.*
 
+
 class CategoriesSelectActivity : AppCompatActivity() {
 
     private lateinit var adapter: JobsRecyclerAdapter
@@ -35,7 +37,8 @@ class CategoriesSelectActivity : AppCompatActivity() {
     private val viewModel by lazy {
         val remote = CategoriesRemoteDataStore()
         val useCase = CategoriesUseCase(remote)
-        ViewModelProviders.of(this, CategoriesViewModelFactory(useCase)).get(CategoriesViewModel::class.java)
+        ViewModelProviders.of(this, CategoriesViewModelFactory(useCase))
+            .get(CategoriesViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,10 +64,10 @@ class CategoriesSelectActivity : AppCompatActivity() {
         })
 
         viewModel.loadingStatus.observe(
-                this,
-                Observer { isLoading ->
-                    progress.visibility = if (isLoading) VISIBLE else GONE
-                })
+            this,
+            Observer { isLoading ->
+                progress.visibility = if (isLoading) VISIBLE else GONE
+            })
 
         FirebaseAnalytics.getInstance(this).logEvent("highestpaid_jobs", null)
     }
@@ -100,10 +103,16 @@ class CategoriesSelectActivity : AppCompatActivity() {
         })
     }
 
-    private fun onItemClick(job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {
+    private fun onItemClick(
+        job: Job,
+        content: ViewGroup,
+        imageView: ImageView,
+        textViewTitle: TextView,
+        textViewDate: TextView
+    ) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
+            .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
 
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("job", job)

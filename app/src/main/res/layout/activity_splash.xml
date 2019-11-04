@@ -19,7 +19,7 @@
         android:fontFamily="@font/pacifico"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/remote_jobs"
-        android:textColor="#4CA0FF"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="58sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

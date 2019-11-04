@@ -3,6 +3,7 @@ package com.remotejobs.io.app.companies.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -103,7 +104,7 @@ class CompaniesSelectActivity : AppCompatActivity() {
         })
     }
 
-    private fun onItemClick(job: Job, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {
+    private fun onItemClick(job: Job, content: ViewGroup, imageView: ImageView, textViewTitle: TextView, textViewDate: TextView) {
 
         val options: ActivityOptionsCompat = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this, Pair.create(imageView, "image"))
