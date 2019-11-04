@@ -69,12 +69,12 @@ android {
     flavorDimensions "experience"
     productFlavors {
         instant {
-            versionCode 25
-            versionName "1.25"
+            versionCode 27
+            versionName "1.27"
         }
         installed {
-            versionCode 26
-            versionName "1.26"
+            versionCode 28
+            versionName "1.28"
         }
     }
 

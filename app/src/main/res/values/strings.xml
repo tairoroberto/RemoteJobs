@@ -8,7 +8,7 @@
     <string name="title_highestpaid">Highest Paid</string>
     <string name="title_companies">Companies</string>
     <string name="title_statistics">Statistics</string>
-    <string name="remote_jobs">Remote Jobs</string>
+    <string name="remote_jobs">Remote \nJobs</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

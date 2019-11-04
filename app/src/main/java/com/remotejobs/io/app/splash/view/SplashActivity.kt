@@ -31,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         textView.setOnClickListener { jump() }
+        textView2.setOnClickListener { jump() }
 
         timer.schedule(object : TimerTask() {
             override fun run() {

@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#4C62FE"
+        android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="true"
         tools:context=".home.view.HomeActivity">
 
@@ -19,7 +19,7 @@
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#4C62FE"
+                android:background="@color/colorPrimaryDark"
                 android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">

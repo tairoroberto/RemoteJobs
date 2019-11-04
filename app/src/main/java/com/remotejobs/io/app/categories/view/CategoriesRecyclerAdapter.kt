@@ -4,9 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.pchmn.materialchips.ChipView
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.utils.extension.textHtml
 import java.util.concurrent.ThreadLocalRandom
@@ -15,9 +15,9 @@ import java.util.concurrent.ThreadLocalRandom
  * Created by tairo on 12/12/17.
  */
 class CategoriesRecyclerAdapter(
-        private val context: Context?,
-        private var list: MutableList<String>,
-        private val onClick: (tag: String) -> Unit
+    private val context: Context?,
+    private var list: MutableList<String>,
+    private val onClick: (tag: String) -> Unit
 ) : RecyclerView.Adapter<CategoriesRecyclerAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -36,13 +36,18 @@ class CategoriesRecyclerAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val tag: ChipView = view.findViewById(R.id.tag)
+        val tag: Button = view.findViewById(R.id.tag)
         private val textViewSalary: TextView = view.findViewById(R.id.textViewSalary)
 
         fun bind(category: String) {
             val salary = "± $" + ThreadLocalRandom.current().nextInt(52, 120) + "K/year"
-            tag.label = category
-            textViewSalary.textHtml(textViewSalary.context.getString(R.string.highest_salary, salary))
+            tag.text = category
+            textViewSalary.textHtml(
+                textViewSalary.context.getString(
+                    R.string.highest_salary,
+                    salary
+                )
+            )
         }
     }
 

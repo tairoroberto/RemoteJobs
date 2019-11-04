@@ -3,11 +3,11 @@ package com.remotejobs.io.app.home.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.pchmn.materialchips.ChipView
 import com.remotejobs.io.app.R
 import com.remotejobs.io.app.model.Job
 import com.remotejobs.io.app.utils.extension.getDateDiff
@@ -53,8 +53,8 @@ class JobsRecyclerAdapter(
         val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
         val textViewDate: TextView = view.findViewById(R.id.textViewDate)
         private val textViewCompany: TextView = view.findViewById(R.id.textViewCompany)
-        private val tag1: ChipView = view.findViewById(R.id.tag1)
-        private val tag2: ChipView = view.findViewById(R.id.tag2)
+        private val tag1: Button = view.findViewById(R.id.tag1)
+        private val tag2: Button = view.findViewById(R.id.tag2)
 
         fun bind(
             job: Job,
@@ -85,19 +85,17 @@ class JobsRecyclerAdapter(
 
             job.tags?.forEachIndexed { index, s ->
                 if (index == 0) {
-                    tag1.label = s
+                    tag1.text = s
                     tag1.visibility = View.VISIBLE
-                    tag1.setHasAvatarIcon(true)
-                    tag1.setOnChipClicked {
+                    tag1.setOnClickListener {
                         onClick(job, content, imageView, textViewTitle, textViewDate)
                     }
                 }
 
                 if (index == 1) {
-                    tag2.label = s
+                    tag2.text = s
                     tag2.visibility = View.VISIBLE
-                    tag2.setHasAvatarIcon(true)
-                    tag2.setOnChipClicked {
+                    tag2.setOnClickListener {
                         onClick(job, content, imageView, textViewTitle, textViewDate)
                     }
                 }
